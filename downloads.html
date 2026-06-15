@@ -8,6 +8,220 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* 操作系统选择舱专属组件样式 */
+        .os-selector-card {
+            grid-column: 1 / -1; /* 跨越全部网格列 */
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            padding: 2rem !important;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+        }
+
+        .os-selector-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .os-selector-header .desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* 迅雷提示框 */
+        .thunder-alert-box {
+            margin-top: 1rem;
+            padding: 0.85rem 1rem;
+            background: #0d0d0f;
+            border-left: 2px solid #ffffff;
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+        }
+
+        .thunder-alert-box .alert-icon {
+            font-size: 1rem;
+        }
+
+        .thunder-alert-box .alert-content {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .thunder-alert-box .alert-content b {
+            color: #ffffff;
+        }
+
+        /* 步骤选择区 */
+        .os-selector-section {
+            border-top: 1px dashed var(--border-color);
+            padding-top: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .os-selector-section .step-num {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .os-selector-section .step-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        /* OS 大版本标签行 */
+        .os-tabs-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .os-tab-btn {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.6rem 1.2rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            border-radius: var(--radius-sm);
+        }
+
+        .os-tab-btn:hover {
+            color: #ffffff;
+            border-color: var(--border-hover);
+        }
+
+        .os-tab-btn.active {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        /* 子版本小标签行 */
+        .sub-tabs-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .sub-tab-btn {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.4rem 0.8rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            border-radius: var(--radius-sm);
+        }
+
+        .sub-tab-btn:hover {
+            color: #ffffff;
+            border-color: var(--border-hover);
+        }
+
+        .sub-tab-btn.active {
+            color: #ffffff;
+            border-color: #ffffff;
+            font-weight: 600;
+            background: #18181b;
+        }
+
+        /* 镜像列表 */
+        .iso-list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .iso-item-row {
+            background: #050506;
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            transition: var(--transition-fast);
+        }
+
+        .iso-item-row:hover {
+            border-color: var(--border-hover);
+            background: #09090b;
+        }
+
+        .iso-item-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #ffffff;
+            line-height: 1.4;
+        }
+
+        .iso-item-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.25rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+        }
+
+        .iso-item-meta span strong {
+            color: #ffffff;
+        }
+
+        .iso-item-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .iso-copy-btn {
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.45rem 0.85rem;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.35rem;
+            transition: var(--transition-fast);
+            border-radius: var(--radius-sm);
+        }
+
+        .iso-copy-btn:hover {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        /* 修复页面割裂感，调整 grid 高度分布 */
+        .downloads-grid {
+            align-items: start;
+        }
+    </style>
 </head>
 <body>
     <!-- 背景发光 -->
@@ -68,64 +282,46 @@
             </div>
 
             <div class="downloads-grid" id="downloads-container">
-                <!-- 操作系统 -->
-                <div class="download-card" data-cat="os">
-                    <div class="dl-badge">Win11 最新版</div>
-                    <h4>Windows 11 消费者版 26H1 (2026年5月更新)</h4>
-                    <p>微软官方原版 Windows 11 最新 26H1 消费者零售版镜像 (含专业版、家庭版等)。</p>
-                    <span id="win11-26h1-magnet" style="display: none;">magnet:?xt=urn:btih:a5a5ffce78e5099a52647c9010d64dab12d77b29&dn=zh-cn_windows_11_consumer_editions_version_26h1_updated_may_2026_x64_dvd_b733cc65.iso&xl=8123025408</span>
-                    <span id="win11-26h1-ed2k" style="display: none;">ed2k://|file|zh-cn_windows_11_consumer_editions_version_26h1_updated_may_2026_x64_dvd_b733cc65.iso|8123025408|F7672B81433B0DB776B84D20777B8EDC|/</span>
-                    <div class="dl-links" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                        <a href="javascript:void(0)" class="dl-btn" onclick="copyText('win11-26h1-magnet', '磁力链接已复制，请使用迅雷进行高速下载！')">复制磁力链接</a>
-                        <a href="javascript:void(0)" class="dl-btn" onclick="copyText('win11-26h1-ed2k', 'ed2k链接已复制，请使用迅雷进行高速下载！')">复制 ED2K 链接</a>
+                <!-- 微软 Windows 全版本系统镜像高速下载舱 (MSDN 数据源) -->
+                <div class="download-card os-selector-card" data-cat="os" id="win-selector-card">
+                    <div class="os-selector-header">
+                        <div class="dl-badge">官方原版 Windows 镜像源</div>
+                        <h3>💻 微软 Windows 原版系统全系列镜像高速下载舱</h3>
+                        <p class="desc">本系统下载舱由官方技术团队维护，数据全量同步自微软 MSDN 官方订户资源。提供 <b>Windows 11 / 10 / 8.1 / 8 / 7 / XP</b> 全版本及历史月度更新的磁力(Magnet)与电驴(ED2K)高速直链。</p>
+                        
+                        <div class="thunder-alert-box">
+                            <span class="alert-icon">⚠️</span>
+                            <div class="alert-content">
+                                <strong>下载提示：</strong>系统镜像体积较大，点击复制下载链接后，请使用页面下方下载的 <b>“迅雷极速官方纯净版”</b> 或已安装的迅雷进行高速下载。
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="download-card" data-cat="os">
-                    <div class="dl-badge">Win11 25H2</div>
-                    <h4>Windows 11 消费者版 25H2 (2026年5月更新)</h4>
-                    <p>微软原版 Windows 11 25H2 消费者零售版镜像 (含专业、家庭、教育、工作站版等)。</p>
-                    <span id="win11-25h2-magnet" style="display: none;">magnet:?xt=urn:btih:ef0dc5437bc991e21329c3756d46ceccc01545e9&dn=zh-cn_windows_11_consumer_editions_version_25h2_updated_may_2026_x64_dvd_ceef8999.iso&xl=8700340224</span>
-                    <span id="win11-25h2-ed2k" style="display: none;">ed2k://|file|zh-cn_windows_11_consumer_editions_version_25h2_updated_may_2026_x64_dvd_ceef8999.iso|8700340224|2C26BA17D74D1A7439EBDED8D6D6F949|/</span>
-                    <div class="dl-links" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                        <a href="javascript:void(0)" class="dl-btn" onclick="copyText('win11-25h2-magnet', '磁力链接已复制，请使用迅雷进行高速下载！')">复制磁力链接</a>
-                        <a href="javascript:void(0)" class="dl-btn" onclick="copyText('win11-25h2-ed2k', 'ed2k链接已复制，请使用迅雷进行高速下载！')">复制 ED2K 链接</a>
+                    <!-- OS 大版本切换 Tab -->
+                    <div class="os-selector-section">
+                        <span class="step-num">Step 1</span>
+                        <span class="step-title">选择系统大版本：</span>
+                        <div class="os-tabs-row" id="os-tabs-container">
+                            <!-- 动态加载 Windows XP 至 11 -->
+                        </div>
                     </div>
-                </div>
 
-                <div class="download-card" data-cat="os">
-                    <div class="dl-badge">Win11 24H2</div>
-                    <h4>Windows 11 消费者版 24H2 (2026年5月更新)</h4>
-                    <p>微软原版 Windows 11 24H2 消费者零售版镜像 (含专业、家庭、教育、工作站版等)。</p>
-                    <span id="win11-24h2-magnet" style="display: none;">magnet:?xt=urn:btih:c2ca11841b1fbca1f702f565ca48ec9fc3431be3&dn=zh-cn_windows_11_consumer_editions_version_24h2_updated_may_2026_x64_dvd_d061a709.iso&xl=8656445440</span>
-                    <span id="win11-24h2-ed2k" style="display: none;">ed2k://|file|zh-cn_windows_11_consumer_editions_version_24h2_updated_may_2026_x64_dvd_d061a709.iso|8656445440|143AF503697FB495BF1AEC8C108F67DA|/</span>
-                    <div class="dl-links" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                        <a href="javascript:void(0)" class="dl-btn" onclick="copyText('win11-24h2-magnet', '磁力链接已复制，请使用迅雷进行高速下载！')">复制磁力链接</a>
-                        <a href="javascript:void(0)" class="dl-btn" onclick="copyText('win11-24h2-ed2k', 'ed2k链接已复制，请使用迅雷进行高速下载！')">复制 ED2K 链接</a>
+                    <!-- 子版本切换 Tab -->
+                    <div class="os-selector-section" id="sub-versions-section">
+                        <span class="step-num">Step 2</span>
+                        <span class="step-title">选择具体更新版本 (按发布日期倒序)：</span>
+                        <div class="sub-tabs-row" id="sub-tabs-container">
+                            <!-- 动态加载版本更新号，如 26H1, 25H2, SP1 等 -->
+                        </div>
                     </div>
-                </div>
 
-                <div class="download-card" data-cat="os">
-                    <div class="dl-badge">Win11 23H2</div>
-                    <h4>Windows 11 消费者版 23H2 (2025年10月更新)</h4>
-                    <p>微软原版 Windows 11 经典 23H2 消费者零售版镜像 (最受游戏玩家推荐的版本)。</p>
-                    <span id="win11-23h2-magnet" style="display: none;">magnet:?xt=urn:btih:448ab82f9050b1a7a66ab5425c005eb58dbe3e39&dn=zh-cn_windows_11_consumer_editions_version_23h2_updated_oct_2025_x64_dvd_8deeaabd.iso&xl=7525928960</span>
-                    <span id="win11-23h2-ed2k" style="display: none;">ed2k://|file|zh-cn_windows_11_consumer_editions_version_23h2_updated_oct_2025_x64_dvd_8deeaabd.iso|7525928960|4F5D19E4F0E32473BFF2A9DA1CF008E7|/</span>
-                    <div class="dl-links" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                        <a href="javascript:void(0)" class="dl-btn" onclick="copyText('win11-23h2-magnet', '磁力链接已复制，请使用迅雷进行高速下载！')">复制磁力链接</a>
-                        <a href="javascript:void(0)" class="dl-btn" onclick="copyText('win11-23h2-ed2k', 'ed2k链接已复制，请使用迅雷进行高速下载！')">复制 ED2K 链接</a>
-                    </div>
-                </div>
-
-                <div class="download-card" data-cat="os">
-                    <div class="dl-badge">Win10 经典版</div>
-                    <h4>Windows 10 消费者版 22H2 (2025年10月更新)</h4>
-                    <p>微软官方原版 Windows 10 经典正式版零售镜像 (含专业版、家庭版等，稳定性极佳)。</p>
-                    <span id="win10-22h2-magnet" style="display: none;">magnet:?xt=urn:btih:3a8a09a5aae8aca84d3990ce62a2c664e2ef5892&dn=zh-cn_windows_10_consumer_editions_version_22h2_updated_oct_2025_x64_dvd_38efd00d.iso&xl=7168839680</span>
-                    <span id="win10-22h2-ed2k" style="display: none;">ed2k://|file|zh-cn_windows_10_consumer_editions_version_22h2_updated_oct_2025_x64_dvd_38efd00d.iso|7168839680|C16CA4505649F9128F6F42A1DE2D7526|/</span>
-                    <div class="dl-links" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                        <a href="javascript:void(0)" class="dl-btn" onclick="copyText('win10-22h2-magnet', '磁力链接已复制，请使用迅雷进行高速下载！')">复制磁力链接</a>
-                        <a href="javascript:void(0)" class="dl-btn" onclick="copyText('win10-22h2-ed2k', 'ed2k链接已复制，请使用迅雷进行高速下载！')">复制 ED2K 链接</a>
+                    <!-- 镜像资源下载列表 -->
+                    <div class="os-selector-section">
+                        <span class="step-num">Step 3</span>
+                        <span class="step-title">选择镜像文件并复制下载链接：</span>
+                        <div class="iso-list-container" id="iso-list-container">
+                            <!-- 动态加载当前子版本下的全部镜像列表，包含磁力和 ed2k 复制按钮 -->
+                        </div>
                     </div>
                 </div>
 
@@ -236,6 +432,154 @@
         </div>
     </footer>
 
+    <script src="win-data.js"></script>
     <script src="script.js"></script>
+    <script>
+        (function() {
+            // 确保 WINDOWS_ISO_DB 正确加载
+            if (typeof WINDOWS_ISO_DB === 'undefined') {
+                console.error("WINDOWS_ISO_DB database not loaded!");
+                return;
+            }
+
+            // 初始化状态变量
+            let currentOS = "Windows 11"; // 默认选中 Windows 11
+            let currentSub = "";           // 默认选中第一个子版本
+
+            const osTabsContainer = document.getElementById('os-tabs-container');
+            const subTabsContainer = document.getElementById('sub-tabs-container');
+            const isoListContainer = document.getElementById('iso-list-container');
+            const subVersionsSection = document.getElementById('sub-versions-section');
+
+            // 渲染系统大版本 tab
+            function renderOSTabs() {
+                osTabsContainer.innerHTML = '';
+                const osNames = Object.keys(WINDOWS_ISO_DB);
+                
+                osNames.forEach(osName => {
+                    const btn = document.createElement('button');
+                    btn.className = 'os-tab-btn' + (osName === currentOS ? ' active' : '');
+                    btn.textContent = osName;
+                    btn.addEventListener('click', function() {
+                        selectOS(osName);
+                    });
+                    osTabsContainer.appendChild(btn);
+                });
+            }
+
+            // 选择操作系统
+            function selectOS(osName) {
+                currentOS = osName;
+                
+                // 获取当前 OS 下的全部子版本
+                const subVersions = WINDOWS_ISO_DB[osName] || [];
+                if (subVersions.length > 0) {
+                    currentSub = subVersions[0].subName;
+                    subVersionsSection.style.display = 'flex';
+                } else {
+                    currentSub = "";
+                    subVersionsSection.style.display = 'none';
+                }
+                
+                renderOSTabs();
+                renderSubTabs();
+                renderISOList();
+            }
+
+            // 渲染具体更新版本 tab
+            function renderSubTabs() {
+                subTabsContainer.innerHTML = '';
+                const subVersions = WINDOWS_ISO_DB[currentOS] || [];
+                
+                subVersions.forEach(sub => {
+                    const btn = document.createElement('button');
+                    btn.className = 'sub-tab-btn' + (sub.subName === currentSub ? ' active' : '');
+                    
+                    // 美化子版本显示名称
+                    let displayName = sub.subName;
+                    if (displayName === 'FIRST') displayName = '初始正式版';
+                    if (displayName === 'OTHER') displayName = '其他衍生版/LTSC';
+                    if (displayName === 'UPDATE') displayName = '升级版/更新包';
+                    
+                    btn.textContent = displayName;
+                    btn.addEventListener('click', function() {
+                        selectSub(sub.subName);
+                    });
+                    subTabsContainer.appendChild(btn);
+                });
+            }
+
+            // 选择子版本
+            function selectSub(subName) {
+                currentSub = subName;
+                renderSubTabs();
+                renderISOList();
+            }
+
+            // 渲染当前所选大版本和子版本对应的镜像文件列表
+            function renderISOList() {
+                isoListContainer.innerHTML = '';
+                
+                const subVersions = WINDOWS_ISO_DB[currentOS] || [];
+                const matchedSub = subVersions.find(sub => sub.subName === currentSub);
+                
+                if (!matchedSub || !matchedSub.items || matchedSub.items.length === 0) {
+                    isoListContainer.innerHTML = '<div style="color: var(--text-secondary); font-size: 0.8rem; padding: 1.5rem; text-align: center; border: 1px dashed var(--border-color);">暂无当前版本镜像资源数据</div>';
+                    return;
+                }
+
+                matchedSub.items.forEach((item, index) => {
+                    const itemRow = document.createElement('div');
+                    itemRow.className = 'iso-item-row';
+                    
+                    const magnetId = 'magnet-' + currentOS.replace(/\s+/g, '-') + '-' + currentSub + '-' + index;
+                    const ed2kId = 'ed2k-' + currentOS.replace(/\s+/g, '-') + '-' + currentSub + '-' + index;
+                    
+                    let actionsHtml = '';
+                    if (item.magnet) {
+                        actionsHtml += '<button class="iso-copy-btn" onclick="copyText(\'' + magnetId + '\', \'磁力链接已复制！请打开迅雷进行下载。\')">' +
+                            '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.25rem;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>' +
+                            '复制磁力链接' +
+                            '</button> ';
+                    }
+                    if (item.ed2k) {
+                        actionsHtml += '<button class="iso-copy-btn" onclick="copyText(\'' + ed2kId + '\', \'ED2K 链接已复制！请打开迅雷进行下载。\')">' +
+                            '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.25rem;"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>' +
+                            '复制 ED2K 链接' +
+                            '</button>';
+                    }
+
+                    itemRow.innerHTML = 
+                        '<div class="iso-item-title">' + escapeHTML(item.title) + '</div>' +
+                        '<div class="iso-item-meta">' +
+                            '<span>发布时间: <strong>' + (item.date || '未知') + '</strong></span>' +
+                            '<span>文件大小: <strong>' + (item.size || '未知') + '</strong></span>' +
+                        '</div>' +
+                        '<span id="' + magnetId + '" style="display: none;">' + (item.magnet || '') + '</span>' +
+                        '<span id="' + ed2kId + '" style="display: none;">' + (item.ed2k || '') + '</span>' +
+                        '<div class="iso-item-actions">' + actionsHtml + '</div>';
+                    
+                    isoListContainer.appendChild(itemRow);
+                });
+            }
+
+            // HTML 转义防止注入 (开发安全规范)
+            function escapeHTML(str) {
+                if (!str) return '';
+                return str.replace(/[&<>'"]/g, 
+                    tag => ({
+                        '&': '&amp;',
+                        '<': '&lt;',
+                        '>': '&gt;',
+                        "'": '&#39;',
+                        '"': '&quot;'
+                    }[tag] || tag)
+                );
+            }
+
+            // 首次运行初始化
+            selectOS(currentOS);
+        })();
+    </script>
 </body>
 </html>
