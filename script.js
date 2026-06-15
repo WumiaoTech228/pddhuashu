@@ -1,5 +1,5 @@
 /* ==========================================================================
-   OSBox 极客技术服务站 - 共享交互逻辑与多页面鉴权脚本 (script.js)
+   OSBox 平台 - 共享交互逻辑与多页面鉴权脚本 (script.js)
    ========================================================================= */
 
 // 全局状态变量
@@ -111,7 +111,7 @@ function checkUnlockStatus() {
                 const activeNames = getActiveServicesChineseNames();
                 lockText.innerHTML = `服务状态：已成功激活部分服务（<span style='color: #a855f7; font-weight: 600;'>${activeNames}</span>），其他服务可在激活后解锁。`;
             } else {
-                lockText.innerHTML = "服务状态：<span style='color: #10b981; font-weight: 600;'>🟢 所有极客自助服务已完全解锁</span>，欢迎使用！";
+                lockText.innerHTML = "服务状态：<span style='color: #10b981; font-weight: 600;'>🟢 所有服务已完全解锁</span>，欢迎使用！";
             }
         }
     } else {
@@ -211,7 +211,7 @@ function insertUnlockModalHtml() {
                 <span class="modal-lock-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                 </span>
-                <h2>极客服务安全验证</h2>
+                <h2>安全验证</h2>
                 <p>请输入拼多多客服发送给您的 <b>6位订单激活授权码</b> 以解锁本栏目高级技术服务教程与官方高速下载链接。</p>
             </div>
             
@@ -392,7 +392,7 @@ function submitVerification() {
             case '9':
             case '0':
                 targetTabsToUnlock = ['minecraft', 'trouble', 'linux', 'os-install', 'boot-keys', 'downloads', 'steam', 'custom'];
-                unlockedName = '所有极客技术服务';
+                unlockedName = '所有技术服务';
                 break;
             default:
                 handleVerificationError();
