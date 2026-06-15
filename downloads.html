@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         /* 操作系统选择舱专属组件样式 */
-        .os-selector-card {
+        .os-selector-card, .linux-selector-card {
             grid-column: 1 / -1; /* 跨越全部网格列 */
             display: flex;
             flex-direction: column;
@@ -275,7 +275,8 @@
             <!-- 分类筛选导航 -->
             <div class="download-filter">
                 <button class="filter-btn active" data-filter="all">全部软件</button>
-                <button class="filter-btn" data-filter="os">微软 & Linux 系统镜像</button>
+                <button class="filter-btn" data-filter="win">微软原版系统</button>
+                <button class="filter-btn" data-filter="linux">Linux 开源系统</button>
                 <button class="filter-btn" data-filter="burn">PE & U盘烧录工具</button>
                 <button class="filter-btn" data-filter="tools">运行库 & 维护工具</button>
                 <button class="filter-btn" data-filter="remote">远程控制客服工具</button>
@@ -283,7 +284,7 @@
 
             <div class="downloads-grid" id="downloads-container">
                 <!-- 微软 Windows 全版本系统镜像高速下载舱 (MSDN 数据源) -->
-                <div class="download-card os-selector-card" data-cat="os" id="win-selector-card">
+                <div class="download-card os-selector-card" data-cat="win" id="win-selector-card">
                     <div class="os-selector-header">
                         <div class="dl-badge">官方原版 Windows 镜像源</div>
                         <h3>💻 微软 Windows 原版系统全系列镜像高速下载舱</h3>
@@ -325,12 +326,37 @@
                     </div>
                 </div>
 
-                <div class="download-card" data-cat="os">
-                    <div class="dl-badge">Linux</div>
-                    <h4>Ubuntu Desktop 官方镜像</h4>
-                    <p>适合用于人工智能 AI 运行环境、开发者编程学习、老电脑轻办公系统的 Linux 发行版。</p>
-                    <div class="dl-links">
-                        <a href="https://ubuntu.com/download/desktop" target="_blank" class="dl-btn">官方下载页面</a>
+                <!-- 🐧 Linux 开源系统发行版官方导航舱 -->
+                <div class="download-card linux-selector-card" data-cat="linux" id="linux-selector-card">
+                    <div class="os-selector-header">
+                        <div class="dl-badge">官方原版 Linux 发行版</div>
+                        <h3>🐧 Linux 开源系统全系列发行版官方导航舱</h3>
+                        <p class="desc">收录全球及国内主流最知名的 Linux 操作系统官方下载渠道。点击下载将直接跳转至其官方下载页面或国内高速高校镜像源，由用户自主挑选版本，确保安全纯净无劫持。</p>
+                        
+                        <div class="thunder-alert-box">
+                            <span class="alert-icon">💡</span>
+                            <div class="alert-content">
+                                <strong>获取包方式说明：</strong>不同 Linux 系统有不同的包管理器，比如 Ubuntu/Debian 为 <b>DEB包</b>，Rocky/Fedora 为 <b>RPM包</b>，Arch 为 <b>Pacman包</b>。点击以下按钮即可跳转到对应官方页面获取对应格式的文件包。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Linux 发行版选择 Tab -->
+                    <div class="os-selector-section">
+                        <span class="step-num">Step 1</span>
+                        <span class="step-title">选择 Linux 知名发行版：</span>
+                        <div class="os-tabs-row" id="linux-tabs-container">
+                            <!-- 动态加载 Ubuntu, Debian, Rocky, Arch 等 -->
+                        </div>
+                    </div>
+
+                    <!-- 对应发行版信息与官网跳转通道 -->
+                    <div class="os-selector-section">
+                        <span class="step-num">Step 2</span>
+                        <span class="step-title" id="linux-selected-title">系统信息与官方下载页面：</span>
+                        <div class="iso-list-container" id="linux-content-container">
+                            <!-- 动态加载选中发行版的包格式、简介、图形化桌面版、非图形化服务器版以及国内镜像下载页链接 -->
+                        </div>
                     </div>
                 </div>
 
@@ -436,131 +462,283 @@
     <script src="script.js"></script>
     <script>
         (function() {
-            // 确保 WINDOWS_ISO_DB 正确加载
-            if (typeof WINDOWS_ISO_DB === 'undefined') {
+            // ==========================================
+            // 1. 微软 Windows 全版本系统镜像渲染舱
+            // ==========================================
+            if (typeof WINDOWS_ISO_DB !== 'undefined') {
+                let currentOS = "Windows 11";
+                let currentSub = "";
+
+                const osTabsContainer = document.getElementById('os-tabs-container');
+                const subTabsContainer = document.getElementById('sub-tabs-container');
+                const isoListContainer = document.getElementById('iso-list-container');
+                const subVersionsSection = document.getElementById('sub-versions-section');
+
+                function renderOSTabs() {
+                    osTabsContainer.innerHTML = '';
+                    const osNames = Object.keys(WINDOWS_ISO_DB);
+                    osNames.forEach(osName => {
+                        const btn = document.createElement('button');
+                        btn.className = 'os-tab-btn' + (osName === currentOS ? ' active' : '');
+                        btn.textContent = osName;
+                        btn.addEventListener('click', function() {
+                            selectOS(osName);
+                        });
+                        osTabsContainer.appendChild(btn);
+                    });
+                }
+
+                function selectOS(osName) {
+                    currentOS = osName;
+                    const subVersions = WINDOWS_ISO_DB[osName] || [];
+                    if (subVersions.length > 0) {
+                        currentSub = subVersions[0].subName;
+                        subVersionsSection.style.display = 'flex';
+                    } else {
+                        currentSub = "";
+                        subVersionsSection.style.display = 'none';
+                    }
+                    renderOSTabs();
+                    renderSubTabs();
+                    renderISOList();
+                }
+
+                function renderSubTabs() {
+                    subTabsContainer.innerHTML = '';
+                    const subVersions = WINDOWS_ISO_DB[currentOS] || [];
+                    subVersions.forEach(sub => {
+                        const btn = document.createElement('button');
+                        btn.className = 'sub-tab-btn' + (sub.subName === currentSub ? ' active' : '');
+                        let displayName = sub.subName;
+                        if (displayName === 'FIRST') displayName = '初始正式版';
+                        if (displayName === 'OTHER') displayName = '其他衍生版/LTSC';
+                        if (displayName === 'UPDATE') displayName = '升级版/更新包';
+                        btn.textContent = displayName;
+                        btn.addEventListener('click', function() {
+                            selectSub(sub.subName);
+                        });
+                        subTabsContainer.appendChild(btn);
+                    });
+                }
+
+                // 选择子版本
+                function selectSub(subName) {
+                    currentSub = subName;
+                    renderSubTabs();
+                    renderISOList();
+                }
+
+                function renderISOList() {
+                    isoListContainer.innerHTML = '';
+                    const subVersions = WINDOWS_ISO_DB[currentOS] || [];
+                    const matchedSub = subVersions.find(sub => sub.subName === currentSub);
+                    
+                    if (!matchedSub || !matchedSub.items || matchedSub.items.length === 0) {
+                        isoListContainer.innerHTML = '<div style="color: var(--text-secondary); font-size: 0.8rem; padding: 1.5rem; text-align: center; border: 1px dashed var(--border-color);">暂无当前版本镜像资源数据</div>';
+                        return;
+                    }
+
+                    matchedSub.items.forEach((item, index) => {
+                        const itemRow = document.createElement('div');
+                        itemRow.className = 'iso-item-row';
+                        const magnetId = 'magnet-' + currentOS.replace(/\s+/g, '-') + '-' + currentSub + '-' + index;
+                        const ed2kId = 'ed2k-' + currentOS.replace(/\s+/g, '-') + '-' + currentSub + '-' + index;
+                        
+                        let actionsHtml = '';
+                        if (item.magnet) {
+                            actionsHtml += '<button class="iso-copy-btn" onclick="copyText(\'' + magnetId + '\', \'磁力链接已复制！请打开迅雷开始高速下载系统镜像。\')">' +
+                                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.25rem;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>' +
+                                '复制磁力链接' +
+                                '</button> ';
+                        }
+                        if (item.ed2k) {
+                            actionsHtml += '<button class="iso-copy-btn" onclick="copyText(\'' + ed2kId + '\', \'ED2K 链接已复制！请打开迅雷开始高速下载系统镜像。\')">' +
+                                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.25rem;"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>' +
+                                '复制 ED2K 链接' +
+                                '</button>';
+                        }
+
+                        itemRow.innerHTML = 
+                            '<div class="iso-item-title">' + escapeHTML(item.title) + '</div>' +
+                            '<div class="iso-item-meta">' +
+                                '<span>发布时间: <strong>' + (item.date || '未知') + '</strong></span>' +
+                                '<span>文件大小: <strong>' + (item.size || '未知') + '</strong></span>' +
+                            '</div>' +
+                            '<span id="' + magnetId + '" style="display: none;">' + (item.magnet || '') + '</span>' +
+                            '<span id="' + ed2kId + '" style="display: none;">' + (item.ed2k || '') + '</span>' +
+                            '<div class="iso-item-actions">' + actionsHtml + '</div>';
+                        
+                        isoListContainer.appendChild(itemRow);
+                    });
+                }
+
+                selectOS(currentOS);
+            } else {
                 console.error("WINDOWS_ISO_DB database not loaded!");
-                return;
             }
 
-            // 初始化状态变量
-            let currentOS = "Windows 11"; // 默认选中 Windows 11
-            let currentSub = "";           // 默认选中第一个子版本
+            // ==========================================
+            // 2. Linux 开源系统全系列发行版导航舱
+            // ==========================================
+            const LINUX_DISTRO_DB = {
+                "Ubuntu": {
+                    "format": "DEB 包格式 (APT / Snap)",
+                    "desc": "目前最流行的 Linux 桌面发行版，生态完善，极为适合初学者、个人开发以及各类 AI 云计算学习环境部署。",
+                    "desktop": "https://ubuntu.com/download/desktop",
+                    "server": "https://ubuntu.com/download/server",
+                    "mirror": "https://mirrors.tuna.tsinghua.edu.cn/ubuntu-releases/"
+                },
+                "Debian": {
+                    "format": "DEB 包格式 (APT)",
+                    "desc": "以极致的稳定性和社区自由精神著称，是 Ubuntu/deepin 等系统的母体，其极高稳定性是生产服务器的骨干。",
+                    "desktop": "https://www.debian.org/CD/live/",
+                    "server": "https://www.debian.org/distrib/netinst",
+                    "mirror": "https://mirrors.tuna.tsinghua.edu.cn/debian-cd/"
+                },
+                "Linux Mint": {
+                    "format": "DEB 包格式 (APT / Flatpak)",
+                    "desc": "基于 Ubuntu 深度打磨的桌面系统，界面完美贴合 Windows 操作习惯，预装丰富的日常工具，极度推荐给不习惯命令行的新手。",
+                    "desktop": "https://linuxmint.com/download.php",
+                    "server": "", // Mint 无独立服务器版
+                    "mirror": "https://mirrors.tuna.tsinghua.edu.cn/linuxmint/"
+                },
+                "Rocky Linux": {
+                    "format": "RPM 包格式 (DNF / YUM)",
+                    "desc": "由原 CentOS 创始人发起，100% 兼容 RHEL (红帽企业级 Linux)，是 CentOS 停止维护后公认最完美的商业替代版服务器系统。",
+                    "desktop": "https://rockylinux.org/download",
+                    "server": "https://rockylinux.org/download", // 同一页面
+                    "mirror": "https://mirrors.tuna.tsinghua.edu.cn/rocky/"
+                },
+                "AlmaLinux": {
+                    "format": "RPM 包格式 (DNF / YUM)",
+                    "desc": "红帽 RHEL 的另一个完美 100% 兼容替代版，由社区独立驱动，安全稳定，支持一键无缝从旧 CentOS 7/8 热迁移。",
+                    "desktop": "https://almalinux.org/download/",
+                    "server": "https://almalinux.org/download/",
+                    "mirror": "https://mirrors.tuna.tsinghua.edu.cn/almalinux/"
+                },
+                "Fedora": {
+                    "format": "RPM 包格式 (DNF / Flatpak)",
+                    "desc": "红帽公司主导的前沿技术先锋平台，集成最新版桌面环境与最前沿的 Linux 内核技术，是 Linus Torvalds 的日常主力系统。",
+                    "desktop": "https://fedoraproject.org/workstation/download",
+                    "server": "https://fedoraproject.org/server/download",
+                    "mirror": "https://mirrors.tuna.tsinghua.edu.cn/fedora/releases/"
+                },
+                "openSUSE": {
+                    "format": "RPM 包格式 (Zypper)",
+                    "desc": "德国著名 Linux 系统，以其华丽的 KDE 集成与极其强大的 YaST 系统控制台著称，支持 Leap 稳定版与 Tumbleweed 滚动版。",
+                    "desktop": "https://get.opensuse.org/leap/",
+                    "server": "https://get.opensuse.org/leap/#server",
+                    "mirror": "https://mirrors.tuna.tsinghua.edu.cn/opensuse/"
+                },
+                "Arch Linux": {
+                    "format": "Pacman 包格式 (AUR 社区库)",
+                    "desc": "极客最爱的轻量级、完全 DIY 系统。遵循 KISS 原则，不提供开箱即用桌面，由用户通过命令行或内置脚本从零完全装配。",
+                    "desktop": "https://archlinux.org/download/",
+                    "server": "https://archlinux.org/download/",
+                    "mirror": "https://mirrors.tuna.tsinghua.edu.cn/archlinux/iso/"
+                },
+                "openEuler (欧拉)": {
+                    "format": "RPM 包格式 (DNF / YUM)",
+                    "desc": "华为自主开源捐赠的国产企业级服务器操作系统。专为数字基础设施、混合云和高性能计算能效进行了内核级深度调优。",
+                    "desktop": "https://www.openeuler.org/zh/download/",
+                    "server": "https://www.openeuler.org/zh/download/",
+                    "mirror": "https://mirrors.tuna.tsinghua.edu.cn/openeuler/"
+                },
+                "deepin (深度)": {
+                    "format": "DEB 包格式 (APT)",
+                    "desc": "国内装机量巨大、美轮美奂的国产 Linux 桌面版。自研 DDE 桌面系统，预装应用商店支持原生微信、QQ、WPS 等海量常用国人软件。",
+                    "desktop": "https://www.deepin.org/zh/download",
+                    "server": "https://www.uniontech.com/product/server-uos", // 商业 UOS 服务器版
+                    "mirror": "https://mirrors.tuna.tsinghua.edu.cn/deepin-cd/"
+                }
+            };
 
-            const osTabsContainer = document.getElementById('os-tabs-container');
-            const subTabsContainer = document.getElementById('sub-tabs-container');
-            const isoListContainer = document.getElementById('iso-list-container');
-            const subVersionsSection = document.getElementById('sub-versions-section');
+            let currentLinux = "Ubuntu";
 
-            // 渲染系统大版本 tab
-            function renderOSTabs() {
-                osTabsContainer.innerHTML = '';
-                const osNames = Object.keys(WINDOWS_ISO_DB);
+            const linuxTabsContainer = document.getElementById('linux-tabs-container');
+            const linuxContentContainer = document.getElementById('linux-content-container');
+            const linuxSelectedTitle = document.getElementById('linux-selected-title');
+
+            function renderLinuxTabs() {
+                linuxTabsContainer.innerHTML = '';
+                const distros = Object.keys(LINUX_DISTRO_DB);
                 
-                osNames.forEach(osName => {
+                distros.forEach(name => {
                     const btn = document.createElement('button');
-                    btn.className = 'os-tab-btn' + (osName === currentOS ? ' active' : '');
-                    btn.textContent = osName;
+                    btn.className = 'os-tab-btn' + (name === currentLinux ? ' active' : '');
+                    btn.textContent = name;
                     btn.addEventListener('click', function() {
-                        selectOS(osName);
+                        selectLinux(name);
                     });
-                    osTabsContainer.appendChild(btn);
+                    linuxTabsContainer.appendChild(btn);
                 });
             }
 
-            // 选择操作系统
-            function selectOS(osName) {
-                currentOS = osName;
-                
-                // 获取当前 OS 下的全部子版本
-                const subVersions = WINDOWS_ISO_DB[osName] || [];
-                if (subVersions.length > 0) {
-                    currentSub = subVersions[0].subName;
-                    subVersionsSection.style.display = 'flex';
-                } else {
-                    currentSub = "";
-                    subVersionsSection.style.display = 'none';
-                }
-                
-                renderOSTabs();
-                renderSubTabs();
-                renderISOList();
+            function selectLinux(name) {
+                currentLinux = name;
+                renderLinuxTabs();
+                renderLinuxContent();
             }
 
-            // 渲染具体更新版本 tab
-            function renderSubTabs() {
-                subTabsContainer.innerHTML = '';
-                const subVersions = WINDOWS_ISO_DB[currentOS] || [];
-                
-                subVersions.forEach(sub => {
-                    const btn = document.createElement('button');
-                    btn.className = 'sub-tab-btn' + (sub.subName === currentSub ? ' active' : '');
-                    
-                    // 美化子版本显示名称
-                    let displayName = sub.subName;
-                    if (displayName === 'FIRST') displayName = '初始正式版';
-                    if (displayName === 'OTHER') displayName = '其他衍生版/LTSC';
-                    if (displayName === 'UPDATE') displayName = '升级版/更新包';
-                    
-                    btn.textContent = displayName;
-                    btn.addEventListener('click', function() {
-                        selectSub(sub.subName);
-                    });
-                    subTabsContainer.appendChild(btn);
-                });
-            }
+            function renderLinuxContent() {
+                const distro = LINUX_DISTRO_DB[currentLinux];
+                if (!distro) return;
 
-            // 选择子版本
-            function selectSub(subName) {
-                currentSub = subName;
-                renderSubTabs();
-                renderISOList();
-            }
+                linuxSelectedTitle.innerHTML = '系统信息与官方下载页面 (' + currentLinux + ') - <strong style="color: #ffffff; font-family: var(--font-mono); font-size: 0.8rem;">' + distro.format + '</strong>';
 
-            // 渲染当前所选大版本和子版本对应的镜像文件列表
-            function renderISOList() {
-                isoListContainer.innerHTML = '';
-                
-                const subVersions = WINDOWS_ISO_DB[currentOS] || [];
-                const matchedSub = subVersions.find(sub => sub.subName === currentSub);
-                
-                if (!matchedSub || !matchedSub.items || matchedSub.items.length === 0) {
-                    isoListContainer.innerHTML = '<div style="color: var(--text-secondary); font-size: 0.8rem; padding: 1.5rem; text-align: center; border: 1px dashed var(--border-color);">暂无当前版本镜像资源数据</div>';
-                    return;
-                }
+                let desktopHtml = '';
+                let serverHtml = '';
+                let mirrorHtml = '';
 
-                matchedSub.items.forEach((item, index) => {
-                    const itemRow = document.createElement('div');
-                    itemRow.className = 'iso-item-row';
-                    
-                    const magnetId = 'magnet-' + currentOS.replace(/\s+/g, '-') + '-' + currentSub + '-' + index;
-                    const ed2kId = 'ed2k-' + currentOS.replace(/\s+/g, '-') + '-' + currentSub + '-' + index;
-                    
-                    let actionsHtml = '';
-                    if (item.magnet) {
-                        actionsHtml += '<button class="iso-copy-btn" onclick="copyText(\'' + magnetId + '\', \'磁力链接已复制！请打开迅雷进行下载。\')">' +
-                            '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.25rem;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>' +
-                            '复制磁力链接' +
-                            '</button> ';
-                    }
-                    if (item.ed2k) {
-                        actionsHtml += '<button class="iso-copy-btn" onclick="copyText(\'' + ed2kId + '\', \'ED2K 链接已复制！请打开迅雷进行下载。\')">' +
-                            '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.25rem;"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>' +
-                            '复制 ED2K 链接' +
-                            '</button>';
-                    }
-
-                    itemRow.innerHTML = 
-                        '<div class="iso-item-title">' + escapeHTML(item.title) + '</div>' +
-                        '<div class="iso-item-meta">' +
-                            '<span>发布时间: <strong>' + (item.date || '未知') + '</strong></span>' +
-                            '<span>文件大小: <strong>' + (item.size || '未知') + '</strong></span>' +
+                // Desktop GUI Link
+                if (distro.desktop) {
+                    desktopHtml = '<div class="iso-item-row" style="margin-bottom: 0.5rem;">' +
+                        '<div class="iso-item-title">🖥️ Desktop（图形化桌面版 / GUI）官方下载渠道</div>' +
+                        '<p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0.25rem 0 0.5rem 0;">包含完整直观的图形化桌面操作系统，非常适合个人使用、应用开发、图形办公或虚拟机体验。</p>' +
+                        '<div class="iso-item-actions">' +
+                            '<a href="' + distro.desktop + '" target="_blank" class="iso-copy-btn" style="text-decoration: none;">' +
+                                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.25rem;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>' +
+                                '进入官方 Desktop 下载页' +
+                            '</a>' +
                         '</div>' +
-                        '<span id="' + magnetId + '" style="display: none;">' + (item.magnet || '') + '</span>' +
-                        '<span id="' + ed2kId + '" style="display: none;">' + (item.ed2k || '') + '</span>' +
-                        '<div class="iso-item-actions">' + actionsHtml + '</div>';
-                    
-                    isoListContainer.appendChild(itemRow);
-                });
+                    '</div>';
+                }
+
+                // Server CLI Link
+                if (distro.server) {
+                    serverHtml = '<div class="iso-item-row" style="margin-bottom: 0.5rem;">' +
+                        '<div class="iso-item-title">🎛️ Server / Minimal（非图形化服务器版 / CLI）官方下载渠道</div>' +
+                        '<p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0.25rem 0 0.5rem 0;">去除了所有的图形界面，仅包含轻量化的基础命令行系统。最大化保障服务器性能与稳定性，适合生产服务器部署或 Docker 容器主机。</p>' +
+                        '<div class="iso-item-actions">' +
+                            '<a href="' + distro.server + '" target="_blank" class="iso-copy-btn" style="text-decoration: none;">' +
+                                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.25rem;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>' +
+                                '进入官方 Server 下载页' +
+                            '</a>' +
+                        '</div>' +
+                    '</div>';
+                }
+
+                // Mirror Link
+                if (distro.mirror) {
+                    mirrorHtml = '<div class="iso-item-row">' +
+                        '<div class="iso-item-title">⚡ 国内高速镜像源归档目录 (Tsinghua 清华大学镜像站)</div>' +
+                        '<p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0.25rem 0 0.5rem 0;">当直接访问境外 Linux 官网速度过慢时，推荐直接进入清华大学等国内顶级高校的镜像归档目录，下载同等安全的官方纯净原版 ISO 文件。</p>' +
+                        '<div class="iso-item-actions">' +
+                            '<a href="' + distro.mirror + '" target="_blank" class="iso-copy-btn" style="text-decoration: none;">' +
+                                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.25rem;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>' +
+                                '进入清华大学高速镜像目录' +
+                            '</a>' +
+                        '</div>' +
+                    '</div>';
+                }
+
+                linuxContentContainer.innerHTML = 
+                    '<div style="font-size: 0.85rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1rem; border-bottom: 1px dashed var(--border-color); padding-bottom: 1rem;">' +
+                        '<strong>发行版简介：</strong>' + escapeHTML(distro.desc) +
+                    '</div>' +
+                    desktopHtml +
+                    serverHtml +
+                    mirrorHtml;
             }
 
             // HTML 转义防止注入 (开发安全规范)
@@ -577,8 +755,9 @@
                 );
             }
 
-            // 首次运行初始化
-            selectOS(currentOS);
+            // 首次运行初始化 Linux 标签
+            renderLinuxTabs();
+            renderLinuxContent();
         })();
     </script>
 </body>
