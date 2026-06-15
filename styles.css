@@ -162,6 +162,13 @@ body {
     min-height: calc(100vh - 200px);
 }
 
+/* 当没有侧边栏时，app-container 自动为单栏 */
+.app-container:not(:has(.sidebar)) {
+    grid-template-columns: 1fr;
+    max-width: 1000px;
+}
+
+
 /* 5. 侧边导航栏 (Sidebar) */
 .sidebar {
     background: transparent;
