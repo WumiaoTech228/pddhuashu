@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows/Linux 原版系统重装话术 | OSBox 极客服务站</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .kefu-container {
+            max-width: 1000px;
+            margin: 3.5rem auto;
+            padding: 0 2rem;
+        }
+        .kefu-header {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+        }
+        .kefu-header h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+        .kefu-header p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        .kefu-section {
+            margin-bottom: 3.5rem;
+        }
+        .kefu-section-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffffff;
+            border-left: 2px solid #ffffff;
+            padding-left: 0.75rem;
+            margin-bottom: 1.5rem;
+            font-family: var(--font-sans);
+        }
+        .script-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1rem;
+            gap: 1.5rem;
+            transition: var(--transition-fast);
+        }
+        .script-row:hover {
+            border-color: var(--border-hover);
+            background: #121214;
+        }
+        .script-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .script-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .script-content {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            line-height: 1.5;
+            white-space: pre-wrap;
+            font-family: var(--font-sans);
+        }
+        .copy-btn {
+            background: #ffffff;
+            color: #000000;
+            border: 1px solid #ffffff;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            white-space: nowrap;
+        }
+        .copy-btn:hover {
+            background: #e4e4e7;
+            border-color: #e4e4e7;
+        }
+    
+        /* 商品快捷导航 */
+        .category-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+        .category-nav-item {
+            display: inline-flex;
+            align-items: center;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.6rem 1.2rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .category-nav-item:hover {
+            color: #ffffff;
+            border-color: var(--border-hover);
+            background: #121214;
+            transform: translateY(-1px);
+        }
+        .category-nav-item:active {
+            transform: translateY(0);
+        }
+        
+        /* 平滑滚动与偏移 */
+        html {
+            scroll-behavior: smooth;
+        }
+        .kefu-section {
+            scroll-margin-top: 7.5rem;
+        }
+</style>
+</head>
+<body class="kefu-page">
+    <!-- 头部横幅区 -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand" onclick="window.location.href='index.html'" style="cursor: pointer;">
+                <span class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>
+                </span>
+                <div class="brand-text">
+                    <h1>OSBox 极客服务平台</h1>
+                    <p>Geek Technical Service Station</p>
+                </div>
+            </div>
+            <div class="store-badge">
+                <span class="badge-status"></span>
+                <span>拼多多官方技术合作 (24H 在线服务)</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="kefu-container">
+        <div class="kefu-header">
+            <h2>原版系统重装快捷话术</h2>
+            <p>本工具库覆盖了 Windows 10/11 及 Linux 系统原版纯净重装、数据备份、BIOS 调试、Intel VMD 磁盘加载、系统激活与聊天记录恢复全流程客服快捷话术。</p>
+            
+            <!-- 快捷商品导航 -->
+            <div class="category-nav">
+                <a href="os-install.html" class="category-nav-item active">💻 原版纯净重装</a>
+                <a href="minecraft.html" class="category-nav-item">🧱 我的世界 Minecraft 部署</a>
+                <a href="trouble.html" class="category-nav-item">🔧 电脑系统疑难杂症解决</a>
+                <a href="linux.html" class="category-nav-item">🐧 Linux 专业系统安装</a>
+                <a href="steam.html" class="category-nav-item">🎮 Steam 安装与使用优化</a>
+                <a href="custom.html" class="category-nav-item">🎨 系统封装与定制</a>
+                <a href="boot-keys.html" class="category-nav-item">⌨️ 主板启动键</a>
+                <a href="downloads.html" class="category-nav-item">📥 纯净下载</a>
+            </div>
+        </div>
+
+        <!-- 01. 售前硬件与系统确认 -->
+        <div class="kefu-section" id="section-reinstall">
+            <div class="kefu-section-title">01. 售前硬件与系统确认</div>
+            
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">确认基础机型与故障状态</span>
+                    <div class="script-content" id="spec-1">请问您的电脑是台式机还是笔记本？目前电脑还能正常开机进入桌面吗？</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('spec-1')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">确认需要重装的系统版本</span>
+                    <div class="script-content" id="spec-2">请问您这次想要安装什么系统？目前推荐Windows 10纯净版（游戏工作最稳定）或Windows 11官方原版。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('spec-2')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">确认非系统盘空间（免U盘重装）</span>
+                    <div class="script-content" id="spec-3">重装系统无需准备U盘，但需要您的非系统盘（如D盘或E盘）有至少10-15GB以上的剩余空间，用于存放官方系统镜像与重装软件。请问目前空间足够吗？</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('spec-3')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">老硬件升级Windows 11配置提示</span>
+                    <div class="script-content" id="spec-4">您的电脑硬件配置未达到微软官方的Windows 11最低安装标准，但我们可以通过技术手段为您安全绕过检测限制，正常重装并使用。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('spec-4')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">苹果Mac安装Windows双系统确认</span>
+                    <div class="script-content" id="spec-5">请问您的苹果电脑是Intel处理器的老款，还是新款M系列芯片的Mac？新款M系列芯片苹果电脑只能通过虚拟机运行Windows，不支持直接安装双系统。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('spec-5')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">Windows 11/10 版本选择建议</span>
+                    <div class="script-content" id="spec-6">我们默认推荐为您重装【专业版】（支持组策略、远程桌面与更全面的功能，最适合游戏、工作和日常使用），不推荐系统限制较多的家庭版或日常更新受限的长期服务版（LTSC，除非低配电脑）。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('spec-6')">一键复制</button>
+            </div>
+        </div>
+
+        <!-- 02. 数据备份与安全警告 -->
+        <div class="kefu-section">
+            <div class="kefu-section-title">02. 数据备份与安全警告</div>
+            
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">C盘数据备份警示</span>
+                    <div class="script-content" id="back-1">重要提示：重装系统会清空C盘的所有数据，包括桌面文件、文档、下载目录以及微信/QQ的聊天记录。请务必将重要数据备份到其他分区中！</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('back-1')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">多硬盘/多分区安全告知</span>
+                    <div class="script-content" id="back-2">请确认您的电脑上除了C盘外是否还有其他盘（如D盘、E盘）？如果有，重装系统默认只格式化C盘，其他盘的文件均会安全保留，不受影响。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('back-2')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">浏览器书签与账号备份提示</span>
+                    <div class="script-content" id="back-3">如果您有在浏览器中保存的重要书签、账号密码或行业软件本地数据，请提前导出备份。系统重装后，原有软件需重新安装，浏览器数据可登录账号进行云同步。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('back-3')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">磁盘 BitLocker 加密警告</span>
+                    <div class="script-content" id="back-4">重要安全提示：重装前请确认您的 C 盘或 D 盘等分区是否开启了 BitLocker 磁盘加密（如果开启，盘符上会有个锁的图标）。若开启了，请务必先进入控制面板将其彻底解密关闭，或者导出保存好您的恢复密钥，以防重装后其他盘被死锁无法读取。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('back-4')">一键复制</button>
+            </div>
+        </div>
+
+        <!-- 03. 服务步骤前置告知 -->
+        <div class="kefu-section">
+            <div class="kefu-section-title">03. 服务步骤前置告知</div>
+            
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">系统重装流程告知（开始前发送）</span>
+                    <div class="script-content" id="step-1">现在开始为您进行系统重装，具体步骤如下：
+第一步：远程为您下载官方系统镜像，并配置重装软件。
+第二步：再次和您确认C盘备份，随后运行重装软件重启电脑。
+第三步：电脑将自动重启进入重装软件的独立部署环境，开始格式化C盘并写入系统（期间电脑不能断电，耗时15-20分钟）。
+第四步：系统写入完成自动重启，进入桌面后为您补全驱动、正版激活系统并安装游戏运行库。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('step-1')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">系统升级流程告知（开始前发送）</span>
+                    <div class="script-content" id="step-2">现在开始为您进行系统升级，具体步骤如下：
+第一步：远程检测您目前的系统环境和硬件兼容性，做绕过检测处理。
+第二步：下载官方升级助手和最新的Win11纯净镜像。
+第三步：执行无损升级安装（升级会保留您的所有个人文件和已安装软件，但建议仍然备份重要文档防万一）。
+第四步：升级完成后重启进入新系统，为您完成正版数字激活和系统优化。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('step-2')">一键复制</button>
+            </div>
+        </div>
+
+        <!-- 04. 下单与自助站使用 -->
+        <div class="kefu-section">
+            <div class="kefu-section-title">04. 下单与自助站使用</div>
+            
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">发送网页端地址与激活验证码</span>
+                    <div class="script-content" id="ord-1">系统重装服务已准备就绪。请访问我们的官方技术站：http://localhost:8000 并在【原版纯净重装】中输入激活码：123H44 解锁详细图文教程与官方下载通道。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('ord-1')">一键复制</button>
+            </div>
+        </div>
+
+        <!-- 05. 远程连接与工具下载 -->
+        <div class="kefu-section">
+            <div class="kefu-section-title">05. 远程连接与工具下载</div>
+            
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">引导下载网易UU远程</span>
+                    <div class="script-content" id="down-1">请访问网易UU远程官网：https://uuyc.163.com/ 下载并安装远程软件。安装完成后，请将您的设备代码和密码发给我，我们为您开始远程操作。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('down-1')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">网速测试提示</span>
+                    <div class="script-content" id="down-2">系统镜像文件大约为5GB至6GB，下载时间取决于您的网络速度。下载期间您可以正常使用电脑，请勿关闭下载窗口。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('down-2')">一键复制</button>
+            </div>
+        </div>
+
+        <!-- 06. 运行重装软件与系统部署 -->
+        <div class="kefu-section">
+            <div class="kefu-section-title">06. 运行重装软件与系统部署</div>
+            
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">运行重装软件环境准备</span>
+                    <div class="script-content" id="usb-1">现在工程师将为您配置并准备重装软件环境。此过程需要下载必要的文件并建立本地重装引导，请保持电脑正常运行，不要操作键盘鼠标。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('usb-1')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">系统镜像下载与解压中</span>
+                    <div class="script-content" id="usb-2">官方原版系统镜像正在下载并写入重装软件的工作目录。由于文件体积较大，写入期间请不要断电或关闭重装软件窗口，请耐心等待。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('usb-2')">一键复制</button>
+            </div>
+        </div>
+
+        <!-- 07. 重启引导与自动安装 -->
+        <div class="kefu-section">
+            <div class="kefu-section-title">07. 重启引导与自动安装</div>
+            
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">重启进入自动重装环境</span>
+                    <div class="script-content" id="boot-1">重装软件环境已经配置完毕，现在需要重启电脑。重启后电脑会自动显示引导菜单并进入重装软件的PE自动安装环境，您无需敲击任何按键，网络及声音自动部署，耐心等待其自动执行格式化和写入即可。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('boot-1')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">重启进不去BIOS/启动菜单解决方法</span>
+                    <div class="script-content" id="boot-2">如果重启后没有自动进入重装环境，而是直接回到了原系统或提示引导失败，说明您的系统开启了引导保护。请先手动关机，开机时连击 Delete 或 F2 进入 BIOS，在安全或启动选项中检查引导顺序。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('boot-2')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">安全启动报错解决方法</span>
+                    <div class="script-content" id="boot-3">如果重启进入重装软件环境时屏幕报错或提示安全启动违规（Secure Boot Violation），需要重新开机进BIOS，在安全设置（Security）里将Secure Boot（安全启动）设置为Disabled（关闭），保存重启后再试。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('boot-3')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">老旧电脑 Legacy 与 UEFI 引导模式切换</span>
+                    <div class="script-content" id="boot-4">如果重启后找不到重装软件的引导项，可能是老旧主板未开启 UEFI 兼容。请进入 BIOS 设置，在 Boot 或 Startup 菜单中，将 Boot Mode 从 Legacy 修改为 UEFI（或者将 CSM 兼容支持模块开启），保存并重启后再试。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('boot-4')">一键复制</button>
+            </div>
+        </div>
+
+        <!-- 08. 安装中遇到特殊问题解决 -->
+        <div class="kefu-section">
+            <div class="kefu-section-title">08. 安装中遇到特殊问题解决</div>
+            
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">看不到电脑硬盘（Intel VMD限制）</span>
+                    <div class="script-content" id="err-1">如果重装界面找不到任何磁盘，这是因为您的电脑是Intel 11代及以上的处理器，默认开启了Intel VMD硬盘技术。我们需要远程为您加载相应的IRST驱动，或者需要您进入BIOS关闭VMD设置。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('err-1')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">引导格式不符（GPT与MBR硬盘转换）</span>
+                    <div class="script-content" id="err-2">如果重装软件提示无法安装到当前磁盘，因为硬盘分区表是 MBR 或 GPT 格式不符，这是因为您的系统分区表类型与当前的启动模式冲突。工程师需要将该磁盘重新初始化并转换分区表格式，请确认。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('err-2')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">重装后其他盘符（D盘/E盘）不见了或显示脱机</span>
+                    <div class="script-content" id="err-3">如果进入桌面后发现 D 盘或 E 盘等其他分区不见了，请右键点击桌面“此电脑”选择“管理”，进入“磁盘管理”。如果看到其他硬盘状态为“脱机”，只需在其上点击右键选择“联机”；如果显示未分配盘符，右键为其“更改驱动器号和路径”分配盘符即可恢复。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('err-3')">一键复制</button>
+            </div>
+        </div>
+
+        <!-- 09. 系统首次启动与配置 -->
+        <div class="kefu-section">
+            <div class="kefu-section-title">09. 系统首次启动与配置</div>
+            
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">系统首次释放配置等待</span>
+                    <div class="script-content" id="first-1">系统已写入完毕，电脑会自动重启数次以完成首次开机配置。在这个界面请勿手动关机，耐心等待进入系统桌面。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('first-1')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">绕过微软账户联网登录</span>
+                    <div class="script-content" id="first-2">系统开机向导会强制要求您联网并登录微软账户。工程师将使用技术指令绕过该网络绑定，为您创建本地离线账户，这样开机速度更快且不容易卡死。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('first-2')">一键复制</button>
+            </div>
+        </div>
+
+        <!-- 10. 激活、驱动与运行库配置 -->
+        <div class="kefu-section">
+            <div class="kefu-section-title">10. 激活、驱动与运行库配置</div>
+            
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">系统完成激活说明</span>
+                    <div class="script-content" id="run-1">新系统已经成功安装完毕，且已帮您完成系统正版数字授权激活，您在系统设置中可以查看激活状态。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('run-1')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">驱动配置与静置等待</span>
+                    <div class="script-content" id="run-2">系统已成功进入桌面。由于新系统正通过后台自动调优声卡、网卡与显卡驱动，屏幕可能会出现短暂闪烁，声音在几分钟内就会恢复，这是正常现象。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('run-2')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">游戏运行库与组件安装</span>
+                    <div class="script-content" id="run-3">我们已为您完成了VC++ 2005-2022运行库及DirectX 3D基础游戏运行库的安装，以防您在后续运行软件和游戏时报错提示缺少dll文件。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('run-3')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">重装后电脑断网/缺少网卡驱动解决方法</span>
+                    <div class="script-content" id="run-4">如果系统装完后无法连接有线或无线网络，通常是由于主板网卡驱动未被新系统内置。我们需要用另外一台电脑或手机将“万能网卡版”的驱动安装包下载到本地，复制到本电脑并运行安装，即可恢复网络连接。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('run-4')">一键复制</button>
+            </div>
+        </div>
+
+        <!-- 11. 售后交代、好评引导与退款承诺 -->
+        <div class="kefu-section">
+            <div class="kefu-section-title">11. 售后交代、好评引导与退款承诺</div>
+            
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">系统交付检查与网速/声音测试</span>
+                    <div class="script-content" id="end-1">系统已全部安装和配置完成。请您检查网络和声音是否能正常使用。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('end-1')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">五星好评引导</span>
+                    <div class="script-content" id="end-2">如果本次重装服务解决了您的问题，请给我们的订单点个五星好评，非常感谢您的肯定！</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('end-2')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">无法安装成功退款声明</span>
+                    <div class="script-content" id="end-3">由于电脑硬件存在损坏或兼容问题导致未能重装成功，我们承诺安装不成功全额退款。您可以在后台申请退款，我们会为您立即同意。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('end-3')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">微信与QQ历史聊天记录数据恢复</span>
+                    <div class="script-content" id="end-4">如果您在重装前备份了微信或QQ的聊天数据，请重新安装并打开微信/QQ，在其设置的“文件管理”或“存储路径”中，将目录指向您此前备份到非系统盘的“WeChat Files”或“Tencent Files”文件夹，软件会自动载入您的历史记录。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('end-4')">一键复制</button>
+            </div>
+        </div>
+        </main>
+
+    <!-- 浮动 Toast 提示 -->
+    <div id="toast" class="toast">复制成功</div>
+
+    <!-- 页脚 -->
+    <footer class="app-footer">
+        <div class="footer-container">
+            <p>&copy; 2026 OSBox 极客技术服务站. 本站所有资源均指向官方原版下载链接，不承担任何第三方版权纠纷。</p>
+            <p class="muted">拼多多店铺名：OSBox极客服务 | 竭诚为您提供最优质的技术支持 | <a href="kefu.html" style="color: var(--text-muted); text-decoration: none;">客服快捷话术</a></p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

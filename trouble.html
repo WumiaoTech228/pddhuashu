@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统疑难杂症解决话术 | OSBox 极客服务站</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .kefu-container {
+            max-width: 1000px;
+            margin: 3.5rem auto;
+            padding: 0 2rem;
+        }
+        .kefu-header {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+        }
+        .kefu-header h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+        .kefu-header p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        .kefu-section {
+            margin-bottom: 3.5rem;
+        }
+        .kefu-section-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffffff;
+            border-left: 2px solid #ffffff;
+            padding-left: 0.75rem;
+            margin-bottom: 1.5rem;
+            font-family: var(--font-sans);
+        }
+        .script-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1rem;
+            gap: 1.5rem;
+            transition: var(--transition-fast);
+        }
+        .script-row:hover {
+            border-color: var(--border-hover);
+            background: #121214;
+        }
+        .script-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .script-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .script-content {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            line-height: 1.5;
+            white-space: pre-wrap;
+            font-family: var(--font-sans);
+        }
+        .copy-btn {
+            background: #ffffff;
+            color: #000000;
+            border: 1px solid #ffffff;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            white-space: nowrap;
+        }
+        .copy-btn:hover {
+            background: #e4e4e7;
+            border-color: #e4e4e7;
+        }
+    
+        /* 商品快捷导航 */
+        .category-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+        .category-nav-item {
+            display: inline-flex;
+            align-items: center;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.6rem 1.2rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .category-nav-item:hover {
+            color: #ffffff;
+            border-color: var(--border-hover);
+            background: #121214;
+            transform: translateY(-1px);
+        }
+        .category-nav-item:active {
+            transform: translateY(0);
+        }
+        
+        /* 平滑滚动与偏移 */
+        html {
+            scroll-behavior: smooth;
+        }
+        .kefu-section {
+            scroll-margin-top: 7.5rem;
+        }
+</style>
+</head>
+<body class="kefu-page">
+    <!-- 头部横幅区 -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand" onclick="window.location.href='index.html'" style="cursor: pointer;">
+                <span class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>
+                </span>
+                <div class="brand-text">
+                    <h1>OSBox 极客服务平台</h1>
+                    <p>Geek Technical Service Station</p>
+                </div>
+            </div>
+            <div class="store-badge">
+                <span class="badge-status"></span>
+                <span>拼多多官方技术合作 (24H 在线服务)</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="kefu-container">
+        <div class="kefu-header">
+            <h2>系统疑难杂症解决话术</h2>
+            <p>本工具库包含电脑蓝屏 Minidump 日志分析、微软 VC++ & DirectX 运行库修复、显卡驱动 DDU 清理重装以及网络重置 LSP 修复客服快捷话术。</p>
+            
+            <!-- 快捷商品导航 -->
+            <div class="category-nav">
+                <a href="os-install.html" class="category-nav-item">💻 原版纯净重装</a>
+                <a href="minecraft.html" class="category-nav-item">🧱 我的世界 Minecraft 部署</a>
+                <a href="trouble.html" class="category-nav-item active">🔧 电脑系统疑难杂症解决</a>
+                <a href="linux.html" class="category-nav-item">🐧 Linux 专业系统安装</a>
+                <a href="steam.html" class="category-nav-item">🎮 Steam 安装与使用优化</a>
+                <a href="custom.html" class="category-nav-item">🎨 系统封装与定制</a>
+                <a href="boot-keys.html" class="category-nav-item">⌨️ 主板启动键</a>
+                <a href="downloads.html" class="category-nav-item">📥 纯净下载</a>
+            </div>
+        </div>
+
+        <!-- 13. 电脑系统疑难杂症解决 -->
+        <div class="kefu-section" id="section-trouble">
+            <div class="kefu-section-title">13. 电脑系统疑难杂症解决</div>
+            
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">蓝屏崩溃日志分析</span>
+                    <div class="script-content" id="trouble-1">请您在 C:\Windows\Minidump 路径下查找是否有后缀为 .dmp 的蓝屏日志文件并发送给工程师。我们将使用专业分析工具定位是哪个驱动程序或硬件硬件导致的蓝屏崩溃。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('trouble-1')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">系统运行库 DLL 报错修复</span>
+                    <div class="script-content" id="trouble-2">针对您运行软件或游戏时提示缺少 msvcp140.dll、vcruntime140.dll 或 DirectX 3D 组件的问题，工程师将为您重新部署全套微软 Visual C++ 2005-2022 最新运行库及 DirectX 修复组件。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('trouble-2')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">显卡驱动冲突黑屏/闪烁解决</span>
+                    <div class="script-content" id="trouble-3">我们会首先引导电脑进入安全模式，使用 DDU (Display Driver Uninstaller) 工具彻底清理残留的旧显卡驱动和注册表，随后为您重新纯净安装最稳定的显卡官方驱动，解决游戏闪退或黑屏。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('trouble-3')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">网络丢包延迟与网卡修复</span>
+                    <div class="script-content" id="trouble-4">针对您的网络访问异常或游戏高延迟丢包，我们将为您进行网卡驱动重置、清空 DNS 缓存并配置最优公共 DNS（如阿里或腾讯DNS），并修复 LSP 套接字以恢复正常网络。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('trouble-4')">一键复制</button>
+            </div>
+        </div>
+
+        </main>
+
+    <!-- 浮动 Toast 提示 -->
+    <div id="toast" class="toast">复制成功</div>
+
+    <!-- 页脚 -->
+    <footer class="app-footer">
+        <div class="footer-container">
+            <p>&copy; 2026 OSBox 极客技术服务站. 本站所有资源均指向官方原版下载链接，不承担任何第三方版权纠纷。</p>
+            <p class="muted">拼多多店铺名：OSBox极客服务 | 竭诚为您提供最优质的技术支持 | <a href="kefu.html" style="color: var(--text-muted); text-decoration: none;">客服快捷话术</a></p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

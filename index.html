@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSBox 极客技术服务站 | 拼多多官方自助平台</title>
+    <meta name="description" content="专业提供我的世界Minecraft远程部署、Windows/Linux纯净系统重装、电脑疑难杂症修复、主板快捷键查询及官方软件下载。">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="portal-hub-page">
+    <!-- 背景光效装饰 -->
+    <div class="bg-glow glow-1"></div>
+    <div class="bg-glow glow-2"></div>
+    <div class="bg-glow glow-3"></div>
+
+    <!-- 头部横幅区 -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand">
+                <span class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>
+                </span>
+                <div class="brand-text">
+                    <h1>OSBox 极客服务平台</h1>
+                    <p>Geek Technical Service Station</p>
+                </div>
+            </div>
+            <div class="store-badge">
+                <span class="badge-status"></span>
+                <span>拼多多官方技术合作 (24H 在线服务)</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 页面容器 -->
+    <main class="app-container">
+        <section class="content-area">
+            <div class="welcome-hero">
+                <h2>欢迎来到 OSBox 官方售后服务与系统部署自助大厅</h2>
+                <p>本店承诺：<b>所有软件服务不成功全额退款，专业极客工程师 1对1 贴心远程协助。</b>您购买服务后，请联系拼多多在线客服发送您的订单号，即可获取对应的 6 位授权激活码，在此解锁您购买的项目教程与高速下载通道。</p>
+                <div class="unlock-status-banner">
+                    <span class="status-indicator"></span>
+                    <span id="lock-status-text">服务状态：正在检测您的授权激活码...</span>
+                </div>
+            </div>
+
+            <!-- 导航大厅 Portal Grid -->
+            <div class="portal-grid">
+                <!-- 行 1 -->
+                <div class="portal-card" data-target="minecraft" data-index="01.">
+                    <div class="card-info-wrapper">
+                        <h3>我的世界 Minecraft Java 部署</h3>
+                        <p>Java版本环境共存安装、HMCL/PCL2启动器调优、多人联机内网穿透（Sakura FRP/ZeroTier）及云服务器配置。</p>
+                    </div>
+                                        <span class="card-action-hint">&rarr;</span>
+                </div>
+
+                <!-- 行 2 -->
+                <div class="portal-card" data-target="trouble" data-index="02.">
+                    <div class="card-info-wrapper">
+                        <h3>电脑系统疑难杂症解决</h3>
+                        <p>系统崩溃蓝屏诊断（分析日志）、游戏运行库 VC++ 及 DirectX 全套修复、显卡驱动清理与网络重置。</p>
+                    </div>
+                                        <span class="card-action-hint">&rarr;</span>
+                </div>
+
+                <!-- 行 3 -->
+                <div class="portal-card" data-target="linux" data-index="03.">
+                    <div class="card-info-wrapper">
+                        <h3>Linux 专业系统安装</h3>
+                        <p>Win/Linux 双系统安全压缩分区部署、安装向导详细指南、NVIDIA 独显驱动配置与国内软件源加速。</p>
+                    </div>
+                                        <span class="card-action-hint">&rarr;</span>
+                </div>
+
+                <!-- 行 4 -->
+                <div class="portal-card" data-target="os-install" data-index="04.">
+                    <div class="card-info-wrapper">
+                        <h3>Windows / Linux 原版重装</h3>
+                        <p>告别带广告推广的劣质PE。采用 Ventoy 万能写入引导、微软原版 ISO 镜像与官方 LTSC 纯净重装。</p>
+                    </div>
+                                        <span class="card-action-hint">&rarr;</span>
+                </div>
+
+                <!-- 行 5 -->
+                <div class="portal-card" data-target="boot-keys" data-index="05.">
+                    <div class="card-info-wrapper">
+                        <h3>主板启动快捷键查询</h3>
+                        <p>全网最全独立主板及笔记本机型快速引导菜单按键。支持实时模糊检索，直接插盘即装。</p>
+                    </div>
+                                        <span class="card-action-hint">&rarr;</span>
+                </div>
+
+                <!-- 行 6 -->
+                <div class="portal-card" data-target="downloads" data-index="06.">
+                    <div class="card-info-wrapper">
+                        <h3>官方纯净下载中心</h3>
+                        <p>直连官方系统原版 ISO、PE 烧录写盘工具、VC++ 运行库组件包、DirectX Repair 及工程师远程桌面工具。</p>
+                    </div>
+                                        <span class="card-action-hint">&rarr;</span>
+                </div>
+            </d
+
+                <!-- 行 7 -->
+                <div class="portal-card" data-target="steam" data-index="07.">
+                    <div class="card-info-wrapper">
+                        <h3>Steam 安装与使用优化</h3>
+                        <p>Valve 官方纯净客户端安装、商店/社区 -118 连接故障修复、已有游戏库路径导入及手机令牌安全设置。</p>
+                    </div>
+                    <span class="card-action-hint">&rarr;</span>
+                </div>iv>
+
+            <!-- 流程卡片 -->
+            <div class="card pdd-process">
+                <h3>🛠 极客远程技术服务流程</h3>
+                <div class="process-steps">
+                    <div class="step">
+                        <span class="step-num">1</span>
+                        <h4>下单付款</h4>
+                        <p>在拼多多店铺选择对应的服务（如“Windows系统重装”）并完成付款。</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">2</span>
+                        <h4>联系客服</h4>
+                        <p>提供您的电脑配置及具体需求，我们为您分配专属技术人员。</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">3</span>
+                        <h4>发送激活码</h4>
+                        <p>客服在聊天框给您发送授权激活码，您输入该验证码解锁本站的教程和软件下载。</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-num">4</span>
+                        <h4>远程协助</h4>
+                        <p>工程师将接管您的屏幕（网易UU远程/RustDesk）进行快速解决，不成功全额退款！</p>
+                    </div>
+                </div>
+            </d
+
+                <!-- 行 8 -->
+                <div class="portal-card" data-target="custom" data-index="08.">
+                    <div class="card-info-wrapper">
+                        <h3>系统封装与个性化定制</h3>
+                        <p>支持自定义 Windows 开机画面Logo、定制默认桌面背景壁纸及常用/专业软件静默预装一键打包封装服务。</p>
+                    </div>
+                    <span class="card-action-hint">&rarr;</span>
+                </div>iv>
+        </section>
+    </main>
+
+    <!-- 浮动 Toast 提示 -->
+    <div id="toast" class="toast">复制成功</div>
+
+    <!-- 页脚 -->
+    <footer class="app-footer">
+        <div class="footer-container">
+            <p>&copy; 2026 OSBox 极客技术服务站. 本站所有资源均指向官方原版下载链接，不承担任何第三方版权纠纷。</p>
+            <p class="muted">拼多多店铺名：OSBox极客服务 | 竭诚为您提供最优质的技术支持 | <a href="kefu.html" style="color: var(--text-muted); text-decoration: none;">客服快捷话术</a></p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

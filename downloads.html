@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>官方纯净安全下载中心 | OSBox 极客服务站</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 背景发光 -->
+    <div class="bg-glow glow-1"></div>
+    <div class="bg-glow glow-2"></div>
+    <div class="bg-glow glow-3"></div>
+
+    <!-- 头部横幅区 -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand" onclick="window.location.href='index.html'" style="cursor: pointer;">
+                <span class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>
+                </span>
+                <div class="brand-text">
+                    <h1>OSBox 极客服务平台</h1>
+                    <p>Geek Technical Service Station</p>
+                </div>
+            </div>
+            <div class="store-badge">
+                <span class="badge-status"></span>
+                <span>拼多多官方技术合作 (24H 在线服务)</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 页面容器 -->
+    <main class="app-container">
+        <!-- 侧边导航栏 -->
+        
+
+        <!-- 内容区域 -->
+        <section class="content-area">
+            <div class="section-title">
+                <h2>📥 官方安全纯净下载中心 (绝无高速下载器广告)</h2>
+                <p class="subtitle">只收录各软件的官方网站、权威开源项目主页，告别流氓软件站捆绑包和恶意插件。</p>
+            
+
+            
+
+            <!-- 快捷商品导航 -->
+            <div class="category-nav">
+                <a href="os-install.html" class="category-nav-item">💻 原版纯净重装</a>
+                <a href="minecraft.html" class="category-nav-item">🧱 我的世界 Minecraft 部署</a>
+                <a href="trouble.html" class="category-nav-item">🔧 电脑系统疑难杂症解决</a>
+                <a href="linux.html" class="category-nav-item">🐧 Linux 专业系统安装</a>
+                <a href="steam.html" class="category-nav-item">🎮 Steam 安装与使用优化</a>
+                <a href="custom.html" class="category-nav-item">🎨 系统封装与定制</a>
+                <a href="boot-keys.html" class="category-nav-item">⌨️ 主板启动键</a>
+                <a href="downloads.html" class="category-nav-item active">📥 纯净下载</a>
+            </div></div>
+
+            <!-- 分类筛选导航 -->
+            <div class="download-filter">
+                <button class="filter-btn active" data-filter="all">全部软件</button>
+                <button class="filter-btn" data-filter="os">微软 & Linux 系统镜像</button>
+                <button class="filter-btn" data-filter="burn">PE & U盘烧录工具</button>
+                <button class="filter-btn" data-filter="tools">运行库 & 维护工具</button>
+                <button class="filter-btn" data-filter="remote">远程控制客服工具</button>
+            </div>
+
+            <div class="downloads-grid" id="downloads-container">
+                <!-- 操作系统 -->
+                <div class="download-card" data-cat="os">
+                    <div class="dl-badge">系统镜像</div>
+                    <h4>Windows 11 官方纯净版</h4>
+                    <p>微软官网提供的 Windows 11 最新正式版原版 ISO 镜像文件下载页面。</p>
+                    <div class="dl-links">
+                        <a href="https://www.microsoft.com/zh-cn/software-download/windows11" target="_blank" class="dl-btn">官方下载页面</a>
+                    </div>
+                </div>
+
+                <div class="download-card" data-cat="os">
+                    <div class="dl-badge">系统镜像</div>
+                    <h4>Windows 10 官方纯净版</h4>
+                    <p>微软官网提供的 Windows 10 经典正式版 ISO 镜像，最适合主流网游。</p>
+                    <div class="dl-links">
+                        <a href="https://www.microsoft.com/zh-cn/software-download/windows10" target="_blank" class="dl-btn">官方下载页面</a>
+                    </div>
+                </div>
+
+                <div class="download-card" data-cat="os">
+                    <div class="dl-badge">系统镜像</div>
+                    <h4>HelloIT 极简系统 (MSDN原版)</h4>
+                    <p>国内最知名的微软原版镜像库，提供各种纯净无改动系统包 (ed2k/磁力链接)。</p>
+                    <div class="dl-links">
+                        <a href="https://next.itellyou.cn/" target="_blank" class="dl-btn">访问 HelloIT 网站</a>
+                    </div>
+                </div>
+
+                <div class="download-card" data-cat="os">
+                    <div class="dl-badge">Linux</div>
+                    <h4>Ubuntu Desktop 官方镜像</h4>
+                    <p>适合用于人工智能 AI 运行环境、开发者编程学习、老电脑轻办公系统的 Linux 发行版。</p>
+                    <div class="dl-links">
+                        <a href="https://ubuntu.com/download/desktop" target="_blank" class="dl-btn">官方下载页面</a>
+                    </div>
+                </div>
+
+                <!-- 烧录工具 -->
+                <div class="download-card" data-cat="burn">
+                    <div class="dl-badge">U盘引导</div>
+                    <h4>Ventoy 万能 U 盘引导制作 (推荐)</h4>
+                    <p>新一代多合一启动U盘制作工具。只需写入一次引导，以后只需拖拽 ISO 文件即可直接启动。</p>
+                    <div class="dl-links">
+                        <a href="https://www.ventoy.net/cn/download.html" target="_blank" class="dl-btn">Ventoy 官网下载</a>
+                    </div>
+                </div>
+
+                <div class="download-card" data-cat="burn">
+                    <div class="dl-badge">U盘引导</div>
+                    <h4>Rufus 经典单文件烧录工具</h4>
+                    <p>快速、轻量、无需安装的 U 盘写盘工具，制作单个 Windows / Linux 安装盘的首选。</p>
+                    <div class="dl-links">
+                        <a href="https://rufus.ie/" target="_blank" class="dl-btn">Rufus 官网下载</a>
+                    </div>
+                </div>
+
+                <!-- 维护工具 -->
+                <div class="download-card" data-cat="tools">
+                    <div class="dl-badge">运行库</div>
+                    <h4>微软常用运行库合集</h4>
+                    <p>一键安装包含 VC++ 2005 - 2022 所有版本运行库，彻底解决打开游戏提示 DLL 丢失问题。</p>
+                    <div class="dl-links">
+                        <a href="https://learn.microsoft.com/zh-cn/cpp/windows/latest-supported-vc-redist?view=msvc-170" target="_blank" class="dl-btn">微软官方运行库</a>
+                    </div>
+                </div>
+
+                <div class="download-card" data-cat="tools">
+                    <div class="dl-badge">游戏工具</div>
+                    <h4>DirectX 修复工具 (DirectX Repair)</h4>
+                    <p>由张宇开发的著名绿色工具，强力修复 DirectX 组件丢失及 c000007b 报错。</p>
+                    <div class="dl-links">
+                        <a href="https://blog.csdn.net/vbcom/article/details/7245186" target="_blank" class="dl-btn">作者博客下载页</a>
+                    </div>
+                </div>
+
+                <div class="download-card" data-cat="tools">
+                    <div class="dl-badge">Minecraft JDK</div>
+                    <h4>Eclipse Temurin Java JDK 官方站</h4>
+                    <p>完全免费、由各大社区共同维护的高性能 Java 运行环境，我的世界必配。</p>
+                    <div class="dl-links">
+                        <a href="https://adoptium.net/zh-CN/temurin/releases/" target="_blank" class="dl-btn">Adoptium 官网</a>
+                    </div>
+                </div>
+
+                <div class="download-card" data-cat="tools">
+                    <div class="dl-badge">显卡清理</div>
+                    <h4>DDU 显卡驱动卸载清理工具</h4>
+                    <p>Display Driver Uninstaller。在安全模式下彻底清理 AMD/NVIDIA/Intel 显卡驱动注册表残留。</p>
+                    <div class="dl-links">
+                        <a href="https://www.wagnardsoft.com/" target="_blank" class="dl-btn">Wagnardsoft 官网</a>
+                    </div>
+                </div>
+
+                <!-- 远程协助 -->
+                <div class="download-card" data-cat="remote">
+                    <div class="dl-badge-help">远程工具</div>
+                    <h4>网易UU远程 (最推荐)</h4>
+                    <p>网易出品的专业远程控制软件，超低延迟与蓝光高清画质，供技术人员远程为您服务。</p>
+                    <div class="dl-links">
+                        <a href="https://uuyc.163.com/" target="_blank" class="dl-btn">网易UU远程官网</a>
+                    </div>
+                </div>
+
+                <div class="download-card" data-cat="remote">
+                    <div class="dl-badge-help">远程工具</div>
+                    <h4>RustDesk 免费开源远程控制</h4>
+                    <p>完全免费、开源的远程桌面软件，无需付费，隐私安全，备用远程首选。</p>
+                    <div class="dl-links">
+                        <a href="https://rustdesk.com/zh/" target="_blank" class="dl-btn">RustDesk 官网</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 浮动 Toast 提示 -->
+    <div id="toast" class="toast">复制成功</div>
+
+    <!-- 页脚 -->
+    <footer class="app-footer">
+        <div class="footer-container">
+            <p>&copy; 2026 OSBox 极客技术服务站. 本站所有资源均指向官方原版下载链接，不承担任何第三方版权纠纷。</p>
+            <p class="muted">拼多多店铺名：OSBox极客服务 | 竭诚为您提供最优质的技术支持</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
