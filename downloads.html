@@ -287,7 +287,7 @@
                 <div class="download-card os-selector-card" data-cat="win" id="win-selector-card">
                     <div class="os-selector-header">
                         <div class="dl-badge">官方原版 Windows 镜像源</div>
-                        <h3>💻 微软 Windows 原版系统全系列镜像高速下载舱</h3>
+                        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px; display: inline-block;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="2" y1="20" x2="22" y2="20"></line><line x1="12" y1="17" x2="12" y2="20"></line></svg>微软 Windows 原版系统全系列镜像高速下载舱</h3>
                         <p class="desc">本系统下载舱由官方技术团队维护，数据全量同步自微软 MSDN 官方订户资源。提供 <b>Windows 11 / 10 / 8.1 / 8 / 7 / XP</b> 全版本及历史月度更新的磁力(Magnet)与电驴(ED2K)高速直链。</p>
                         
                         <div class="thunder-alert-box">
@@ -326,11 +326,11 @@
                     </div>
                 </div>
 
-                <!-- 🐧 Linux 开源系统发行版官方导航舱 -->
+                <!-- Linux 开源系统发行版官方导航舱 -->
                 <div class="download-card linux-selector-card" data-cat="linux" id="linux-selector-card">
                     <div class="os-selector-header">
                         <div class="dl-badge">官方原版 Linux 发行版</div>
-                        <h3>🐧 Linux 开源系统全系列发行版官方导航舱</h3>
+                        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px; display: inline-block;"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>Linux 开源系统全系列发行版官方导航舱</h3>
                         <p class="desc">收录全球及国内主流最知名的 Linux 操作系统官方下载渠道。点击下载将直接跳转至其官方下载页面或国内高速高校镜像源，由用户自主挑选版本，确保安全纯净无劫持。</p>
                         
                         <div class="thunder-alert-box">
@@ -721,7 +721,7 @@
                 // Desktop GUI Link
                 if (distro.desktop) {
                     desktopHtml = '<div class="iso-item-row" style="margin-bottom: 0.5rem;">' +
-                        '<div class="iso-item-title">🖥️ Desktop（图形化桌面版 / GUI）官方下载渠道</div>' +
+                        '<div class="iso-item-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; display: inline-block;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>Desktop（图形化桌面版 / GUI）官方下载渠道</div>' +
                         '<p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0.25rem 0 0.5rem 0;">包含完整直观的图形化桌面操作系统，非常适合个人使用、应用开发、图形办公或虚拟机体验。</p>' +
                         '<div class="iso-item-actions">' +
                             '<a href="' + distro.desktop + '" target="_blank" class="iso-copy-btn" style="text-decoration: none;">' +
@@ -735,7 +735,7 @@
                 // Server CLI Link
                 if (distro.server) {
                     serverHtml = '<div class="iso-item-row" style="margin-bottom: 0.5rem;">' +
-                        '<div class="iso-item-title">🎛️ Server / Minimal（非图形化服务器版 / CLI）官方下载渠道</div>' +
+                        '<div class="iso-item-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; display: inline-block;"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line><line x1="18" y1="6" x2="18.01" y2="6"></line><line x1="18" y1="18" x2="18.01" y2="18"></line></svg>Server / Minimal（非图形化服务器版 / CLI）官方下载渠道</div>' +
                         '<p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0.25rem 0 0.5rem 0;">去除了所有的图形界面，仅包含轻量化的基础命令行系统。最大化保障服务器性能与稳定性，适合生产服务器部署或 Docker 容器主机。</p>' +
                         '<div class="iso-item-actions">' +
                             '<a href="' + distro.server + '" target="_blank" class="iso-copy-btn" style="text-decoration: none;">' +
@@ -749,7 +749,7 @@
                 // Mirror Link
                 if (distro.mirror) {
                     mirrorHtml = '<div class="iso-item-row">' +
-                        '<div class="iso-item-title">⚡ 国内高速镜像源归档目录 (Tsinghua 清华大学镜像站)</div>' +
+                        '<div class="iso-item-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; display: inline-block; color: #eab308;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>国内高速镜像源归档目录 (Tsinghua 清华大学镜像站)</div>' +
                         '<p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0.25rem 0 0.5rem 0;">当直接访问境外 Linux 官网速度过慢时，推荐直接进入清华大学等国内顶级高校的镜像归档目录，下载同等安全的官方纯净原版 ISO 文件。</p>' +
                         '<div class="iso-item-actions">' +
                             '<a href="' + distro.mirror + '" target="_blank" class="iso-copy-btn" style="text-decoration: none;">' +
