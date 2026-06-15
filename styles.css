@@ -1149,8 +1149,34 @@ summary:hover {
 /* 统一取消彩线条，改用纯粹高对比底色 */
 .boot-header { border-left: none !important; }
 
+.boot-body {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.boot-body p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.card-tag {
+    align-self: flex-start;
+    font-size: 0.7rem;
+    padding: 0.15rem 0.45rem;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+}
+
+
 /* 15. 下载中心 (downloads.html) */
-.filter-btn {
+.filter-btn, .boot-filter-btn {
     padding: 0.5rem 1.1rem;
     background: transparent;
     border: 1px solid var(--border-color);
@@ -1163,12 +1189,12 @@ summary:hover {
     transition: var(--transition-fast);
 }
 
-.filter-btn:hover {
+.filter-btn:hover, .boot-filter-btn:hover {
     color: #ffffff;
     border-color: var(--border-hover);
 }
 
-.filter-btn.active {
+.filter-btn.active, .boot-filter-btn.active {
     background: #ffffff;
     border-color: #ffffff;
     color: #000000;

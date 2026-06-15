@@ -5,6 +5,7 @@
 // 全局状态变量
 let unlockedTabs = [];
 let currentPage = 'home'; // 当前所在的页面标识 ('home', 'minecraft', 'trouble', etc.)
+let currentBootCategory = 'all'; // 快捷键分类筛选
 
 document.addEventListener('DOMContentLoaded', () => {
     // 1. 定位当前页面类型
@@ -49,6 +50,8 @@ function detectCurrentPage() {
         currentPage = 'kefu';
     } else if (pageName.includes('steam')) {
         currentPage = 'steam';
+    } else if (pageName.includes('custom')) {
+        currentPage = 'custom';
     }
 }
 
@@ -57,7 +60,7 @@ function detectCurrentPage() {
  */
 function checkUnlockStatus() {
     // 全面开放，免去验证码锁定，所有页面直接解锁
-    unlockedTabs = ['minecraft', 'trouble', 'linux', 'os-install', 'boot-keys', 'downloads', 'steam'];
+    unlockedTabs = ['minecraft', 'trouble', 'linux', 'os-install', 'boot-keys', 'downloads', 'steam', 'custom'];
 
     const body = document.body;
     const lockText = document.getElementById('lock-status-text');
@@ -142,6 +145,8 @@ function getActiveServicesChineseNames() {
     if (unlockedTabs.includes('os-install')) names.push('Win/Linux重装');
     if (unlockedTabs.includes('boot-keys')) names.push('快捷键查询');
     if (unlockedTabs.includes('downloads')) names.push('下载中心');
+    if (unlockedTabs.includes('steam')) names.push('Steam优化');
+    if (unlockedTabs.includes('custom')) names.push('系统定制');
     return names.join('、');
 }
 
@@ -376,9 +381,17 @@ function submitVerification() {
                 targetTabsToUnlock = ['downloads'];
                 unlockedName = '官方纯净下载中心';
                 break;
+            case '7':
+                targetTabsToUnlock = ['custom'];
+                unlockedName = '系统封装与定制服务';
+                break;
+            case '8':
+                targetTabsToUnlock = ['steam'];
+                unlockedName = 'Steam 安装与使用优化';
+                break;
             case '9':
             case '0':
-                targetTabsToUnlock = ['minecraft', 'trouble', 'linux', 'os-install', 'boot-keys', 'downloads'];
+                targetTabsToUnlock = ['minecraft', 'trouble', 'linux', 'os-install', 'boot-keys', 'downloads', 'steam', 'custom'];
                 unlockedName = '所有极客技术服务';
                 break;
             default:
@@ -520,9 +533,14 @@ function filterBootKeys() {
     cards.forEach(card => {
         const keywords = card.getAttribute('data-keywords').toLowerCase();
         const title = card.querySelector('h3').innerText.toLowerCase();
-        const bodyText = card.querySelector('.boot-body p').innerText.toLowerCase();
+        const pElement = card.querySelector('.boot-body p');
+        const bodyText = pElement ? pElement.innerText.toLowerCase() : '';
+        const category = card.getAttribute('data-category') || 'all';
         
-        if (keywords.includes(query) || title.includes(query) || bodyText.includes(query)) {
+        const matchesQuery = keywords.includes(query) || title.includes(query) || bodyText.includes(query);
+        const matchesCategory = currentBootCategory === 'all' || category === currentBootCategory;
+        
+        if (matchesQuery && matchesCategory) {
             card.classList.remove('hidden');
         } else {
             card.classList.add('hidden');
@@ -530,11 +548,32 @@ function filterBootKeys() {
     });
 }
 
+function setBootCategory(category, element) {
+    currentBootCategory = category;
+    
+    const filterButtons = document.querySelectorAll('.boot-filter-btn');
+    filterButtons.forEach(btn => btn.classList.remove('active'));
+    if (element) {
+        element.classList.add('active');
+    }
+    
+    filterBootKeys();
+}
+
 function clearBootSearch() {
     const searchInput = document.getElementById('boot-key-search');
     if (searchInput) {
         searchInput.value = '';
-        filterBootKeys();
+    }
+    currentBootCategory = 'all';
+    const allBtn = document.querySelector('.boot-filter-btn[onclick*="all"]');
+    const filterButtons = document.querySelectorAll('.boot-filter-btn');
+    filterButtons.forEach(btn => btn.classList.remove('active'));
+    if (allBtn) {
+        allBtn.classList.add('active');
+    }
+    filterBootKeys();
+    if (searchInput) {
         searchInput.focus();
     }
 }

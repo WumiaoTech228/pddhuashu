@@ -59,223 +59,695 @@
             </div>
 
             <!-- 交互式搜索 -->
+            <!-- 交互式搜索 -->
             <div class="search-box-container">
                 <div class="search-wrapper">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="search-icon"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                    <input type="text" id="boot-key-search" placeholder="输入主板品牌、笔记本品牌 (例如：华硕, 技嘉, 联想, DELL)..." oninput="filterBootKeys()">
+                    <input type="text" id="boot-key-search" placeholder="输入设备/主板品牌 (例如：华硕, 技嘉, 联想, DELL)..." oninput="filterBootKeys()">
                 </div>
                 <button class="clear-search-btn" onclick="clearBootSearch()">重置筛选</button>
+            </div>
+
+            <!-- 分类过滤 Tab -->
+            <div class="boot-filter">
+                <button class="boot-filter-btn active" onclick="setBootCategory('all', this)">全部设备</button>
+                <button class="boot-filter-btn" onclick="setBootCategory('motherboard', this)">⌨️ 组装主板</button>
+                <button class="boot-filter-btn" onclick="setBootCategory('laptop', this)">💻 品牌笔记本</button>
+                <button class="boot-filter-btn" onclick="setBootCategory('desktop', this)">🖥️ 品牌台式机</button>
             </div>
 
             <div class="boot-keys-grid" id="boot-keys-container">
                 <!-- 组 1: 独立主板 -->
                 <div class="boot-card" data-category="motherboard" data-keywords="asus 华硕">
-                    <div class="boot-header mb-asus">
+                    <div class="boot-header">
                         <h3>华硕主板 (ASUS)</h3>
                         <span class="key-badge">F8</span>
                     </div>
                     <div class="boot-body">
-                        <p>适用范围：所有台式机华硕主板</p>
-                        <span class="card-tag">台式机主板</span>
+                        <p>适用范围：台式机华硕主板</p>
+                        <span class="card-tag">组装机主板</span>
                     </div>
                 </div>
 
                 <div class="boot-card" data-category="motherboard" data-keywords="gigabyte 技嘉">
-                    <div class="boot-header mb-gigabyte">
+                    <div class="boot-header">
                         <h3>技嘉主板 (GIGABYTE)</h3>
                         <span class="key-badge">F12</span>
                     </div>
                     <div class="boot-body">
                         <p>适用范围：台式机技嘉主板</p>
-                        <span class="card-tag">台式机主板</span>
+                        <span class="card-tag">组装机主板</span>
                     </div>
                 </div>
 
-                <div class="boot-card" data-category="motherboard" data-keywords="msi 微星 msi">
-                    <div class="boot-header mb-msi">
+                <div class="boot-card" data-category="motherboard" data-keywords="msi 微星">
+                    <div class="boot-header">
                         <h3>微星主板 (MSI)</h3>
                         <span class="key-badge">F11</span>
                     </div>
                     <div class="boot-body">
                         <p>适用范围：台式机微星主板</p>
-                        <span class="card-tag">台式机主板</span>
-                    </div>
-                </div>
-
-                <div class="boot-card" data-category="motherboard" data-keywords="asrock 华擎">
-                    <div class="boot-header mb-asrock">
-                        <h3>华擎主板 (ASRock)</h3>
-                        <span class="key-badge">F11</span>
-                    </div>
-                    <div class="boot-body">
-                        <p>适用范围：台式机华擎主板</p>
-                        <span class="card-tag">台式机主板</span>
-                    </div>
-                </div>
-
-                <div class="boot-card" data-category="motherboard" data-keywords="colorful 七彩虹">
-                    <div class="boot-header mb-colorful">
-                        <h3>七彩虹主板 (Colorful)</h3>
-                        <span class="key-badge">F11 / Esc</span>
-                    </div>
-                    <div class="boot-body">
-                        <p>适用范围：台式机七彩虹主板</p>
-                        <span class="card-tag">台式机主板</span>
-                    </div>
-                </div>
-
-                <div class="boot-card" data-category="motherboard" data-keywords="maxsun 铭瑄">
-                    <div class="boot-header mb-maxsun">
-                        <h3>铭瑄主板 (MAXSUN)</h3>
-                        <span class="key-badge">Esc / F11</span>
-                    </div>
-                    <div class="boot-body">
-                        <p>适用范围：台式机铭瑄主板</p>
-                        <span class="card-tag">台式机主板</span>
+                        <span class="card-tag">组装机主板</span>
                     </div>
                 </div>
 
                 <div class="boot-card" data-category="motherboard" data-keywords="biostar 映泰">
-                    <div class="boot-header mb-biostar">
+                    <div class="boot-header">
                         <h3>映泰主板 (BIOSTAR)</h3>
                         <span class="key-badge">F9</span>
                     </div>
                     <div class="boot-body">
                         <p>适用范围：台式机映泰主板</p>
-                        <span class="card-tag">台式机主板</span>
+                        <span class="card-tag">组装机主板</span>
                     </div>
                 </div>
 
                 <div class="boot-card" data-category="motherboard" data-keywords="soyo 梅捷">
-                    <div class="boot-header mb-soyo">
+                    <div class="boot-header">
                         <h3>梅捷主板 (SOYO)</h3>
+                        <span class="key-badge">Esc / F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：台式机梅捷主板。部分老款型号为 F11。</p>
+                        <span class="card-tag">组装机主板</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="motherboard" data-keywords="colorful 七彩虹">
+                    <div class="boot-header">
+                        <h3>七彩虹主板 (Colorful)</h3>
                         <span class="key-badge">Esc / F11</span>
                     </div>
                     <div class="boot-body">
-                        <p>适用范围：台式机梅捷主板</p>
-                        <span class="card-tag">台式机主板</span>
+                        <p>适用范围：台式机七彩虹主板</p>
+                        <span class="card-tag">组装机主板</span>
                     </div>
                 </div>
 
-                <!-- 组 2: 笔记本电脑 -->
-                <div class="boot-card" data-category="laptop" data-keywords="lenovo 联想 lenovo xiaoxin 小新 savior 拯救者">
-                    <div class="boot-header lp-lenovo">
-                        <h3>联想笔记本 (Lenovo)</h3>
-                        <span class="key-badge">F12 / Fn+F12</span>
+                <div class="boot-card" data-category="motherboard" data-keywords="asrock 华擎">
+                    <div class="boot-header">
+                        <h3>华擎主板 (ASRock)</h3>
+                        <span class="key-badge">F11</span>
                     </div>
                     <div class="boot-body">
-                        <p>含小新、拯救者系列。部分老机型需使用卡针在关机状态下戳侧面 Novo 小孔开机。</p>
-                        <span class="card-tag">笔记本</span>
+                        <p>适用范围：台式机华擎主板</p>
+                        <span class="card-tag">组装机主板</span>
                     </div>
                 </div>
 
-                <div class="boot-card" data-category="laptop" data-keywords="thinkpad 联想 thinkpad 思考本">
-                    <div class="boot-header lp-thinkpad">
-                        <h3>ThinkPad 笔记本</h3>
-                        <span class="key-badge">F12 / Enter键</span>
+                <div class="boot-card" data-category="motherboard" data-keywords="spark 斯巴达克">
+                    <div class="boot-header">
+                        <h3>斯巴达克主板 (SPARK)</h3>
+                        <span class="key-badge">Esc</span>
                     </div>
                     <div class="boot-body">
-                        <p>启动时狂按 Enter 键进入选择菜单，然后再按 F12 键选择引导项。</p>
-                        <span class="card-tag">笔记本</span>
+                        <p>适用范围：台式机斯巴达克主板</p>
+                        <span class="card-tag">组装机主板</span>
                     </div>
                 </div>
 
-                <div class="boot-card" data-category="laptop" data-keywords="dell 戴尔 dell inspiron g3 g5 g15 alienware 外星人">
-                    <div class="boot-header lp-dell">
-                        <h3>戴尔笔记本 (DELL)</h3>
+                <div class="boot-card" data-category="motherboard" data-keywords="onda 昂达">
+                    <div class="boot-header">
+                        <h3>昂达主板 (ONDA)</h3>
+                        <span class="key-badge">F11</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：台式机昂达主板</p>
+                        <span class="card-tag">组装机主板</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="motherboard" data-keywords="unika 双敏">
+                    <div class="boot-header">
+                        <h3>双敏主板 (UNIKA)</h3>
+                        <span class="key-badge">Esc</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：台式机双敏主板</p>
+                        <span class="card-tag">组装机主板</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="motherboard" data-keywords="asl 翔升">
+                    <div class="boot-header">
+                        <h3>翔升主板 (ASL)</h3>
+                        <span class="key-badge">F10</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：台式机翔升主板</p>
+                        <span class="card-tag">组装机主板</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="motherboard" data-keywords="ecs 精英">
+                    <div class="boot-header">
+                        <h3>精英主板 (ECS)</h3>
+                        <span class="key-badge">Esc / F11</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：台式机精英主板</p>
+                        <span class="card-tag">组装机主板</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="motherboard" data-keywords="gct 冠盟">
+                    <div class="boot-header">
+                        <h3>冠盟主板 (GCT)</h3>
+                        <span class="key-badge">F11 / F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：台式机冠盟主板</p>
+                        <span class="card-tag">组装机主板</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="motherboard" data-keywords="foxconn 富士康">
+                    <div class="boot-header">
+                        <h3>富士康主板 (Foxconn)</h3>
+                        <span class="key-badge">Esc / F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：台式机富士康主板</p>
+                        <span class="card-tag">组装机主板</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="motherboard" data-keywords="topstar 顶星">
+                    <div class="boot-header">
+                        <h3>顶星主板 (Topstar)</h3>
+                        <span class="key-badge">F11 / F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：台式机顶星主板</p>
+                        <span class="card-tag">组装机主板</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="motherboard" data-keywords="maxsun 铭瑄">
+                    <div class="boot-header">
+                        <h3>铭瑄主板 (MAXSUN)</h3>
+                        <span class="key-badge">Esc</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：台式机铭瑄主板。部分型号为 F11。</p>
+                        <span class="card-tag">组装机主板</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="motherboard" data-keywords="yeston 盈通">
+                    <div class="boot-header">
+                        <h3>盈通主板 (YESTON)</h3>
+                        <span class="key-badge">F8</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：台式机盈通主板</p>
+                        <span class="card-tag">组装机主板</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="motherboard" data-keywords="jetway 捷波">
+                    <div class="boot-header">
+                        <h3>捷波主板 (Jetway)</h3>
+                        <span class="key-badge">Esc</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：台式机捷波主板</p>
+                        <span class="card-tag">组装机主板</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="motherboard" data-keywords="intel 英特尔">
+                    <div class="boot-header">
+                        <h3>Intel 主板</h3>
                         <span class="key-badge">F12</span>
                     </div>
                     <div class="boot-body">
-                        <p>含外星人 (Alienware) 及灵越等所有戴尔机型。</p>
-                        <span class="card-tag">笔记本</span>
+                        <p>适用范围：台式机英特尔原装主板</p>
+                        <span class="card-tag">组装机主板</span>
                     </div>
                 </div>
 
-                <div class="boot-card" data-category="laptop" data-keywords="hp 惠普 hp star 暗影精灵 光影精灵 pavilion戰66">
-                    <div class="boot-header lp-hp">
-                        <h3>惠普笔记本 (HP)</h3>
-                        <span class="key-badge">F9 / Esc</span>
-                    </div>
-                    <div class="boot-body">
-                        <p>先按 Esc 会弹出菜单，再按 F9 键即可进入 Startup Menu 选择引导 U 盘。</p>
-                        <span class="card-tag">笔记本</span>
-                    </div>
-                </div>
-
-                <div class="boot-card" data-category="laptop" data-keywords="asus 华硕 asus rog 玩家国度 tianxuan 天选 aotian 飞行堡垒">
-                    <div class="boot-header lp-asus">
-                        <h3>华硕笔记本 / 玩家国度</h3>
+                <div class="boot-card" data-category="motherboard" data-keywords="jwele 杰微">
+                    <div class="boot-header">
+                        <h3>杰微主板 (Jwele)</h3>
                         <span class="key-badge">Esc / F8</span>
                     </div>
                     <div class="boot-body">
-                        <p>天选、ROG系列，开机画面出现时请敲击 Esc 键进入快速启动。</p>
+                        <p>适用范围：台式机杰微主板</p>
+                        <span class="card-tag">组装机主板</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="motherboard" data-keywords="ziming 致铭">
+                    <div class="boot-header">
+                        <h3>致铭主板 (Ziming)</h3>
+                        <span class="key-badge">F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：台式机致铭主板</p>
+                        <span class="card-tag">组装机主板</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="motherboard" data-keywords="panying 磐英">
+                    <div class="boot-header">
+                        <h3>磐英主板 (Panying)</h3>
+                        <span class="key-badge">Esc</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：台式机磐英主板</p>
+                        <span class="card-tag">组装机主板</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="motherboard" data-keywords="supox 磐正">
+                    <div class="boot-header">
+                        <h3>磐正主板 (SUPoX)</h3>
+                        <span class="key-badge">Esc</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：台式机磐正主板</p>
+                        <span class="card-tag">组装机主板</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="motherboard" data-keywords="guanming 冠铭">
+                    <div class="boot-header">
+                        <h3>冠铭主板 (Guanming)</h3>
+                        <span class="key-badge">F9</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：台式机冠铭主板</p>
+                        <span class="card-tag">组装机主板</span>
+                    </div>
+                </div>
+
+                <!-- 组 2: 品牌笔记本 -->
+                <div class="boot-card" data-category="laptop" data-keywords="lenovo 联想 xiaoxin 小新 savior 拯救者">
+                    <div class="boot-header">
+                        <h3>联想笔记本 (Lenovo)</h3>
+                        <span class="key-badge">F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：联想小新、扬天、昭阳、拯救者系列笔记本。部分型号需按 Fn+F12。</p>
                         <span class="card-tag">笔记本</span>
                     </div>
                 </div>
 
-                <div class="boot-card" data-category="laptop" data-keywords="acer 宏碁 acer 传奇 helios">
-                    <div class="boot-header lp-acer">
+                <div class="boot-card" data-category="laptop" data-keywords="acer 宏碁">
+                    <div class="boot-header">
                         <h3>宏碁笔记本 (Acer)</h3>
                         <span class="key-badge">F12</span>
                     </div>
                     <div class="boot-body">
-                        <p><b>提示：</b> 宏碁笔记本默认禁用了 F12 引导，需先按 F2 进 BIOS，在 Main 页将 F12 Boot Menu 改为 Enabled 才能使用。</p>
+                        <p>提示：若按无反应，需先按 F2 进 BIOS，在 Main 菜单中将 F12 Boot Menu 改为 Enabled 才能使用。</p>
                         <span class="card-tag">笔记本</span>
                     </div>
                 </div>
 
-                <div class="boot-card" data-category="laptop" data-keywords="huawei 华为 matebook">
-                    <div class="boot-header lp-huawei">
-                        <h3>华为笔记本 (Huawei)</h3>
-                        <span class="key-badge">F12</span>
+                <div class="boot-card" data-category="laptop" data-keywords="asus 华硕 rog 玩家国度 tianxuan 天选">
+                    <div class="boot-header">
+                        <h3>华硕笔记本 (ASUS)</h3>
+                        <span class="key-badge">Esc / F8</span>
                     </div>
                     <div class="boot-body">
-                        <p>所有 MateBook 笔记本机型，开机黑屏时迅速敲击 F12。</p>
+                        <p>适用范围：华硕无畏、灵耀、天选、ROG 玩家国度等全系列笔记本。</p>
                         <span class="card-tag">笔记本</span>
                     </div>
                 </div>
 
-                <div class="boot-card" data-category="laptop" data-keywords="honor 荣耀 magicbook">
-                    <div class="boot-header lp-honor">
-                        <h3>荣耀笔记本 (Honor)</h3>
+                <div class="boot-card" data-category="laptop" data-keywords="hp 惠普">
+                    <div class="boot-header">
+                        <h3>惠普笔记本 (HP)</h3>
+                        <span class="key-badge">F9 / Esc</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：惠普战66、星系列、暗影精灵、光影精灵笔记本。通常开机连续敲击 F9 即可。</p>
+                        <span class="card-tag">笔记本</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="laptop" data-keywords="thinkpad 思考本 联想">
+                    <div class="boot-header">
+                        <h3>ThinkPad 笔记本</h3>
+                        <span class="key-badge">F12 / Enter</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>启动时疯狂敲击 Enter 键中断正常启动以弹出菜单，再按 F12 键进入 Boot Menu 选择 U 盘。</p>
+                        <span class="card-tag">笔记本</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="laptop" data-keywords="dell 戴尔 alienware 外星人">
+                    <div class="boot-header">
+                        <h3>戴尔笔记本 (DELL)</h3>
                         <span class="key-badge">F12</span>
                     </div>
                     <div class="boot-body">
-                        <p>MagicBook 系列笔记本。</p>
+                        <p>适用范围：戴尔灵越、成就、游匣、Alienware 外星人等所有戴尔笔记本型号。</p>
+                        <span class="card-tag">笔记本</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="laptop" data-keywords="hasee 神舟">
+                    <div class="boot-header">
+                        <h3>神舟笔记本 (Hasee)</h3>
+                        <span class="key-badge">F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：神舟战神、优雅、承龙等系列笔记本。</p>
+                        <span class="card-tag">笔记本</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="laptop" data-keywords="toshiba 东芝">
+                    <div class="boot-header">
+                        <h3>东芝笔记本 (Toshiba)</h3>
+                        <span class="key-badge">F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：所有东芝品牌笔记本。</p>
+                        <span class="card-tag">笔记本</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="laptop" data-keywords="samsung 三星">
+                    <div class="boot-header">
+                        <h3>三星笔记本 (Samsung)</h3>
+                        <span class="key-badge">F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：三星全系列笔记本机型。</p>
+                        <span class="card-tag">笔记本</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="laptop" data-keywords="sony 索尼 vaio">
+                    <div class="boot-header">
+                        <h3>索尼笔记本 (Sony)</h3>
+                        <span class="key-badge">Esc</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>部分老款 Sony VAIO 笔记本需要使用关机状态下的 ASSIST 特殊物理按键开机进入选单。</p>
+                        <span class="card-tag">笔记本</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="laptop" data-keywords="ibm">
+                    <div class="boot-header">
+                        <h3>IBM 笔记本</h3>
+                        <span class="key-badge">F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：经典老款 IBM 笔记本设备。</p>
+                        <span class="card-tag">笔记本</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="laptop" data-keywords="fujitsu 富士通">
+                    <div class="boot-header">
+                        <h3>富士通笔记本 (Fujitsu)</h3>
+                        <span class="key-badge">F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：富士通品牌笔记本机型。</p>
+                        <span class="card-tag">笔记本</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="laptop" data-keywords="haier 海尔">
+                    <div class="boot-header">
+                        <h3>海尔笔记本 (Haier)</h3>
+                        <span class="key-badge">F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：海尔品牌笔记本。</p>
+                        <span class="card-tag">笔记本</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="laptop" data-keywords="founder 方正">
+                    <div class="boot-header">
+                        <h3>方正笔记本 (Founder)</h3>
+                        <span class="key-badge">F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：方正品牌笔记本机型。</p>
+                        <span class="card-tag">笔记本</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="laptop" data-keywords="tongfang 清华同方">
+                    <div class="boot-header">
+                        <h3>清华同方笔记本</h3>
+                        <span class="key-badge">F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：清华同方品牌笔记本。</p>
+                        <span class="card-tag">笔记本</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="laptop" data-keywords="msi 微星">
+                    <div class="boot-header">
+                        <h3>微星笔记本 (MSI)</h3>
+                        <span class="key-badge">F11</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：微星强袭、神枪手、绝影、雷影等电竞游戏笔记本。</p>
+                        <span class="card-tag">笔记本</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="laptop" data-keywords="benq 明基">
+                    <div class="boot-header">
+                        <h3>明基笔记本 (BenQ)</h3>
+                        <span class="key-badge">F9</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：明基品牌笔记本电脑。</p>
+                        <span class="card-tag">笔记本</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="laptop" data-keywords="gigabyte 技嘉 aorus">
+                    <div class="boot-header">
+                        <h3>技嘉笔记本 (GIGABYTE)</h3>
+                        <span class="key-badge">F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：技嘉 AORUS 系列及 Aero 系列笔记本。</p>
+                        <span class="card-tag">笔记本</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="laptop" data-keywords="thunderobot 雷神">
+                    <div class="boot-header">
+                        <h3>雷神笔记本 (Thunderobot)</h3>
+                        <span class="key-badge">F12 / Esc</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：雷神 911、猎刃等系列游戏本。开机可尝试敲击 F12 或 Esc。</p>
+                        <span class="card-tag">笔记本</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="laptop" data-keywords="mechrevo 机械革命">
+                    <div class="boot-header">
+                        <h3>机械革命 (MECHREVO)</h3>
+                        <span class="key-badge">F10 / F11</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：机械革命极光、无界、旷世、耀世、蛟龙等笔记本电脑。</p>
+                        <span class="card-tag">笔记本</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="laptop" data-keywords="terrans force tf 未来人类">
+                    <div class="boot-header">
+                        <h3>未来人类 (Terrans Force)</h3>
+                        <span class="key-badge">F7</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：未来人类 TF 系列高端发烧游戏本。</p>
+                        <span class="card-tag">笔记本</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="laptop" data-keywords="gateway 捷威 奶牛">
+                    <div class="boot-header">
+                        <h3>Gateway 笔记本</h3>
+                        <span class="key-badge">F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：Gateway (捷威/奶牛) 系列笔记本。</p>
+                        <span class="card-tag">笔记本</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="laptop" data-keywords="emachines">
+                    <div class="boot-header">
+                        <h3>eMachines 笔记本</h3>
+                        <span class="key-badge">F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：eMachines 品牌系列笔记本。</p>
                         <span class="card-tag">笔记本</span>
                     </div>
                 </div>
 
                 <div class="boot-card" data-category="laptop" data-keywords="xiaomi 小米 redmibook 红米">
-                    <div class="boot-header lp-xiaomi">
+                    <div class="boot-header">
                         <h3>小米 / 红米笔记本</h3>
                         <span class="key-badge">F12</span>
                     </div>
                     <div class="boot-body">
-                        <p>包含小米笔记本、RedmiBook系列，开机直接敲击 F12。</p>
+                        <p>适用范围：小米笔记本电脑、RedmiBook 全系列笔记本。</p>
                         <span class="card-tag">笔记本</span>
                     </div>
                 </div>
 
-                <div class="boot-card" data-category="laptop" data-keywords="mechrevo 机械革命 jiaolong kuangshi 蛟龙 旷世">
-                    <div class="boot-header lp-mechrevo">
-                        <h3>机械革命 (MECHREVO)</h3>
-                        <span class="key-badge">F11</span>
+                <div class="boot-card" data-category="laptop" data-keywords="apple 苹果 macbook pro mini imac">
+                    <div class="boot-header">
+                        <h3>苹果 Mac 电脑 (Apple)</h3>
+                        <span class="key-badge">Option</span>
                     </div>
                     <div class="boot-body">
-                        <p>旷世、极光、蛟龙等机型，开机敲击 F11。</p>
-                        <span class="card-tag">笔记本</span>
-                    </div>
-                </div>
-
-                <div class="boot-card" data-category="laptop" data-keywords="apple 苹果 macbook mac pro mini imac">
-                    <div class="boot-header lp-apple">
-                        <h3>苹果 Mac 电脑</h3>
-                        <span class="key-badge">Option (Alt)</span>
-                    </div>
-                    <div class="boot-body">
-                        <p>Intel 芯片机型：开机时按住 Option 键不放；M芯片机型：关机状态下按住开机键不放直到载入启动选项。</p>
+                        <p>Intel 芯片机型：开机按住 Option (Alt) 键不放；M系列芯片：关机状态下长按电源键不放直到载入启动选项。</p>
                         <span class="card-tag">Mac</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="laptop" data-keywords="huawei 华为 matebook">
+                    <div class="boot-header">
+                        <h3>华为笔记本 (Huawei)</h3>
+                        <span class="key-badge">F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：华为 MateBook 全系列笔记本电脑。</p>
+                        <span class="card-tag">笔记本</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="laptop" data-keywords="honor 荣耀 magicbook">
+                    <div class="boot-header">
+                        <h3>荣耀笔记本 (Honor)</h3>
+                        <span class="key-badge">F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：荣耀 MagicBook 全系列笔记本。</p>
+                        <span class="card-tag">笔记本</span>
+                    </div>
+                </div>
+
+                <!-- 组 3: 品牌台式机 -->
+                <div class="boot-card" data-category="desktop" data-keywords="lenovo 联想 台式机">
+                    <div class="boot-header">
+                        <h3>联想台式机 (Lenovo)</h3>
+                        <span class="key-badge">F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：联想天逸、刃系列、扬天等全线品牌台式机及一体机。</p>
+                        <span class="card-tag">品牌台式机</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="desktop" data-keywords="hp 惠普 台式机">
+                    <div class="boot-header">
+                        <h3>惠普台式机 (HP)</h3>
+                        <span class="key-badge">F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：惠普 Pavilion、暗影精灵等全线品牌台式机及一体机。</p>
+                        <span class="card-tag">品牌台式机</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="desktop" data-keywords="acer 宏碁 台式机">
+                    <div class="boot-header">
+                        <h3>宏碁台式机 (Acer)</h3>
+                        <span class="key-badge">F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：宏碁品牌台式机及一体机机型。</p>
+                        <span class="card-tag">品牌台式机</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="desktop" data-keywords="dell 戴尔 台式机">
+                    <div class="boot-header">
+                        <h3>戴尔台式机 (DELL)</h3>
+                        <span class="key-badge">Esc</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：戴尔 OptiPlex、灵越等台式机。若按 Esc 没反应，可尝试按 F12 键。</p>
+                        <span class="card-tag">品牌台式机</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="desktop" data-keywords="hasee 神舟 台式机">
+                    <div class="boot-header">
+                        <h3>神舟台式机 (Hasee)</h3>
+                        <span class="key-badge">F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：神舟新梦、战神等全线品牌台式机。</p>
+                        <span class="card-tag">品牌台式机</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="desktop" data-keywords="asus 华硕 台式机">
+                    <div class="boot-header">
+                        <h3>华硕台式机 (ASUS)</h3>
+                        <span class="key-badge">F8</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：华硕天选、天选 AIR 等全线品牌台式机及一体机。</p>
+                        <span class="card-tag">品牌台式机</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="desktop" data-keywords="founder 方正 台式机">
+                    <div class="boot-header">
+                        <h3>方正台式机 (Founder)</h3>
+                        <span class="key-badge">F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：方正品牌台式机机型。</p>
+                        <span class="card-tag">品牌台式机</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="desktop" data-keywords="tongfang 清华同方 台式机">
+                    <div class="boot-header">
+                        <h3>清华同方台式机</h3>
+                        <span class="key-badge">F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：清华同方真爱、超翔等全系列品牌台式机。</p>
+                        <span class="card-tag">品牌台式机</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="desktop" data-keywords="haier 海尔 台式机">
+                    <div class="boot-header">
+                        <h3>海尔台式机 (Haier)</h3>
+                        <span class="key-badge">F12</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：海尔品牌台式主机及一体机。</p>
+                        <span class="card-tag">品牌台式机</span>
+                    </div>
+                </div>
+
+                <div class="boot-card" data-category="desktop" data-keywords="benq 明基 台式机">
+                    <div class="boot-header">
+                        <h3>明基台式机 (BenQ)</h3>
+                        <span class="key-badge">F8</span>
+                    </div>
+                    <div class="boot-body">
+                        <p>适用范围：明基品牌台式电脑及一体机。</p>
+                        <span class="card-tag">品牌台式机</span>
                     </div>
                 </div>
             </div>
