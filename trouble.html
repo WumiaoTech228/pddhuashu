@@ -130,6 +130,47 @@
         .kefu-section {
             scroll-margin-top: 7.5rem;
         }
+
+.trouble-search-bar {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    padding: 1rem 1.25rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    align-items: center;
+}
+.trouble-search-bar svg {
+    flex-shrink: 0;
+}
+.trouble-search-input {
+    flex: 1;
+    background: #050506;
+    border: 1px solid var(--border-color);
+    color: #ffffff;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    font-family: var(--font-sans);
+    outline: none;
+}
+.trouble-search-input:focus {
+    border-color: #ffffff;
+}
+.trouble-search-input::placeholder {
+    color: var(--text-muted);
+}
+.trouble-search-clear {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.5rem 0.8rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+    display: none;
+}
+.script-row.hidden-by-search {
+    display: none;
+}
 </style>
 </head>
 <body class="kefu-page">
@@ -173,8 +214,13 @@
 
         <!-- 13. 电脑系统疑难杂症解决 -->
         <div class="kefu-section" id="section-trouble">
-            <div class="kefu-section-title">13. 电脑系统疑难杂症解决</div>
+            <div class="kefu-section-title">13. 电脑系统疑难杂症解决（含游戏玩家与品牌笔记本专项）</div>
             
+            <div class="trouble-search-bar" id="trouble-search-bar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" class="trouble-search-input" id="trouble-search-input" placeholder="搜索疑难杂症关键词（如：蓝屏、游戏闪退、打印机、Dell、联想...）" oninput="filterTroubleScripts()">
+                <button class="trouble-search-clear" id="trouble-search-clear" onclick="clearTroubleSearch()">清除</button>
+            </div>
             <div class="script-row">
                 <div class="script-info">
                     <span class="script-desc">蓝屏崩溃日志分析</span>
@@ -525,6 +571,389 @@ DISM /Online /Cleanup-Image /RestoreHealth /Source:WIM:X:\Sources\install.wim:1 
                 </div>
                 <button class="copy-btn" onclick="copyText('trouble-17')">一键复制</button>
             </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">游戏闪退/崩溃/卡死修复（全屏优化/虚拟内存/DirectX/待机内存清理）</span>
+                    <div class="script-content" id="trouble-18">【游戏闪退/崩溃/卡死综合修复方案】
+游戏崩溃分多种类型，先定位问题根源：
+1. 查看崩溃日志：打开 C:\Windows\Minidump 找 .dmp 蓝屏文件；打开事件查看器（Win+R → eventvwr → Windows 日志 → 应用程序），找游戏崩溃时的「应用程序错误」事件，记下异常代码（如 0xc0000005 是内存访问违规，0xc0000409 是堆栈溢出）。很多游戏也会在安装目录下生成 crashdump 或 crash.log 文件。
+
+一、全屏优化兼容性修复：
+1. 右键游戏主程序 .exe → 属性 → 兼容性 → 勾选「禁用全屏优化」→ 确定。部分老游戏还需勾选「以 Windows 7 兼容模式运行」。
+2. Win+R → systempropertiesperformance → 数据执行保护 → 为游戏程序添加 DEP 例外：选择「为除下列程序之外的所有程序启用 DEP」→ 添加游戏 exe。
+3. 游戏启动参数（Steam/Epic 属性 → 启动选项）：加 -dx11 或 -d3d11 强制 DX11 渲染（适用于 DX12 导致闪退的新游戏）；加 -windowed 强制窗口化排除全屏独占问题。
+
+二、待机内存清理（游戏帧数骤降/长时间玩变卡）：
+1. 下载 ISLC (Intelligent Standby List Cleaner) → 以管理员运行 → 勾选「Start ISLC minimized and auto-start monitor」→ 设置「The list size is at least 1024MB」和「Free memory is lower than 16284MB」→ 点击 Start。ISLC 会在待机内存超过 1GB 时自动清理，解决长时间游戏后帧数暴跌问题。
+2. 替代方案：RAMMap（微软官方）→ 打开后点 Empty → Empty Standby List 手动一键清空。
+3. 注册表调整内存管理（32GB+ 内存可选）：Win+R → regedit → HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management → 新建 DWORD(32位) ClearPageFileAtShutdown = 1（关机时清理页面文件，防止脏数据累积）。
+
+三、虚拟内存设置（解决大场景加载闪退）：
+1. 很多游戏（如战地/使命召唤/绝地求生）需要比物理内存更大的虚拟内存。Win+Pause → 高级系统设置 → 性能设置 → 高级 → 虚拟内存更改 → 取消「自动管理」→ 选最快的 SSD 盘 → 自定义大小 → 初始值和最大值都设为 16384MB（16GB）或 32768MB（32GB）→ 设置 → 重启。
+2. 不要把虚拟内存放在机械硬盘上，会因为读写延迟导致游戏卡顿和崩溃。
+
+四、DirectX 与运行库全套修复：
+1. 下载 DirectX 修复工具（DirectX Repair）增强版 → 检测并修复 → 自动补齐所有缺失的 DX 组件（D3DX9_43.dll、XINPUT1_3.dll 等老游戏依赖）。同时勾选「修复 C++」自动检测和补齐 VC++ 2005-2022 全套。
+2. .NET Framework 修复：Win+R → appwiz.cpl → 启用或关闭 Windows 功能 → 勾选 .NET Framework 3.5（包括 2.0 和 3.0）和 .NET Framework 4.8 → 确定。老游戏（如天际/辐射）需要 .NET 3.5 才能运行。
+3. 32 位游戏大内存补丁：使用 4GB Patch（NTCore）或 Large Address Aware 工具，勾选游戏主 exe → 启用「Large Address Aware」→ 保存。让 32 位游戏能使用超过 2GB 内存（最高 4GB），显著减少因内存不足导致的崩溃。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('trouble-18')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">游戏反作弊冲突导致蓝屏/无法启动（Vanguard/EAC/BattlEye）</span>
+                    <div class="script-content" id="trouble-19">【反作弊冲突排查与修复】
+一、Vanguard（拳头游戏：VALORANT/LoL）冲突：
+1. 最常见 BSOD 来源：vgk.sys 与 MSI Afterburner / RTSS (RivaTuner Statistics Server) 冲突。完全卸载 Afterburner 和 RTSS，或至少关闭 RTSS 的屏幕显示（OSD）。RGB 灯控软件（如 Corsair iCUE、Razer Synapse、Logitech G HUB）里的硬件监控模块也会触发 vgk.sys 蓝屏。
+2. Vanguard 依赖内核隔离（VBS/HVCI）关闭：Win+R → msinfo32 → 查看「基于虚拟化的安全性」状态。如果显示「已启用」→ 需要关闭：Win+R → gpedit.msc → 计算机配置 → 管理模板 → 系统 → Device Guard → 打开「基于虚拟化的安全性」→ 设为「已禁用」→ 重启。家庭版 Windows 无 gpedit，用注册表：HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\DeviceGuard → 新建 DWORD EnableVirtualizationBasedSecurity = 0。
+3. Vanguard 服务状态检查：Win+R → services.msc → 找到 vgc 服务 → 确保启动类型为「自动」并已运行。如果没有 vgc 服务 → 打开 Riot Client → 设置 → 勾选「开机时启动 Vanguard」→ 重启电脑。
+4. 如果 Vanguard 报错「VAN 1067」或「VAN 9001」：启用 TPM 2.0（BIOS → Security → TPM → Enable）和 Secure Boot（BIOS → Boot → Secure Boot → Enable → Standard 模式，不要选 Custom）。
+
+二、EAC (EasyAntiCheat) 冲突：
+1. EAC 与 Core Isolation/内存完整性冲突：Win+R → Core Isolation → 关闭「内存完整性」→ 重启。
+2. EAC 服务修复：Steam\steamapps\common\游戏名\EasyAntiCheat\ → 以管理员运行 EasyAntiCheat_Setup.exe → 选择「修复服务」→ 完成。或直接运行 EasyAntiCheat_EOS_Setup.exe（Epic 游戏使用 EOS 版本）。
+3. 常见报错「EasyAntiCheat Error Code 30005/30004」：与杀毒软件冲突。将游戏安装目录和 %ProgramFiles%\EasyAntiCheat 文件夹添加到杀软（Windows Defender/360/火绒）的排除列表。
+4. 找不到 EAC 服务：Win+R → services.msc → EasyAntiCheat 需为手动（触发启动），如果被设为禁用则游戏无法启动。
+
+三、BattlEye（BEService）冲突：
+1. 报错「BattlEye Failed to initialize」或「BattlEye Service not running」：Win+R → services.msc → 找 BEService → 右键启动。如果启动报错 → cmd（管理员）→ sc delete BEService → 然后让游戏重新安装 BattlEye（运行游戏目录下的 BattlEye\BEService_x64.exe /install）。
+2. BattlEye 清理：运行游戏目录下 BattlEye\Uninstall_BattlEye.bat → 重启 → 让游戏自动重装 BattlEye。
+
+四、通用排查：
+1. 如果同时安装多个带反作弊的游戏（如 VALORANT + 吃鸡 + 战地），互相之间可能冲突。建议轮换玩时重启电脑让上一个反作弊完全卸载。
+2. 在「控制面板 → 程序和功能」里彻底卸载不玩的游戏的反作弊组件（EasyAntiCheat、BattlEye、Xigncode 等通常独立出现在程序列表中）。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('trouble-19')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">游戏延迟高/丢包/NAT类型严格联机失败修复</span>
+                    <div class="script-content" id="trouble-20">【游戏网络优化与 NAT 问题修复】
+一、Wi-Fi 后台扫卡断流（笔记本 Wi-Fi 玩游戏关键修复）：
+1. 打开 cmd（管理员）→ 输入：netsh wlan show settings → 查看「Auto configuration logic」是否启用。如果启用 → 输入：netsh wlan set autoconfig enabled=no interface="Wi-Fi" → 关闭后台周期扫描。关闭后 Wi-Fi 不会每隔一段时间扫描附近热点导致游戏瞬间卡顿/掉包。
+2. 继续在 cmd（管理员）→ 关闭 Wi-Fi 省电：设备管理器 → 网络适配器 → 右键 Wi-Fi 网卡 → 属性 → 电源管理 → 取消勾选「允许计算机关闭此设备以节约电源」→ 高级 → 把「Wake on Magic Packet」「Wake on Pattern Match」都设为 Disabled。
+
+二、TCP 延迟优化（Nagle 算法 / TCPNoDelay）：
+1. Win+R → regedit → HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Parameters → 新建 DWORD(32位) TCPNoDelay = 1（如果 Parameters 项不存在则创建）。这禁用 Nagle 算法，使小的网络包（如游戏的操作指令）立即发送不等待合并，降低延迟。
+2. 进一步：HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters → 新建 DWORD TcpAckFrequency = 1 → 减少 TCP ACK 延迟。
+
+三、NAT 类型严格（联机失败/找不到匹配/无法加入好友房间）：
+1. 确认路由器的 UPnP 已开启：登录路由器管理页面（通常是 192.168.1.1 或 192.168.31.1）→ 找到 UPnP 设置 → 开启。UPnP 能让游戏自动映射端口。
+2. 如果 UPnP 开启仍 NAT 严格：手设端口转发。查游戏需要的端口（如 GTA5 Online 需 6672、61455-61458 UDP），在路由器 → 端口转发/虚拟服务器 → 添加规则 → 内网 IP 填本机 IP（Win+R → cmd → ipconfig 查看 IPv4）→ 协议选 TCP+UDP → 端口范围填对应值 → 保存。
+3. 把电脑设为 DMZ 主机（不推荐长期使用）可以快速判断是不是路由 NAT 问题：路由器 → DMZ 设置 → 填入电脑内网 IP → 启用。如果 DMZ 后 NAT 变开放，说明路由器 NAT 设置有问题，精确配置端口转发后关闭 DMZ。
+4. 运营商 CGNAT 问题：如果路由器 WAN 口 IP 是 100.64.x.x ~ 100.127.x.x 或 10.x.x.x，说明运营商给你的是内网 IP（CGNAT），无法通过任何路由器设置改善 NAT。致电运营商客服要求「改为公网 IPv4」，通常免费。
+
+四、IPv6 和 Teredo 隧道修复：
+1. Xbox 网络检查：Win+R → xbox-networking → 自动检测 NAT 类型和服务器连接状态。如果 Teredo 显示异常 → cmd（管理员）→ netsh interface Teredo set state type=client → 重启。如果 Teredo 仍异常 → netsh interface Teredo set state servername=win1910.ipv6.microsoft.com。
+2. DNS 优化：Win+R → ncpa.cpl → 右键网卡 → 属性 → Internet 协议版本 4 → 使用以下 DNS 服务器 → 首选 119.29.29.29（腾讯），备用 223.5.5.5（阿里）→ 确定。cmd（管理员）→ ipconfig /flushdns → 刷新缓存。
+
+五、网络适配器驱动与电源管理：
+1. 设备管理器 → 网络适配器 → 右键有线网卡和 Wi-Fi 网卡 → 属性 → 电源管理 → 全部取消勾选「允许计算机关闭」和「允许唤醒」→ 高级 → 把「Energy Efficient Ethernet」设为 Disabled、「Green Ethernet」设为 Disabled → 关闭省电导致的延迟抖动。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('trouble-20')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">NVIDIA/AMD/Intel显卡驱动游戏问题（DDU清洁安装/驱动回滚/掉驱动）</span>
+                    <div class="script-content" id="trouble-21">【显卡驱动全品牌故障修复】
+一、DDU 安全模式彻底清洁安装（适用所有品牌）：
+1. 下载 DDU (Display Driver Uninstaller) 最新版 → 下载你要安装的显卡驱动版本（NVIDIA/AMD/Intel 官网提前下好）。
+2. 断开网络（拔网线/关闭 Wi-Fi）→ 防止 Windows Update 自动推送旧驱动。
+3. 重启进入安全模式：按住 Shift 点重启 → 疑难解答 → 高级选项 → 启动设置 → 重启 → 按 4 进入安全模式。
+4. 运行 DDU → 选项 → 勾选「移除 PhysX」（NVIDIA）或「移除 AMD Audio Bus」（AMD）→ 设备类型选 GPU → 品牌选对应 → 点击「清除并重启」。
+5. 重启后进入正常系统 → 安装提前下好的显卡驱动 → 选「自定义/高级安装」→ 取消勾选不需要的组件（如驱动更新组件、遥测等）→ 仅安装图形驱动和 PhysX → 安装完成后再联网。
+
+二、NVIDIA 专项：
+1. 掉驱动/黑屏后恢复：NVIDIA「清洁安装」不只是驱动本身，还包括 GeForce Experience 的覆盖层和 ShadowPlay。安装驱动时选「自定义」→ 勾选「执行清洁安装」→ 取消 GeForce Experience 的「游戏内覆盖」（Game Overlay，会与部分反作弊冲突）。
+2. 驱动回滚：Win+X → 设备管理器 → 显示适配器 → 右键 NVIDIA 显卡 → 属性 → 驱动程序 → 回滚驱动程序 → 选回滚原因 → 确定。如果回滚按钮灰色：回滚只对从旧版升级到新版后 10 天内有效，超时只能 DDU 卸载后重装旧版。
+3. NVIDIA 控制面板 → 管理 3D 设置 → 程序设置 → 为特定游戏选择「高性能 NVIDIA 处理器」（笔记本混合输出机型必做，否则游戏跑在集显上帧数极低）。
+
+三、AMD 专项：
+1. 驱动超时/黑屏/TDR 问题：Win+R → regedit → HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers → 新建 DWORD(32位) TdrDelay = 10（十进制）。这将驱动超时等待从默认 2 秒延长到 10 秒，给 GPU 更多完成重负载操作的时间，减少误判超时。
+2. AMD 驱动安装时选择「Factory Reset」→ 勾选 → 会在安装前自动清干净旧的 AMD 驱动残留和注册表。
+
+四、Intel 集成显卡专项：
+1. 笔记本 iGPU 和 dGPU 冲突：设备管理器里禁用 Intel 集显会导致笔记本无法调节屏幕亮度，不要完全禁用。正确做法是让特定游戏使用独显：设置 → 系统 → 屏幕 → 图形设置 → 浏览 → 添加游戏 exe → 选项 → 高性能。
+2. MUX Switch / 独显直连：部分高端笔记本（拯救者 Y9000P / ROG 枪神等）bios 里有 MUX Switch 选项，设为「dGPU Only」完全屏蔽集显，游戏性能提升 5-15%，但耗电增加不适合电池使用。
+
+五、阻止 Windows Update 自动覆盖显卡驱动：
+1. Win+R → sysdm.cpl → 硬件 → 设备安装设置 → 选「否」→ 保存更改。
+2. Win+R → gpedit.msc → 计算机配置 → 管理模板 → Windows 组件 → Windows 更新 → 管理从 Windows 更新提供的更新 → 启用「不要在 Windows 更新中包含驱动程序」→ 确定。家庭版用注册表：HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate → 新建 DWORD ExcludeWUDriversInQualityUpdate = 1。
+
+六、显卡 VRAM 用量监控：
+1. 下载 GPU-Z → Sensors 标签页 → 查看「Memory Used」实时显存占用。如果游戏频繁闪退且显存占用接近显卡显存上限，降低游戏纹理质量。
+2. NVIDIA 用户还可以用 GeForce Experience → Alt+R 快捷键 → 性能面板查看 VRAM 占用。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('trouble-21')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">笔记本玩游戏性能差/掉帧/高温降频（联想拯救者/华硕ROG/戴尔G15/惠普暗影精灵）</span>
+                    <div class="script-content" id="trouble-22">【品牌游戏本性能释放与散热优化】
+一、联想拯救者系列（Legion）：
+1. Legion Vantage / 联想电脑管家 → 性能模式 → 选「野兽模式」（Fn+Q 循环切换：安静→均衡→野兽）。野兽模式下风扇会全速，CPU/GPU 功耗墙放开。
+2. 如果野兽模式下仍然降频：下载 LegionFanControl → 手动拉高风扇曲线，70°C 以上风扇 80%+。部分机型有 BD PROCHOT（双向处理器过热）信号问题，用 ThrottleStop → 取消勾选 BD PROCHOT → 保存。注意 BD PROCHOT 是保护机制，取消后需关注温度不要长期超过 95°C。
+3. 更新 BIOS：去联想官网 → 搜你的型号（如 Legion 5 15ARH7）→ 下载最新 BIOS → 更新。新 BIOS 通常优化了风扇曲线和功耗策略。
+
+二、华硕 ROG 系列：
+1. Armoury Crate 经常是性能问题的根源。建议彻底卸载：用官方卸载工具（ASUS Armoury Crate Uninstall Tool，官网下载）→ 运行清除所有残留。替代方案：G-Helper（轻量开源，GitHub 搜 G-Helper）→ 可调节性能模式、风扇曲线、屏幕刷新率等，不占用系统资源。
+2. ROG BIOS 中确认「ASUS Performance Enhancement」已启用，并在 Windows 电源选项中选「华硕高性能」电源计划。
+
+三、戴尔 G15 系列：
+1. Alienware Command Center (AWCC) 通常有 bug。如果有问题：完全卸载 AWCC → 去戴尔官网下最新版重装。在 AWCC 的 Fusion 页面设置高性能散热模式。
+2. G15 常见问题：CPU 温度墙被设置得过低（TCC offset 默认可能较大）。在 BIOS 中找「TCC Activation Offset」→ 设为 0（让 CPU 可以在更高温度才降频），或进入系统后用 ThrottleStop → TPL 窗口 → 调整 TCC Offset 值。
+3. 戴尔电源计划锁死：进入 BIOS → Performance → 关闭「Intel SpeedStep」和「C-States」→ 这些省电技术在某些游戏中误判导致频率波动。
+
+四、惠普暗影精灵系列（OMEN）：
+1. OMEN Gaming Hub → 性能控制 → 选「狂暴模式」。如果 OMEN Gaming Hub 打不开 → 去惠普官网重装 HP Support Assistant 和 OMEN Gaming Hub。
+2. 暗影精灵通病：BIOS 版本严重影响性能。去惠普官网 → 搜暗影精灵型号 → 下载最新 BIOS → 更新。
+3. 关闭 OMEN Gaming Hub 的「网络助推器」（Network Booster），它实际是 QoS 限速，有时反而导致游戏网络卡顿。
+
+五、所有笔记本通用散热优化：
+1. 物理清洁：每 3-6 个月拆后盖，用压缩空气罐或防静电刷清风扇和散热鳍片的积灰。积灰是降频的第一大元凶。
+2. 换硅脂：如果笔记本使用超过 1.5 年且温度异常高，换硅脂（推荐信越 7921 或利民 TFX。相变片如 Honeywell PTM7950 效果持久但贵）。
+3. 抬高笔记本尾部：用瓶盖/支架把笔记本尾部垫高 2-3cm，底部进风口不被挡住，温度可降低 5-10°C。
+4. 禁用 OEM 臃肿软件：厂商预装的各种「电脑管家」「游戏加速」「网络优化」通常本身就在占 CPU 和内存，除了前面提到的必要软件外全部卸载。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('trouble-22')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">Windows游戏相关设置优化（游戏模式/硬件加速GPU调度/Game Bar/电源计划）</span>
+                    <div class="script-content" id="trouble-23">【Windows 游戏相关设置深度优化】
+一、游戏模式开关决策：
+1. Windows 10 1903 及之前版本：游戏模式有 bug，反而会导致卡顿，建议关闭。设置 → 游戏 → 游戏模式 → 关闭。
+2. Windows 10 1909 ~ Win11 22H2：游戏模式稳定，开启后系统会优先分配 CPU/GPU 资源给游戏进程，并阻止后台 Windows Update 和索引。
+3. 验证方法：游戏中 Win+G → 游戏栏 → 设置 → 在游戏栏中可以看到游戏模式是否在工作。如果开启游戏模式后游戏反而卡顿，关闭再测。
+
+二、硬件加速 GPU 调度 (HAGS)：
+1. 设置 → 系统 → 屏幕 → 图形设置 → 更改默认图形设置 →「硬件加速 GPU 调度」→ 开启 → 重启。
+2. HAGS 对 DX12 游戏帧数有 3-10% 提升，但对 DX11 及更老游戏可能无变化甚至略降低。如果你主要玩 DX12 游戏（赛博朋克 2077 / 战神 / 蜘蛛侠等）→ 开启；如果玩 DX11 老游戏且用 OBS 直播 → 关闭 HAGS（HAGS 下 OBS 编码器可能冲突）。
+3. 部分 NVIDIA 驱动版本 HAGS 不稳定导致闪退，如果开启后频繁闪退则关闭。
+
+三、Game Bar / DVR 后台录像关闭（节省 CPU 和磁盘）：
+1. Win+R → regedit → HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR → 新建 DWORD(32位) AppCaptureEnabled = 0
+2. 同一路径下 → 新建 DWORD GameDVR_Enabled = 0
+3. HKEY_CURRENT_USER\System\GameConfigStore → 新建 DWORD GameDVR_Enabled = 0；GameDVR_FSEBehaviorMode = 2（阻止全屏游戏时后台录制）
+4. 设置 → 游戏 → 摄像 → 关闭「在我玩游戏时在后台录制」。
+5. 设置 → 游戏 → Game Bar → 如果不需要截图/录屏功能可完全关闭 Game Bar。
+
+四、电源计划优化：
+1. 台式机专用：Win+R → cmd（管理员）→ powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61 → 在电源选项中选择「卓越性能」。此模式将所有硬件设为最高性能不降频。
+2. 笔记本：选「高性能」；电池用「平衡」兼顾续航。不要在有独显的笔记本上用「节能」，会导致独显被强制关闭。
+3. PCIe 链路状态：电源选项 → 更改计划设置 → 更改高级电源设置 → PCI Express → 链路状态电源管理 → 设为「关闭」→ 防止 PCIe 设备（显卡/NVMe SSD）进入省电状态导致游戏卡顿。
+4. USB 选择性暂停：同上 → USB 设置 → USB 选择性暂停设置 → 设为「禁用」→ 防止游戏外设（键鼠/手柄）间歇性断开。
+5. 处理器电源管理：同上 → 处理器电源管理 → 最小处理器状态 → 台式机设 100%，笔记本插电设 100% → 最大处理器状态 → 100%。散热方式 → 全部「主动」。
+
+五、Core Isolation / 内存完整性：
+1. 对游戏性能影响：内存完整性开启会降低 3-8% 游戏性能，且与多数反作弊（Vanguard/EAC/BattlEye）冲突。Win+R → Core Isolation → 关闭「内存完整性」→ 重启。
+2. 对绝大多数普通用户，关掉内存完整性后安全风险极低。如果电脑只玩游戏不安装来路不明的破解软件，建议关闭。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('trouble-23')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">游戏加载慢/存储性能优化（SSD 4K对齐/虚拟内存/32位大内存补丁/DirectStorage）</span>
+                    <div class="script-content" id="trouble-24">【游戏存储性能全维度优化】
+一、SSD 4K 对齐检查（影响随机读写性能 20-50%）：
+1. Win+R → msinfo32 → 组件 → 存储 → 磁盘 → 找你的 SSD，查看「分区起始偏移」值。如果该值能被 4096 整除（即分区起始偏移 ÷ 4096 = 整数），说明已 4K 对齐。如果不能整除 → 未对齐需要重新分区。
+2. 快速修复未对齐：下载分区助手（免费）→ 右键未对齐的分区 → 高级操作 → 分区对齐 → 选择 4096 扇区 → 确认 → 提交 → 重启后自动对齐（建议先备份重要数据，虽然对齐操作一般不丢失数据）。
+3. 确保 SSD 运行在 AHCI 模式：Win+R → msinfo32 → 组件 → 存储 → SCSI/IDE → 查看控制器类型。如果是「标准 NVM Express 控制器」说明是 NVMe 无需担心。如果是 SATA SSD → 进入 BIOS → SATA Mode → 确保选 AHCI（非 IDE/RAID）。从 IDE 改为 AHCI 后系统可能无法启动，需先进安全模式一次让系统自动加载 AHCI 驱动。
+
+二、写入缓存和高级性能：
+1. 设备管理器 → 磁盘驱动器 → 右键 SSD → 属性 → 策略 → 勾选「启用设备上的写入缓存」→ 确定。这个设置能显著提升写入性能，但意外断电可能丢失未写入数据（笔记本有电池无需担心）。
+2. 如果是 NVMe SSD → 同样界面勾选「关闭 Windows 写入缓存缓冲区刷新」（仅限有电池的笔记本或不担心断电的台式机）。
+
+三、DirectStorage 支持检查：
+1. Win+R → 打开 Xbox Game Bar → 设置 → 游戏功能 → 查看「DirectStorage」是否显示为「已支持」。需同时满足：NVMe SSD (PCIe 3.0 x4 或以上) + DX12 Ultimate GPU + Win11（Win10 22H2 也支持但不完整）。如果显示不支持 → 更新显卡驱动和 SSD 固件到最新。
+2. 如果游戏本身不支持 DirectStorage，这项优化无效果。目前支持的游戏有限（如 Forspoken、暗黑破坏神 4）。
+
+四、页面文件（虚拟内存）优化：
+1. 把页面文件放在最快的 NVMe SSD 上，固定大小避免系统动态调整开销：Win+Pause → 高级系统设置 → 性能设置 → 高级 → 虚拟内存更改 → 取消自动管理 → 选 NVMe SSD 盘 → 自定义大小 → 初始值和最大值都填 16384（16GB 内存用户）或 32768（32GB+ 用户）→ 设置 → 重启。
+2. 不要在 HDD 上放页面文件，也不要把页面文件分配到多个盘上，统一一个固定大小在最快 SSD 上性能最优。
+
+五、32 位游戏大内存补丁：
+1. 32 位游戏默认只能用 2GB 内存，LAA（Large Address Aware）补丁可以让它用 4GB。
+2. 使用 4GB Patch（NTCore 出品）或 Large Address Aware.exe → 打开游戏主 exe → 勾选 → 保存。支持的游戏明显减少加载时间和中途卡顿。
+3. 重要：只对 32 位游戏有效（任务管理器 → 详细信息 → 看游戏 exe 后面是否带 (32 位)）。64 位游戏本身就能用超过 4GB 内存。
+
+六、内存压缩（32GB+ 大内存用户）：
+1. Win+R → powershell（管理员）→ Disable-MMAgent -mc → 关闭内存压缩。内存压缩在 16GB 以下有用，32GB 以上反而浪费 CPU 周期。
+2. 重启后生效。如果想恢复：Enable-MMAgent -mc。
+
+七、RAMMap 待机列表清理：
+1. 运行 RAMMap → Empty → Empty Standby List → 释放被缓存的待机内存。游戏运行一段时间后待机列表可能占用 5-15GB，清理后可提高可用内存。建议配合 ISLC 自动清理使用。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('trouble-24')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">Dell/HP品牌笔记本常见故障（No Boot Device/SupportAssist/BIOS恢复/LED诊断码）</span>
+                    <div class="script-content" id="trouble-25">【Dell / HP 品牌笔记本故障排查】
+一、Dell 开机报错「No Boot Device Found」：
+1. 进入 BIOS（开机按 F2）→ System Configuration → SATA Operation → 确认是 AHCI 或 RAID On（不要选 Disabled）。如果原来 RAID On 的系统改成 AHCI 后无法进系统，需进安全模式一次。
+2. BIOS → Boot Sequence → 确认硬盘在启动列表第一位。如果看不到硬盘 → 关机，拆后盖重新拔插硬盘排线/或 NVMe 螺丝松动。
+3. 如果硬盘在 BIOS 里也看不到 → 可能是硬盘故障。开机按 F12 → Diagnostics → 跑 ePSA 完整硬件检测。
+
+二、Dell SupportAssist 故障清理：
+1. SupportAssist 经常卡死或误报。完全卸载：控制面板 → 程序和功能 → 卸载 Dell SupportAssist 及 SupportAssist OS Recovery Plugin。
+2. 清理残留：删除 C:\ProgramData\Dell\SARemediation 和 C:\ProgramData\SupportAssist 文件夹。
+3. 如需重装：去 Dell 官网 → SupportAssist for Home PCs → 下载安装。不装也可以，SupportAssist 不是必需软件。
+
+三、Dell BIOS 恢复：
+1. 如果 BIOS 更新失败导致无法开机：找一台正常电脑 → 下载对应机型的 BIOS .exe 文件。用 Dell BIOS Recovery 工具 → 把 BIOS .exe 改名 BIOS_IMG.rcv → 放到 FAT32 格式的 U 盘根目录。
+2. 插入 U 盘到故障电脑 → 按住 CTRL + ESC → 插上电源 → 松开 → 进入 BIOS Recovery → 选 U 盘中的 BIOS_IMG.rcv → 恢复。
+3. 部分新机型支持直接联网恢复：Ctrl + ESC → 选「Recover BIOS via Network」→ 连接有线网络。
+
+四、Dell 电池 LED 诊断码（电源灯白/橙闪烁）：
+- 2 橙 1 白：CPU 故障
+- 2 橙 2 白：主板/BIOS 损坏
+- 2 橙 3 白：内存故障
+- 2 橙 4 白：内存故障
+- 2 橙 5 白：CMOS 电池故障
+- 2 橙 6 白：显卡故障
+- 2 橙 7 白：硬盘故障
+- 3 橙 1 白：电源适配器不匹配
+出现以上闪烁码 → 对应硬件送修。内存可自行重新插拔试试（拔下用橡皮擦金手指再插回）。
+
+五、HP 笔记本 BIOS 恢复：
+1. HP BIOS 恢复键：Win + B（部分机型 Win + V）。关机 → 按住 Win + B → 按电源键开机 → 持续按住 Win + B 直到出现 HP BIOS Update 界面 → 按提示恢复。
+2. 如果 Win + B 无效 → 去 HP 官网 → 下对应机型的 BIOS Recovery 工具 → 制作恢复 U 盘 → 插 U 盘 → Win + B 开机 → 从 U 盘恢复。
+3. HP Sure Start 恢复：部分商用 EliteBook/ZBook 有 Sure Start 芯片。开机 F2 → HP PC Hardware Diagnostics → Firmware Management → BIOS Recovery → 从网络或 USB 恢复。
+
+六、HP 电池不充电（0% 可用，已插入电源）：
+1. HP 硬重置：关机 → 拔掉电源适配器和所有外设 → 长按电源键 15-20 秒（放电）→ 插上电源 → 开机。
+2. 设备管理器 → 电池 → 右键「Microsoft ACPI 兼容的控制方法电池」→ 卸载设备（不要勾选删除驱动）→ 重启 → 系统自动重新识别电池。
+3. BIOS 电池自检：开机 F2 → 组件测试 → 电池 → 运行一次完整检测。
+
+七、Dell / HP BIOS 和诊断快捷键速查：
+- Dell：F2 进 BIOS；F12 启动菜单 / Diagnostics
+- HP 消费类（暗影精灵/星）：F10 进 BIOS；F9 启动菜单；F2 诊断
+- HP 商用（EliteBook/ProBook）：F10 进 BIOS；F9 启动菜单；F2 诊断（ESC → F2）</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('trouble-25')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">联想/华硕/宏碁/MSI笔记本常见故障（Vantage/奥创/散热/BIOS更新/EC重置）</span>
+                    <div class="script-content" id="trouble-26">【联想 / 华硕 / 宏碁 / MSI 笔记本品牌专项故障】
+一、联想笔记本：
+1. 电池养护模式卡在 55-60% 不充电：打开 Lenovo Vantage → 电源 → 关闭「电池养护模式」→ 选择「常规模式」。如果 Vantage 无法切换 → 在 Vantage 里重置电源设置 → 或在联想电脑管家中同样设置。部分机型需 F2 进 BIOS → Configuration → 关闭「Battery Charge Threshold」。
+2. 合盖睡眠后无法唤醒（Modern Standby S0 问题）：联想很多机型默认用 S0 低功耗睡眠（连接待机）而非传统 S3 睡眠。S0 模式下合盖后仍可能发热、唤醒慢。Win+R → cmd（管理员）→ powercfg /a → 查看支持的睡眠状态。如果只有 S0 无 S3 → BIOS 中找「Sleep Mode」改为「Linux S3」。改后需重装显卡/声卡驱动（S3 唤醒时重新初始化设备，旧驱动可能不兼容）。
+3. Fn 快捷键不工作（亮度/音量/麦克风静音）：联想 Fn 热键依赖多个驱动的安装顺序。正确安装顺序：主板芯片组 → 电源管理 (Lenovo Power Management) → 热键功能集成 (Lenovo Fn and Function Keys / Hotkey Features Integration) → 显卡驱动。如果安装顺序错乱，从设备管理器卸载热键相关设备并在联想官网按顺序重装。
+
+二、华硕笔记本：
+1. Armoury Crate 卸载与 G-Helper 替代：用华硕官方卸载工具彻底清除 Armoury Crate 及所有 Aura Sync / ROG Live Service 残留。然后从 GitHub 下载 G-Helper（seerge/g-helper）→ 解压运行 → 功能包括：性能模式切换、风扇曲线、屏幕刷新率切换、电池充电限制 80%、键盘背光控制，资源占用仅为 Armoury Crate 的不到 5%。
+2. 如果华硕笔记本经常蓝屏：在 BIOS（F2）→ Advanced → 关闭「ASUS Armoury Crate Interface」（华硕底层服务接口），这个服务有时会与反作弊驱动冲突。
+
+三、宏碁笔记本：
+1. Acer Care Center 电池充电限制：打开 Acer Care Center → 检查 → 电池 → 选择「80% 充电限制」延长电池寿命。如果此选项灰色→ 更新 Acer Care Center 到最新版或重启电脑。
+2. Nitro 系列散热问题：PredatorSense / NitroSense → 风扇控制 → 自定义 → 把风扇曲线拉高。部分机型可以 Fn+F 或专用 Turbo 键一键满速风扇。
+3. Acer 出厂恢复：开机 ALT+F10 → 进入 Acer Recovery Management → 选择「恢复出厂设置」。注意：ALT+F10 只有在出厂恢复分区未被删除时才有效。
+
+四、MSI 笔记本：
+1. EC（嵌入式控制器）重置：当风扇转速异常、键盘失灵、电池不充电等问题时，优先 EC 重置。关机 → 拔掉所有电源和外设 → 找底部「EC Reset 孔」（小针孔，部分机型没有孔）→ 用回形针按住 30 秒。没有孔则在关机状态下长按电源键 30 秒 → 松开 → 等 10 秒 → 插电开机。
+2. MSI Center / Dragon Center 问题：如果 Dragon Center 打不开 → 用 MSI Clean Master 卸载工具彻底清除 → 重装 MSI Center（新版本替代了 Dragon Center）。在 MSI Center → 功能 → 场景设置 → 选「极致性能」。
+3. BIOS 更新（M-Flash）：去 MSI 官网下载对应机型 BIOS → 解压到 FAT32 U 盘根目录 → 重启 → 按 DEL 进 BIOS → 选 M-Flash → 选 U 盘中的 BIOS 文件 → 确认更新。更新期间不要断电。
+4. MSI 笔记本蓝屏 WHEA 错误：大概率是 CPU 电压偏低导致。BIOS → Overclocking → 关闭「Intel Turbo Boost Max 3.0」→ 或调高 Core Voltage Offset（+0.02V 开始试）。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('trouble-26')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">华为荣耀/小米红米笔记本常见故障（电脑管家冲突/驱动缺失/散热/触控板）</span>
+                    <div class="script-content" id="trouble-27">【华为/荣耀/小米/红米笔记本品牌专项故障】
+一、华为笔记本：
+1. 华为电脑管家性能模式：打开电脑管家 → 电脑优化 → 性能 → 可选「均衡模式」和「高性能模式」。插电时选高性能。如果电脑管家无法安装或闪退 → 去华为官网下载最新版（注意区分 Intel 版和 AMD 版，不通用）。
+2. 多屏协同连接不稳定/延迟高：确认 Wi-Fi 为 5GHz 频段（2.4GHz 延迟高）→ 笔记本和手机连同一 Wi-Fi → 电脑管家蓝牙和 Wi-Fi 同时开启。如果协同频繁断开 → Win+R → services.msc → 重启「HwOsdService」和「HMService」。排查路由器是否开了 AP 隔离 → 关闭。
+3. 华为笔记本声卡驱动特殊：部分机型使用华为自研 Histen 音效，重装系统后需去华为官网下载「音频驱动 + Histen 音效组件」两个都装好才有声音。先装音频驱动再装 Histen。
+
+二、荣耀笔记本：
+1. 荣耀电脑管家冲突：如果安装了华为电脑管家，会和荣耀电脑管家冲突导致功能异常。确认你的机型属于荣耀还是华为，只装对应的管家。
+2. 音频输出自动切换到耳机/扬声器混乱：荣耀部分机型对音频路由的处理有 bug。设备管理器 → 声音 → 卸载「Realtek Audio」和「Intel Smart Sound Technology」→ 去荣耀官网下载对应型号音频驱动包重新安装。
+3. 荣耀 MagicBook 合盖唤醒问题：进入 BIOS → 关闭「Wake on Lid Open」功能（部分机型不支持该选项）。不支持的话只能在 Windows 里：Win+R → powercfg.cpl → 选择关闭盖子的功能 → 把「关闭盖子时」设为「不采取任何操作」。
+
+三、小米/红米笔记本：
+1. 重装系统后驱动缺失（小米笔记本驱动安装顺序）：红米/小米笔记本重装 Windows 后很多设备不识别。正确安装顺序：
+   ① 主板芯片组驱动 (Chipset)
+   ② Intel Serial IO 驱动（GPIO/I2C/UART，触控板依赖此驱动！）
+   ③ Intel Management Engine Interface (MEI)
+   ④ Intel DPTF (Dynamic Platform & Thermal Framework)
+   ⑤ 显卡驱动（集显先装，独显后装）
+   ⑥ 声卡驱动
+   ⑦ Wi-Fi/蓝牙驱动
+   ⑧ 触控板驱动（需装完 Serial IO 后才有效）
+   驱动下载：小米社区/小米官网 → 服务中心 → 驱动下载 → 选对应型号（如 RedmiBook Pro 15 2022）。
+2. 触控板不工作：设备管理器 → 系统设备 → 找到「Intel Serial IO I2C Host Controller」→ 如果有感叹号说明 Serial IO 驱动没装 → 装好 Serial IO 后触控板自动恢复。
+3. 小米笔记本 Fn+K 性能模式：部分机型 Fn+K 循环切换静音/均衡/全速模式。如果切换无效 → 安装「小米控制中心」驱动（小米官网对应机型驱动包中有）→ 重启。
+4. 红米笔记本散热高温：红米游戏本/Redmi G 满载温度高是设计常态。改善：清理灰尘、换硅脂（推荐利民 TF8）→ BIOS 关闭「Intel Turbo Boost」可降 10-15°C（但损失性能）→ 或使用 ThrottleStop 设置更温和的 PL1/PL2 功耗限制。
+5. 红米笔记本电池鼓包/续航骤降：小米系笔记本电池通病。在小米商城/小米之家售后换电池（一般 2 年保修期内免费）。日常使用建议在 BIOS 里开启电池保护模式（充电上限 60%/80%）。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('trouble-27')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">笔记本通用硬件故障（电池不充电/WHEA蓝屏/触控板键盘失灵）</span>
+                    <div class="script-content" id="trouble-28">【笔记本通用硬件故障排查与修复】
+一、电池不充电（显示 0% 可用，已插入电源）通用修复流程：
+1. 第一步：设备管理器 → 电池 → 右键「Microsoft ACPI 兼容的控制方法电池」→ 卸载设备 → 重启 → 系统自动重新安装驱动并重新识别电池。90% 的软件层面问题此步可解决。
+2. 第二步：硬重置（放电）→ 关机拔电源和所有外设 → 长按电源键 30 秒不松 → 松开等 10 秒 → 插电开机。此操作重置 EC 芯片。
+3. 第三步：cmd（管理员）→ powercfg /batteryreport → 生成电池报告到 C:\Users\用户名\battery-report.html → 打开查看 Design Capacity（设计容量）和 Full Charge Capacity（当前满充容量）。如果满充容量不足设计容量的 40%，电池硬件老化，需更换。
+4. 如果电池报告显示「Battery is not present」：电池硬件未被主板识别 → 拆机重新拔插电池排线 → 可能是主板电源管理芯片故障，需送修。
+
+二、WHEA_UNCORRECTABLE_ERROR 蓝屏（WHEA 蓝屏）：
+这是硬件级别的致命错误（Windows Hardware Error Architecture），软件修复无效。按以下流程排查：
+1. 下载 BlueScreenView → 打开最近的 .dmp 文件 → 查看红色高亮的驱动。如果显示 hal.dll / ntoskrnl.exe → 通常是 CPU 或电压问题。如果显示 nvlddmkm.sys → 显卡。如果显示 storport.sys → NVMe/硬盘。
+2. 8 步排查流程：
+   (1) Dump 分析（BlueScreenView / WinDbg）→ 确定是哪个硬件；
+   (2) 如果 CPU 有超频 → 恢复全默认（包括 BIOS 里关闭 XMP/DOCP）；
+   (3) 内存测试：Win+R → mdsched → 重启做 Windows 内存诊断（基础）。更推荐 memtest86（从 U 盘启动，跑 4 pass 约 4-8 小时）；
+   (4) NVMe SSD 检查：CrystalDiskInfo 看 SMART 的 0E（媒体与数据完整性错误）和 03（可用备用空间），任何 > 0 就需警惕；
+   (5) 更新主板芯片组驱动（Intel Chipset / AMD Chipset Driver）到最新；
+   (6) 在 BIOS 中给 CPU 加一点电压（Vcore Offset +0.02V）→ 部分 CPU 出厂电压偏低导致 WHEA；
+   (7) 移除所有 PCIe 设备（独显/扩展卡）→ 只用集显测是否蓝屏 → 排除 PCIe 设备；
+   (8) 如果以上全无效 → CPU/主板硬件缺陷，在保期内申请 RMA 售后。
+
+三、触控板不工作：
+1. 检查是否误按了触控板禁用快捷键（常见：Fn+F6 / Fn+F7 / Fn+F10 / Fn+空格，不同品牌不一）。
+2. 设置 → 蓝牙和其他设备 → 触控板 → 确保触控板开关已打开。
+3. 设备管理器 → 人体学输入设备 → 找「HID 兼容触摸板」或「I2C HID 设备」→ 如果有黄色感叹号 → 更新驱动 → 浏览我的电脑 → 让我从列表中选择 → 选「HID 兼容触摸板」。如果 I2C HID 有感叹号 → 先装 Intel Serial IO I2C 驱动（去笔记本品牌官网下载芯片组驱动包）。
+4. BIOS 中查看触控板是否被禁用（部分商务本有此选项）。
+
+四、键盘单个按键失灵：
+1. 检查是否有异物卡住 → 用拔键器小心取下键帽，软毛刷清理。
+2. 如果曾进过液体 → 关机断电 → 用 99% 无水酒精倒在按键位置 → 反复按压几十次让酒精进入接触点 → 晾干 2 小时后再开机。
+3. 在 Windows 中重新映射坏键：PowerToys（微软官方）→ 键盘管理器 → 重新映射按键 → 把坏键映射到不常用的按键（如 Scroll Lock）。
+4. EC 重置（方法见各品牌笔记本 EC 重置步骤）。
+5. 设置 → 辅助功能 → 键盘 → 关闭「筛选键」（Filter Keys，有时误开导致按键响应异常）。
+
+五、各品牌笔记本 BIOS / 启动菜单 / 诊断快捷键速查表：
+- Dell：BIOS=F2 | 启动菜单=F12 | 诊断=F12 → Diagnostics
+- HP 消费：BIOS=F10 | 启动菜单=F9 | 诊断=F2
+- HP 商用：BIOS=F10 | 启动菜单=F9 | 诊断=ESC → F2
+- 联想：BIOS=F2/Fn+F2 | 启动菜单=F12 | 诊断=F10
+- ThinkPad：BIOS=F1 | 启动菜单=F12 | 诊断=F10
+- 华硕：BIOS=F2/DEL | 启动菜单=ESC | 诊断=F2 → ASUS Diagnostic
+- 宏碁：BIOS=F2 | 启动菜单=F12 | 诊断=F2 → Diagnostics
+- MSI：BIOS=DEL | 启动菜单=F11 | 诊断=DEL → System Diagnostics
+- 华为：BIOS=F2 | 启动菜单=F12 | 诊断=F2
+- 荣耀：BIOS=F2 | 启动菜单=F12 | 诊断=F2
+- 小米/红米：BIOS=F2 | 启动菜单=F12 | 诊断=F2 → Hardware Diagnostic
+- 神舟/炫龙：BIOS=F2/DEL | 启动菜单=F7/ESC</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('trouble-28')">一键复制</button>
+            </div>
         </div>
 
         </main>
@@ -541,5 +970,36 @@ DISM /Online /Cleanup-Image /RestoreHealth /Source:WIM:X:\Sources\install.wim:1 
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        function filterTroubleScripts() {
+            var input = document.getElementById('trouble-search-input');
+            var clearBtn = document.getElementById('trouble-search-clear');
+            var filter = input.value.toLowerCase().trim();
+            var rows = document.querySelectorAll('#section-trouble .script-row');
+            
+            if (filter === '') {
+                clearBtn.style.display = 'none';
+            } else {
+                clearBtn.style.display = 'inline-block';
+            }
+            
+            rows.forEach(function(row) {
+                var text = row.textContent.toLowerCase();
+                if (text.indexOf(filter) !== -1) {
+                    row.classList.remove('hidden-by-search');
+                } else {
+                    row.classList.add('hidden-by-search');
+                }
+            });
+        }
+        function clearTroubleSearch() {
+            document.getElementById('trouble-search-input').value = '';
+            document.getElementById('trouble-search-clear').style.display = 'none';
+            var rows = document.querySelectorAll('#section-trouble .script-row');
+            rows.forEach(function(row) {
+                row.classList.remove('hidden-by-search');
+            });
+        }
+    </script>
 </body>
 </html>
