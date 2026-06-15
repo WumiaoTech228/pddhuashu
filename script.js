@@ -52,6 +52,8 @@ function detectCurrentPage() {
         currentPage = 'steam';
     } else if (pageName.includes('custom')) {
         currentPage = 'custom';
+    } else if (pageName.includes('office')) {
+        currentPage = 'office';
     }
 }
 
@@ -60,7 +62,7 @@ function detectCurrentPage() {
  */
 function checkUnlockStatus() {
     // 全面开放，免去验证码锁定，所有页面直接解锁
-    unlockedTabs = ['minecraft', 'trouble', 'linux', 'os-install', 'boot-keys', 'downloads', 'steam', 'custom'];
+    unlockedTabs = ['minecraft', 'trouble', 'linux', 'os-install', 'boot-keys', 'downloads', 'steam', 'custom', 'office'];
 
     const body = document.body;
     const lockText = document.getElementById('lock-status-text');
@@ -147,6 +149,7 @@ function getActiveServicesChineseNames() {
     if (unlockedTabs.includes('downloads')) names.push('下载中心');
     if (unlockedTabs.includes('steam')) names.push('Steam优化');
     if (unlockedTabs.includes('custom')) names.push('系统定制');
+    if (unlockedTabs.includes('office')) names.push('Office部署教程');
     return names.join('、');
 }
 
@@ -212,7 +215,7 @@ function insertUnlockModalHtml() {
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                 </span>
                 <h2>安全验证</h2>
-                <p>请输入拼多多客服发送给您的 <b>6位订单激活授权码</b> 以解锁本栏目高级技术服务教程与官方高速下载链接。</p>
+                <p>请输入拼多多客服发送给您的 <b>6位订单激活授权码</b> 以解锁本栏目高级技术服务教程与高速下载通道。</p>
             </div>
             
             <div class="modal-body">

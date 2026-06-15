@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         /* 操作系统选择舱专属组件样式 */
-        .os-selector-card, .linux-selector-card {
+        .os-selector-card, .linux-selector-card, .office-selector-card {
             grid-column: 1 / -1; /* 跨越全部网格列 */
             display: flex;
             flex-direction: column;
@@ -270,6 +270,7 @@
                 <a href="custom.html" class="category-nav-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; display: inline-block;"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 14.7255 3.09032 17.1962 4.85857 19C5.3434 19.49 5.25302 20.3015 4.80169 20.7528C4.54244 21.0121 4.19502 21.1522 3.8272 21.1522C3.12513 21.1522 2.65147 20.4879 2.91574 19.8373C3.6067 18.134 4 16.126 4 14C4 9.58172 7.58172 6 12 6C16.4183 6 20 9.58172 20 14C20 18.4183 16.4183 22 12 22Z"></path></svg>系统封装与定制</a>
                 <a href="boot-keys.html" class="category-nav-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; display: inline-block;"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="7" y1="16" x2="17" y2="16"></line></svg>主板启动键</a>
                 <a href="downloads.html" class="category-nav-item active"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; display: inline-block;"><polyline points="17 10 12 15 7 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line><path d="M21 17v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2"></path></svg>纯净下载</a>
+                <a href="office.html" class="category-nav-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; display: inline-block;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>Office 部署教程</a>
             </div>
 
             <!-- 分类筛选导航 -->
@@ -277,6 +278,7 @@
                 <button class="filter-btn active" data-filter="all">全部软件</button>
                 <button class="filter-btn" data-filter="win">微软原版系统</button>
                 <button class="filter-btn" data-filter="linux">Linux 开源系统</button>
+                <button class="filter-btn" data-filter="office">Office 办公软件</button>
                 <button class="filter-btn" data-filter="burn">PE & U盘烧录工具</button>
                 <button class="filter-btn" data-filter="tools">运行库 & 维护工具</button>
                 <button class="filter-btn" data-filter="remote">远程控制客服工具</button>
@@ -356,6 +358,40 @@
                         <span class="step-title" id="linux-selected-title">系统信息与下载页面：</span>
                         <div class="iso-list-container" id="linux-content-container">
                             <!-- 动态加载选中发行版的包格式、简介、图形化桌面版、非图形化服务器版以及国内镜像下载页链接 -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Office 办公软件全系列下载舱 -->
+                <div class="download-card office-selector-card" data-cat="office" id="office-selector-card">
+                    <div class="os-selector-header">
+                        <div class="dl-badge">原版 Office 办公套件</div>
+                        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px; display: inline-block;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>微软 Office 原版办公软件全系列下载舱</h3>
+                        <p class="desc">收录微软 Office 2024 / 2021 / 2019 / 2016 / 2013 / 2010 全系列原版办公套件及部署工具。提供微软 CDN 官方高速直链与 MSDN 原版高速电驴 (ED2K) 下载，确保纯净安全。</p>
+                        
+                        <div class="thunder-alert-box">
+                            <span class="alert-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; display: inline-block; color: #ef4444;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+                            <div class="alert-content">
+                                <strong>下载提示：</strong>Office 安装镜像体积较大，部分版本提供电驴 (ED2K) 链接，推荐使用页面下方下载的 <b>“迅雷极速纯净版”</b> 或已安装的迅雷进行下载。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Office 版本选择 Tab -->
+                    <div class="os-selector-section">
+                        <span class="step-num">Step 1</span>
+                        <span class="step-title">选择 Office 办公套件版本：</span>
+                        <div class="os-tabs-row" id="office-tabs-container">
+                            <!-- 动态加载 Office 2024, 2021, 2019 等 -->
+                        </div>
+                    </div>
+
+                    <!-- 对应版本信息与下载链接 -->
+                    <div class="os-selector-section">
+                        <span class="step-num">Step 2</span>
+                        <span class="step-title" id="office-selected-title">版本详细信息与下载链接：</span>
+                        <div class="iso-list-container" id="office-content-container">
+                            <!-- 动态加载选中版本的详情、镜像列表及复制/下载按钮 -->
                         </div>
                     </div>
                 </div>
@@ -797,9 +833,207 @@
                 );
             }
 
-            // 首次运行初始化 Linux 标签
+            // ==========================================
+            // 3. Office 办公软件全系列下载舱
+            // ==========================================
+            const OFFICE_DB = {
+                "Office LTSC 2024": {
+                    "desc": "微软最新的长期服务版办公套件，专为不需要频繁云端连接的专业用户设计。包含 Word、Excel、PowerPoint、Outlook 等常用组件。采用即点即用（C2R）部署技术。",
+                    "type": "零售版 / 长期服务版 (IMG 离线镜像)",
+                    "files": [
+                        {
+                            "name": "Office Professional Plus 2024 Retail (专业增强版)",
+                            "size": "4.8 GB",
+                            "sha1": "微软 CDN 官方直链",
+                            "links": [
+                                { "name": "微软 CDN 官方高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProPlus2024Retail.img", "type": "url" }
+                            ]
+                        }
+                    ]
+                },
+                "Office LTSC 2021": {
+                    "desc": "微软经典的企业级长期服务版本，稳定可靠，不支持云端同步功能，是 Win 10 和 Win 11 的高性价比办公选择。采用即点即用（C2R）技术。",
+                    "type": "零售版 / 长期服务版 (IMG 离线镜像)",
+                    "files": [
+                        {
+                            "name": "Office Professional Plus 2021 Retail (专业增强版)",
+                            "size": "4.4 GB",
+                            "sha1": "C40B8F5D88EE2EA7BF98888D7CFB269C89F3A660",
+                            "links": [
+                                { "name": "微软 CDN 官方高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProPlus2021Retail.img", "type": "url" }
+                            ]
+                        }
+                    ]
+                },
+                "Office LTSC 2019": {
+                    "desc": "微软 2019 企业级长期服务版本，支持 Windows 10/11，在经典功能上进行多项革新。采用即点即用（C2R）技术。",
+                    "type": "零售版 / 长期服务版 (IMG 离线镜像)",
+                    "files": [
+                        {
+                            "name": "Office Professional Plus 2019 Retail (专业增强版)",
+                            "size": "3.5 GB",
+                            "sha1": "微软 CDN 官方直链",
+                            "links": [
+                                { "name": "微软 CDN 官方高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProPlus2019Retail.img", "type": "url" }
+                            ]
+                        }
+                    ]
+                },
+                "Office 2016": {
+                    "desc": "非常经典且成熟的 Office 版本，适合 Windows 7 及以上系统。本站提供原厂原版镜像，支持传统的 ISO/MSI 安装模式。",
+                    "type": "专业增强版 (原厂原版 ISO 镜像)",
+                    "files": [
+                        {
+                            "name": "Office Professional Plus 2016 (x86 & x64) - 简体中文",
+                            "size": "2.41 GB",
+                            "sha1": "277926A41B472EE38CA0B36ED8F2696356DCC98F",
+                            "links": [
+                                { "name": "原版电驴高速直链 (ED2K) 复制", "url": "ed2k://|file|cn_office_professional_plus_2016_x86_x64_dvd_6969182.iso|2588266496|27EEA4FE4BB13CD0ECCDFC24167F9E01|/", "type": "copy" }
+                            ]
+                        }
+                    ]
+                },
+                "Office 2013": {
+                    "desc": "微软第一代扁平化界面办公套件，极佳的系统资源占用表现，对老款电脑、低配置设备友好。此版本集成 SP1 补丁包。",
+                    "type": "专业增强版 (集成 SP1 补丁版)",
+                    "files": [
+                        {
+                            "name": "Office Professional Plus 2013 with SP1 (x64) - 简体中文",
+                            "size": "934.85 MB",
+                            "sha1": "5BC5AE6B03876E634FA6396749C59164C7767F9F",
+                            "links": [
+                                { "name": "原版电驴高速直链 (ED2K) 复制", "url": "ed2k://|file|cn_office_professional_plus_2013_with_sp1_x64_dvd_3921920.iso|980258816|E18C9CF896D65B2778AA1A44C922C377|/", "type": "copy" }
+                            ]
+                        },
+                        {
+                            "name": "Office Professional Plus 2013 with SP1 (x86) - 简体中文",
+                            "size": "743.70 MB",
+                            "sha1": "D4D2BE56525EA4C374D8D56A41434938",
+                            "links": [
+                                { "name": "原版电驴高速直链 (ED2K) 复制", "url": "ed2k://|file|cn_office_professional_plus_2013_with_sp1_x86_dvd_3920269.iso|779831296|D4D2BE56525EA4C374D8D56A41434938|/", "type": "copy" }
+                            ]
+                        }
+                    ]
+                },
+                "Office 2010": {
+                    "desc": "拟物化风格办公软件，运行速度极快，高兼容性，推荐给老电脑、低配置工作站系统装机首选。",
+                    "type": "专业增强版 (批量授权 SP1 版)",
+                    "files": [
+                        {
+                            "name": "Office Professional Plus 2010 with SP1 (x64) - 简体中文",
+                            "size": "1.50 GB",
+                            "sha1": "9D97B220739161CFF3147E169B702A056A6C7F51",
+                            "links": [
+                                { "name": "原版电驴高速直链 (ED2K) 复制", "url": "ed2k://|file|SW_DVD5_Office_Professional_Plus_2010w_SP1_64Bit_ChnSimp_CORE_MLF_X17-76742.iso|1612515328|032320121E0EE36D8F0C32EC89CA0AB9|/", "type": "copy" }
+                            ]
+                        },
+                        {
+                            "name": "Office Professional Plus 2010 with SP1 (x86) - 简体中文",
+                            "size": "1.31 GB",
+                            "sha1": "581ED02AC171DB18E80B277214AB6B952038F599",
+                            "links": [
+                                { "name": "原版电驴高速直链 (ED2K) 复制", "url": "ed2k://|file|SW_DVD5_Office_Professional_Plus_2010w_SP1_W32_ChnSimp_CORE_MLF_X17-76734.iso|1412091904|79B75EE3F629A1BD925E6C0AEFDECA10|/", "type": "copy" }
+                            ]
+                        }
+                    ]
+                },
+                "Office 部署工具 (ODT)": {
+                    "desc": "包含微软部署工具 (ODT)，以及开源辅助工具 Office Tool Plus，可在线配置、下载、安装、卸载任何版本的 Office，并支持精细配置需要安装的独立组件（如仅安装 Word/Excel/PPT，剔除其他）。",
+                    "type": "部署与维护辅助工具",
+                    "files": [
+                        {
+                            "name": "Office Deployment Tool (ODT) - 部署工具",
+                            "size": "3.5 MB",
+                            "sha1": "命令行配置工具",
+                            "links": [
+                                { "name": "进入下载页面", "url": "https://www.microsoft.com/en-us/download/details.aspx?id=49117", "type": "url" }
+                            ]
+                        },
+                        {
+                            "name": "Office Tool Plus (推荐) - 开源 Office 部署利器",
+                            "size": "12 MB (免安装版)",
+                            "sha1": "安全、无广告的一键安装管理工具",
+                            "links": [
+                                { "name": "进入官网下载页", "url": "https://otp.landian.vip/", "type": "url" }
+                            ]
+                        }
+                    ]
+                }
+            };
+
+            let currentOffice = "Office LTSC 2024";
+
+            const officeTabsContainer = document.getElementById('office-tabs-container');
+            const officeContentContainer = document.getElementById('office-content-container');
+            const officeSelectedTitle = document.getElementById('office-selected-title');
+
+            function renderOfficeTabs() {
+                officeTabsContainer.innerHTML = '';
+                const versions = Object.keys(OFFICE_DB);
+                
+                versions.forEach(name => {
+                    const btn = document.createElement('button');
+                    btn.className = 'os-tab-btn' + (name === currentOffice ? ' active' : '');
+                    btn.textContent = name;
+                    btn.addEventListener('click', function() {
+                        selectOffice(name);
+                    });
+                    officeTabsContainer.appendChild(btn);
+                });
+            }
+
+            function selectOffice(name) {
+                currentOffice = name;
+                renderOfficeTabs();
+                renderOfficeContent();
+            }
+
+            function renderOfficeContent() {
+                const item = OFFICE_DB[currentOffice];
+                if (!item) return;
+
+                officeSelectedTitle.innerHTML = '版本详细信息与下载链接 (' + currentOffice + ') - <strong style="color: #ffffff; font-family: var(--font-mono); font-size: 0.8rem;">' + item.type + '</strong>';
+
+                let filesHtml = '';
+                item.files.forEach((file, index) => {
+                    let linksHtml = '';
+                    file.links.forEach(link => {
+                        if (link.type === 'url') {
+                            linksHtml += '<a href="' + link.url + '" target="_blank" class="iso-copy-btn" style="text-decoration: none; margin-right: 0.5rem;">' +
+                                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.25rem;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>' +
+                                link.name +
+                            '</a>';
+                        } else if (link.type === 'copy') {
+                            const uniqueId = 'office-link-' + index + '-' + currentOffice.replace(/\s+/g, '-');
+                            linksHtml += '<div style="display:none;" id="' + uniqueId + '">' + link.url + '</div>' +
+                            '<button onclick="copyText(\'' + uniqueId + '\')" class="iso-copy-btn" style="margin-right: 0.5rem;">' +
+                                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.25rem;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>' +
+                                link.name +
+                            '</button>';
+                        }
+                    });
+
+                    filesHtml += '<div class="iso-item-row" style="margin-bottom: 0.75rem;">' +
+                        '<div class="iso-item-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; display: inline-block;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>' + file.name + '</div>' +
+                        '<div class="iso-item-meta">大小: ' + file.size + ' | 校验值 / 标识: ' + file.sha1 + '</div>' +
+                        '<div class="iso-item-actions" style="margin-top: 0.5rem;">' +
+                            linksHtml +
+                        '</div>' +
+                    '</div>';
+                });
+
+                officeContentContainer.innerHTML = 
+                    '<div style="font-size: 0.85rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1rem; border-bottom: 1px dashed var(--border-color); padding-bottom: 1rem;">' +
+                        '<strong>版本部署说明：</strong>' + escapeHTML(item.desc) +
+                    '</div>' +
+                    filesHtml;
+            }
+
+            // 首次运行初始化 Linux 与 Office 标签
             renderLinuxTabs();
             renderLinuxContent();
+            renderOfficeTabs();
+            renderOfficeContent();
         })();
     </script>
 </body>
