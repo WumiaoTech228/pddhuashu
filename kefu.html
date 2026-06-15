@@ -598,7 +598,7 @@
             <div class="script-row">
                 <div class="script-info">
                     <span class="script-desc">NVIDIA 独显驱动与 CUDA/CUDNN 安装</span>
-                    <div class="script-content" id="linux-3">由于 Linux 系统自带的开源驱动（Nouveau）对 NVIDIA 显卡性能支持有限，我们将为您安装 NVIDIA 官方闭源驱动，并可根据您的开发需求配置 CUDA 与 cuDNN 深度学习计算环境。</div>
+                    <div class="script-content" id="linux-3">由于 Linux 系统自带的开源驱动（Nouveau）对 NVIDIA 显卡性能支持有限，我们将为您安装 NVIDIA 闭源驱动，并可根据您的开发需求配置 CUDA 与 cuDNN 深度学习计算环境。</div>
                 </div>
                 <button class="copy-btn" onclick="copyText('linux-3')">一键复制</button>
             </div>
@@ -609,6 +609,348 @@
                     <div class="script-content" id="linux-4">系统安装完毕后，我们将为您配置国内的高速软件源（如清华源或阿里源），并为您安装配置好常用的搜狗拼音输入法/Fcitx5 以及基础编译开发环境（Git/GCC/Make）。</div>
                 </div>
                 <button class="copy-btn" onclick="copyText('linux-4')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">Ubuntu Desktop (图形化) 与 Server (命令行) 安装教程</span>
+                    <div class="script-content" id="linux-5">【Ubuntu 安装指南】
+一、Ubuntu Desktop (图形化桌面版)
+1. 引导启动：使用 Ventoy 启动 U 盘，选择 Ubuntu Desktop 镜像，选择 "Try or Install Ubuntu" 进入 Live 桌面。
+2. 启动安装：双击桌面的 "Install Ubuntu" 图标，选择语言（中文简体）。
+3. 键盘与网络：选择 "Chinese" 键盘布局，连接网络（建议先断开网络，否则联网会自动下载更新导致安装极慢）。
+4. 更新与软件：选择 "正常安装"（含浏览器、办公软件和媒体播放器）或 "最小安装"。勾选 "安装第三方软件和硬件驱动"（可自动解决 Wi-Fi 和部分显卡驱动）。
+5. 安装类型与分区：
+   - 全盘安装：清除整个磁盘并安装 Ubuntu（会抹除所有数据）。
+   - 双系统/自定义分区：选择 "其他选项" (Something else)。
+     - 在空闲空间上点击 "+"，创建 EFI 系统分区 (大小建议 500MB，分区类型为主分区，用于 "EFI 系统分区")。
+     - 创建 Swap 交换空间 (大小建议等同物理内存，分区类型为逻辑分区，用于 "交换空间")。
+     - 创建根分区 (剩余所有空间，分区类型为主分区，用于 "Ext4 日志文件系统"，挂载点为 "/")。
+6. 设置时区与用户：时区选择 Shanghai，输入用户名、计算机名 and 登录密码，选择登录方式。
+7. 写入安装：核对分区信息，点击 "现在安装"，等待进度条结束，提示重启时点击 "现在重启" 并拔出 U 盘。
+
+二、Ubuntu Server (命令行服务器版)
+1. 引导启动：启动 U 盘选择 Ubuntu Server 镜像，加载内核。
+2. 基础语言：选择安装过程语言（默认 English，建议保持英文以防控制台乱码）。
+3. 键盘配置：默认 Layout/Variant 选择 "Chinese / Chinese"。
+4. 选项配置：选择 "Ubuntu Server" (常规安装) 或 "Ubuntu Server (minimized)" (最小化精简安装)。
+5. 网络配置：检测网卡，默认通过 DHCP 获取 IP。如需静态 IP，在此步骤手动编辑 Subnet, Address, Gateway, DNS。
+6. 代理与源地址：Proxy 留空，镜像源 (Configure Ubuntu archive mirror) 更改为国内高速源，例如: https://mirrors.tuna.tsinghua.edu.cn/ubuntu/
+7. 磁盘分区：
+   - 默认勾选 "Use an entire disk" 且勾选 "Set up this disk as an LVM group"（使用 LVM 逻辑卷，便于后期在线扩容）。
+   - 手动分区选择 "Custom storage layout"：
+     - 创建 biosgrub (1MB，若为旧式 MBR 引导) 或 /boot/efi (500MB，文件系统 fat32，挂载为 EFI系统分区)。
+     - 创建 /boot 分区 (1GB，Ext4)。
+     - 创建 LVM 逻辑卷并分配根分区 "/" (Ext4) 和 swap。
+8. 身份设置：输入姓名、服务器名 (hostname)、用户名和高强度密码。
+9. SSH服务：务必勾选 "Install OpenSSH server"（开启 SSH 远程连接以便远程运维），导入认证 Key 可跳过。
+10. 内置软件：可选安装常见服务（如 Docker, MicroK8s, Nextcloud 等），直接点击 Done 忽略。
+11. 完成重启：系统自动写入，当底部显示 "Reboot Now" 时，按回车重启并拔出 U 盘。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('linux-5')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">Debian Live (图形化) 与 Netinst (命令行) 安装教程</span>
+                    <div class="script-content" id="linux-6">【Debian 安装指南】
+一、Debian Live Desktop (图形化桌面版)
+1. 引导启动：使用 U 盘启动，在引导菜单选择 "Debian Live with Desktop (GNOME/KDE/XFCE)"，进入 Live 桌面系统。
+2. 启动安装：在桌面上或应用菜单中双击打开 "Debian Installer" 图标。
+3. 语言与时区：选择 "简体中文"，时区定位到 "Asia/Shanghai"。
+4. 分区选择：
+   - "抹除整个磁盘"：全盘安装 Debian（数据清空）。
+   - "手动分区"：
+     - 新建 EFI 系统分区（大小 500MB，文件系统 fat32，挂载点 /boot/efi，标记 boot）。
+     - 新建 交换分区（大小等同内存，文件系统 linux-swap，标记 swap）。
+     - 新建 根分区（剩余空间，文件系统 ext4，挂载点 /，标记 root）。
+5. 用户创建：输入真实姓名、登录用户名、电脑主机名以及登录密码。
+6. 执行写入：确认概要信息无误后，点击 "安装" (Install)，等待文件复制完毕，点击重启。
+
+二、Debian Netinst (命令行服务器/精简安装)
+1. 引导启动：U 盘启动选择 "Graphical install"（图形化向导安装，推荐）或 "Install"（文本命令行向导安装）。
+2. 语言与区域：选择 "Chinese (Simplified)" -> "中国" -> "汉语"。
+3. 网络配置：自动 DHCP 获取。若失败可手动填入 IP/网关。输入主机名 (hostname) 和域名 (可留空)。
+4. 账户设置：
+   - 设置 root 超级管理员密码（若留空，则默认不激活 root 直接登录，首个普通用户将获得 sudo 权限，建议留空或设置强密码）。
+   - 创建普通用户的全名、用户名 and 登录密码。
+5. 磁盘分区：
+   - 推荐选择 "向导 - 使用整个磁盘" (Guided - use entire disk)。
+   - 分区方案选择 "将所有文件放在同一个分区中" (All files in one partition) 适合新手；或者单独分区。
+   - 确定分区写入："分区方案结束并将修改写入磁盘" -> 选择 "是" 确认。
+6. 包管理器配置：
+   - 扫描额外的介质选择 "否"。
+   - 网络镜像国家选择 "中国" (China)，镜像站点推荐选择 "mirrors.tuna.tsinghua.edu.cn" 或 "mirrors.aliyun.com"。
+   - 代理服务器留空。
+7. 软件选择 (核心步骤)：
+   - 若需要图形界面，勾选 "Debian desktop environment" 并在下方选择桌面套件 (GNOME/KDE Plasma/XFCE 等)。
+   - 若安装纯命令行服务器，取消勾选 "Debian desktop environment" 及其桌面套件。
+   - 务必勾选 "SSH server"（以便远程连接）和 "standard system utilities"（标准系统工具）。
+8. GRUB引导：选择 "将 GRUB 启动引导器安装到主引导记录" -> 选择 "是" -> 选择系统所在的硬盘设备（如 /dev/sda）。
+9. 重启系统：安装完成后点击 "继续"，系统重启并拔掉 U 盘。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('linux-6')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">Linux Mint 桌面版 (图形化) 安装与配置教程</span>
+                    <div class="script-content" id="linux-7">【Linux Mint 安装指南】
+Linux Mint 专为桌面设计，界面与 Windows 高度相似，不提供独立服务器版本。
+1. 引导启动：使用 U 盘启动进入 Live 环境，选择 "Start Linux Mint"。
+2. 启动安装：双击桌面上的 "Install Linux Mint" 盘片图标。
+3. 基础设置：选择 "中文 (简体)" 语言，点击继续；选择 "Chinese" 键盘布局。
+4. 多媒体解码器：勾选 "安装多媒体解码器" (Install multimedia codecs)，该选项会自动安装播放 MP4、MP3 等媒体格式所需的解码器及特殊字体，建议勾选。
+5. 磁盘分区：
+   - 自动分区：选择 "擦除磁盘并安装 Linux Mint"（全盘清除安装）。
+   - 手动分区/双系统：选择 "其他选项" (Something else)。
+     - 新建 EFI 系统分区：大小 500MB，类型为主分区，用于 "EFI 系统分区"。
+     - 新建交换空间：大小等同内存，逻辑分区，用于 "交换空间" (swap)。
+     - 新建根分区：剩余所有空间，主分区，用于 "Ext4 日志文件系统"，挂载点设为 "/"。
+6. 位置与用户：选择时区为 "Shanghai"；创建您的用户名、计算机名称、登录密码。
+7. 写入与完成：确认分区修改，点击 "现在安装" (Install Now)。安装完成后，点击 "现在重启" 并拔出 U 盘。
+8. 首次开机配置：
+   - 启动 "欢迎屏幕" (Welcome Screen)，切换到 "第一步" (First Steps)。
+   - 运行 "系统快照" (Timeshift) 创建一个系统备份节点。
+   - 运行 "驱动管理器" (Driver Manager) 自动检索并一键安装 NVIDIA 显卡闭源驱动或博通无线网卡驱动。
+   - 运行 "更新管理器" (Update Manager) 更新核心系统组件。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('linux-7')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">Rocky Linux & AlmaLinux 桌面 (图形化) 与 服务器 (命令行) 安装教程</span>
+                    <div class="script-content" id="linux-8">【Rocky Linux / AlmaLinux 安装指南】
+这两个系统为兼容红帽 RHEL 的企业级系统，安装程序均采用 Anaconda。
+一、图形化工作站安装 (Workstation GUI)
+1. 引导启动：U 盘引导启动，在菜单中选择 "Install Rocky Linux" 或 "Install AlmaLinux"。
+2. 语言选择：选择 "中文" -> "简体中文 (中国)"。
+3. 安装源与软件选择：
+   - 点击 "软件选择" (Software Selection)，在左侧大类中选择 "带 GUI 的服务器" (Server with GUI) 或 "工作站" (Workstation)。
+   - 在右侧附加软件中可选勾选 "开发工具"、"图形化管理工具" 等。
+4. 安装目的地 (分区)：
+   - 选择要安装的目标硬盘。
+   - 分区配置选择 "自动"；或者选择 "自定义" -> 点击 "完成" 进入分区界面。
+   - 自定义分区建议选择 "LVM"，点击 "点击这里自动创建它们"，程序会自动创建 /boot/efi、/boot、/ (根分区) 和 swap，您可以按需微调大小，确认后点击 "接受更改"。
+5. 网络与主机名：点击 "网络和主机名" (Network & Host Name)，开启右上角网卡开关，在左下角修改主机名，点击 "应用"。
+6. 账户设置：
+   - 点击 "根密码" (Root Password)，输入 Root 超级管理员密码。
+   - 点击 "创建用户" (User Creation)，输入用户名、密码，并勾选 "将此用户作为管理员" (授予 sudo 权限)。
+7. 开始安装：所有带有黄色感叹号 of 选项消除后，点击右下角 "开始安装" (Begin Installation)。
+8. 重启进入：安装完成后，点击 "重启系统" (Reboot System)，首次开机需勾选同意许可协议。
+
+二、极简服务器安装 (Server Minimal CLI)
+1. 前期引导与语言配置同上，选择 "简体中文" 语言。
+2. 软件选择：
+   - 点击 "软件选择" (Software Selection)，在左侧大类中选择 "最小安装" (Minimal Install)，此模式不带任何图形界面，开机直接进入命令行终端，系统占用极小、性能最高。
+   - 可以在右侧勾选 "标准" 或 "系统工具" 补充基础命令行工具。
+3. 分区目的地：选择目标磁盘，如果是专职服务器，建议全盘分区并使用 "自动" (Automatic) LVM 方案。
+4. 网络配置：点击 "网络和主机名"，务必开启网卡开关确保开机自动联网，记录下当前的局域网 IP 地址，以便后续通过 SSH 工具远程连接。
+5. 账户与安装：配置 Root 密码与管理员普通账户。点击 "开始安装"，等待系统写入完毕重启，拔出 U 盘。开机后输入用户名和密码即可开始命令行操作。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('linux-8')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">Fedora Workstation (图形化) 与 Server (命令行) 安装教程</span>
+                    <div class="script-content" id="linux-9">【Fedora 安装指南】
+Fedora 集成了较新版 Linux 内核 and GNOME 桌面环境，适合前沿开发。
+一、Fedora Workstation (图形化桌面版)
+1. 引导启动：使用 U 盘启动选择 "Start Fedora Workstation Live"，进入 Live 桌面系统。
+2. 启动安装：在弹出的欢迎窗口中点击 "Install to Hard Drive" (安装到硬盘)。
+3. 语言与键盘：选择 "中文 (简体)" -> "中文 (中国)"。
+4. 安装目的地 (分区配置)：
+   - 点击 "安装目的地" (Installation Destination)。
+   - 选择您的目标硬盘。在存储配置中选择 "自动" (Automatic)；若要自定义分区，勾选 "自定义" (Custom) 并点击 "完成"。
+   - 自动分区默认采用 Btrfs 文件系统，支持系统快照与子卷挂载。
+5. 用户创建：点击 "用户创建"，设置您的全名、用户名，并勾选 "将此用户设为管理员"，输入密码。
+6. 开始安装：点击 "开始安装" (Begin Installation)，安装完成后点击 "结束安装" (Finish Installation) 并重启系统，拔掉 U 盘。
+
+二、Fedora Server (命令行服务器版)
+1. 引导启动：U 盘引导启动，选择 "Install Fedora Server"。
+2. 语言选择：选择 "中文 (简体)"。
+3. 软件选择：点击 "软件选择"，可选择 "Fedora Server 核心" (精简命令行) 或 "标准 Fedora Server" (带有基础管理工具)。
+4. 网络与主机名：点击配置，开启网卡开关，记录 IP 并设置主机名。
+5. 磁盘分区：点击 "安装目的地"，选中硬盘，选择 "自动" 存储配置（Server 版默认会创建 LVM 卷组且保留一部分空闲空间）。
+6. 管理员设置：配置 Root 密码并建议创建一个具有 sudo 管理权限的普通用户。
+7. 执行写入：点击 "开始安装"，等待安装就绪后重启，进入 Fedora 纯黑命令行终端。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('linux-9')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">openSUSE Leap/Tumbleweed 图形化与命令行安装教程</span>
+                    <div class="script-content" id="linux-10">【openSUSE 安装指南】
+openSUSE 拥有功能完善的 YaST 系统管理器。Leap 为稳定版，Tumbleweed 为滚动更新版。
+一、YaST 图形化桌面安装 (GUI)
+1. 引导启动：使用 U 盘启动，在引导菜单选择 "Installation" (安装)。
+2. 语言与键盘：选择 "Language" 为 "Simplified Chinese (简体中文)"，键盘布局自动匹配为 "Chinese"。
+3. 网络激活：系统会检测网络接口并尝试配置，如需在线拉取更新，点击接受网络设置。
+4. 系统角色 (Desktop Selection)：选择您要使用的桌面环境，可选 "KDE Plasma" (openSUSE 适配度高)、"GNOME" 或 "XFCE"。
+5. 分区方案 (Proposed Partitioning)：安装程序会给出推荐 of Btrfs 分区方案。Btrfs 是 openSUSE 的默认配置，支持 Snapper 系统一键回滚。如需手动分区，点击 "专家分区器" (Expert Partitioner) 进行定制修改。
+6. 时区设置：时区选择为 "亚洲" -> "上海"。
+7. 用户设置：输入新用户的全名、用户名及登录密码。默认勾选 "对此密码用于系统管理员 root"（普通用户密码与 Root 相同，且开机自动登录，可按需修改）。
+8. 安装确认：确认安装摘要无误后，点击 "安装" (Install)，等待文件复制和配置完成，拔出 U 盘重启。
+
+二、YaST 文本模式服务器安装 (CLI/Text)
+1. 引导启动同上，进入安装程序。
+2. 系统角色选择：勾选 "服务器 (带文本模式)" (Server - Text Mode) 或 "事务性服务器" (Transactional Server)。这会配置一个无桌面的纯命令行精简服务器。
+3. 磁盘分区与网络：接受系统推荐的分区。在 YaST 文本界面中通过 Tab 键和方向键移动光标，使用 Enter 确认。
+4. 管理账户：创建普通账号并配置 root 超级密码。
+5. 完成安装：确认概要信息，点击 "Install"，完成写入后系统将自动重启进入命令行模式。开机后可在终端输入 `yast` 命令唤起文本菜单式的系统管理配置工具。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('linux-10')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">Arch Linux 命令行手动与 archinstall 脚本自动化安装教程</span>
+                    <div class="script-content" id="linux-11">【Arch Linux 安装指南】
+Arch Linux 遵循简洁原则，默认不提供图形安装器。
+一、archinstall 脚本自动化安装 (推荐，含桌面/命令行)
+1. 引导启动：U 盘引导进入 Arch 命令行 Live 环境，确保网络畅通（台式机插网线自动联网，笔记本可输入 `iwctl` 命令连接 Wi-Fi）。
+2. 启动脚本：在终端输入命令 `archinstall` 并按回车。
+3. 交互式菜单配置：
+   - "Language"：选择系统语言（建议保持 English 以防控制台乱码）。
+   - "Mirrors" -> "Mirror region"：选择 "China" 以激活国内镜像站。
+   - "Disk configuration"：选择 "Layout" -> 选择目标硬盘 -> 选择 "Wipe all selected drives" (全盘清空并自动分区) -> 推荐文件系统选择 "btrfs" 或 "ext4"。
+   - "Loader"：选择默认的 "systemd-boot" 或 "grub"。
+   - "Profile"：
+     - 若要安装图形桌面：选择 "Type" 为 "desktop" -> 选择桌面环境（如 "kde"、"gnome" 或 "xfce"） -> 选择显卡驱动（Intel/AMD 选择开源驱动，NVIDIA 选择 "nvidia" 驱动）。
+     - 若要安装精简服务器：选择 "Type" 为 "minimal"，不带图形环境。
+   - "Audio"：推荐选择 "pipewire" (现代化音频驱动)。
+   - "Kernels"：选择 "linux" (稳定内核) 或 "linux-lts" (长期支持内核)。
+   - "Create user"：创建一个普通管理员账号，输入用户名和密码，并勾选 "Should this user be a superuser" (赋予 sudo 权限)。设置 Root 超级密码。
+   - "Network configuration"：选择 "Use NetworkManager" (非常重要，否则开机后无法联网)。
+   - "Timezone"：设置为 "Asia/Shanghai"。
+4. 执行安装：点击菜单底部的 "Install"，系统开始下载并安装软件包。完成后会询问是否进入 chroot 环境，选择 "no"，输入 `reboot` 重启并拔出 U 盘。
+
+二、传统命令行手动安装 (纯命令模式)
+1. 分区磁盘：使用 `cfdisk /dev/sda` 分区（EFI分区 500M，Swap分区 8G，根分区剩余）。格式化分区：`mkfs.vfat -F32 /dev/sda1`，`mkswap /dev/sda2 && swapon /dev/sda2`，`mkfs.ext4 /dev/sda3`。
+2. 挂载分区：`mount /dev/sda3 /mnt`，`mkdir -p /mnt/boot`，`mount /dev/sda1 /mnt/boot`。
+3. 安装基础系统：修改 `/etc/pacman.d/mirrorlist` 将中国源置顶，执行 `pacstrap -K /mnt base linux linux-firmware base-devel NetworkManager`。
+4. 配置系统：生成挂载表 `genfstab -U /mnt >> /mnt/etc/fstab`。进入新系统 `arch-chroot /mnt`。
+5. 系统初始化：设置时区 `ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && hwclock --systohc`。配置本地化字符集，在 `/etc/locale.gen` 中取消注释 `en_US.UTF-8` 和 `zh_CN.UTF-8` 并运行 `locale-gen`。设置主机名 `echo "myarch" > /etc/hostname`。
+6. 用户与引导：运行 `passwd` 设置 root 密码。安装 GRUB 引导：`pacman -S grub efibootmgr`，运行 `grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB` 并生成配置文件 `grub-mkconfig -o /boot/grub/grub.cfg`。
+7. 启动服务：`systemctl enable NetworkManager`。输入 `exit` 退出 chroot，输入 `umount -R /mnt`，然后 `reboot` 重启。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('linux-11')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">openEuler (欧拉) 国产桌面与服务器安装教程</span>
+                    <div class="script-content" id="linux-12">【openEuler (欧拉) 安装指南】
+openEuler 是企业级 Linux 系统，高度兼容 RHEL。
+一、图形化/工作站桌面安装
+1. 引导启动：使用 U 盘启动，选择 "Install openEuler"。
+2. 语言选择：选择 "中文" -> "简体中文 (中国)"。
+3. 软件选择 (包含 DDE 桌面)：
+   - 点击 "软件选择" (Software Selection)。
+   - 默认是最小安装。若需要图形桌面，在左侧大类中选择 "Server with DDE" (深度桌面环境) 或 "工作站" (Workstation)。
+   - 右侧可勾选需要的附加工具包。
+4. 安装目的地 (分区)：
+   - 点击 "安装目的地"，选中您的安装目标硬盘。
+   - 在存储配置中选择 "自动" 分区方案；或者选择 "自定义" 进行手动配置，建议配置为 LVM 格式并将根目录 "/" 挂载为 ext4 或 xfs 文件系统。
+5. 账户与安全性：
+   - 点击 "Root 密码"，设置超级管理员 Root 密码（必须包含大写字母、小写字母、数字和特殊字符，符合密码复杂度安全策略）。
+   - 创建普通用户并授权管理员权限。
+6. 网络配置：点击 "网络和主机名"，开启网卡接口并配置主机名。
+7. 执行安装：点击 "开始安装" (Begin Installation)，安装完成后点击重启系统。
+
+二、命令行服务器安装 (CLI Minimal)
+1. 语言配置：同上，选择 "简体中文" 或 "English"。
+2. 软件选择：点击 "软件选择"，保持默认的 "最小安装" (Minimal Install)，不含任何图形界面，适合服务器部署。
+3. 磁盘分区与网卡：选择安装磁盘并执行自动分区。在 "网络和主机名" 中开启网卡，记录 IP 地址以便 SSH 连接。
+4. 密码配置：配置符合高强度复杂度规范 of Root 密码。
+5. 写入重启：点击 "开始安装"。装完重启后在命令行终端通过 SSH 工具登录即可。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('linux-12')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">deepin (深度) 国产桌面图形化安装与初始化教程</span>
+                    <div class="script-content" id="linux-13">【deepin (深度) 安装指南】
+deepin（深度）是桌面发行版，界面华丽，不提供独立服务器版本。
+1. 引导启动：U 盘引导启动，在菜单中选择 "Install deepin"。
+2. 语言选择：选择 "简体中文" 并阅读同意用户许可协议。
+3. 磁盘分区：
+   - "全盘安装"：选择您要安装的目标磁盘，下方可选 "自动分区"（deepin 安装程序会自动分配合理的分区，并默认开启备份还原点机制，推荐）。
+   - "手动安装" (双系统分区)：
+     - 新建 EFI 分区：大小 500MB - 1GB，类型为主分区，挂载点为 `/boot/efi`，文件系统为 `fat32`。
+     - 新建交换分区：大小等同内存，挂载点留空，文件系统为 `swap`。
+     - 新建系统根分区：大小至少 50GB，类型为主分区，挂载点为 `/`，文件系统为 `ext4`。
+     - 新建用户数据分区 (可选)：剩余空间，挂载点为 `/home`，文件系统为 `ext4`。
+4. 创建用户：输入您要创建的用户名、计算机主机名，并设定登录密码。
+5. 安装写入：点击 "开始安装"，等待进度条到 100%。
+6. 重启进入：提示安装成功后，拔出 U 盘点击 "立即重启"。
+7. 首次开机向导：选择时区为 "上海"，系统自动完成最后配置。进入系统后可在自带的 "应用商店" 中一键下载安装微信、QQ、WPS 等软件。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('linux-13')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">CentOS & RHEL (红帽) 企业级系统图形化与命令行安装教程</span>
+                    <div class="script-content" id="linux-14">【CentOS / RHEL 安装指南】
+CentOS 与 RHEL 采用相同的 Anaconda 安装框架， RHEL 需要开发者账号或商业订阅。
+一、图形化桌面安装 (GUI)
+1. 引导启动：U 盘启动选择 "Install CentOS Stream" 或 "Install Red Hat Enterprise Linux"。
+2. 语言配置：选择 "中文" -> "简体中文 (中国)"。
+3. 软件选择：
+   - 点击 "软件选择" (Software Selection)。
+   - 在左侧选择 "带 GUI 的服务器" (Server with GUI) 或 "工作站" (Workstation)。在右侧勾选附加包。
+4. 磁盘分区：
+   - 点击 "安装目的地" (Installation Destination)。
+   - 选中目标磁盘，选择 "自动" 分区方案即可。RHEL 系列默认会配置 XFS 文件系统与 LVM 卷管理。
+5. 账户管理：
+   - 设置 Root 用户密码。
+   - 创建普通用户并勾选 "将此用户作为管理员"。
+6. 开启网络：点击 "网络和主机名"，确保右上角网卡开关置为 ON 状态。
+7. 开始安装：点击 "开始安装"。安装完毕后点击 "重启系统"。如果是 RHEL 系统，首次进入桌面后需在终端运行 `subscription-manager register` 注册您的红帽账号以激活软件源更新。
+
+二、极简服务器安装 (CLI Minimal)
+1. 语言与地区选择同上，设为 "简体中文"。
+2. 软件选择：点击 "软件选择"，选中 "最小安装" (Minimal Install)，取消所有桌面环境，以确保最高的服务器执行效能与最小的安全风险。
+3. 分区目的地：选择 "自动" 存储配置方案。
+4. 激活网卡：进入 "网络和主机名" 配置，开启网卡开关，使其开机自动通过 DHCP 联网。
+5. 密码配置：配置 Root 强密码。
+6. 开始执行：点击 "开始安装"。等待安装完毕后重启并拔掉 U 盘，开机即进入企业级命令行终端。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('linux-14')">一键复制</button>
+            </div>
+
+            <div class="script-row">
+                <div class="script-info">
+                    <span class="script-desc">Oracle Linux & Anolis OS (龙蜥) 数据库与云原生系统安装教程</span>
+                    <div class="script-content" id="linux-15">【Oracle Linux / Anolis OS 安装指南】
+这两个发行版为兼容红帽 RHEL 的企业级系统，分别针对数据库和云原生场景进行了优化。
+一、图形化桌面安装 (GUI)
+1. 引导启动：U 盘引导启动，在菜单中选择 "Install Oracle Linux" 或 "Install Anolis OS"。
+2. 语言选择：选择 "中文" -> "简体中文 (中国)"。
+3. 软件选择：
+   - 点击 "软件选择" (Software Selection)。
+   - 在左侧大类中选择 "带 GUI 的服务器" (Server with GUI) 或 "工作站" (Workstation)。
+   - Oracle Linux 用户建议勾选 "Oracle 数据库先决条件" 等特定包组，以自动配置系统参数（如 sysctl.conf），简化 Oracle 数据库后续的安装过程。
+4. 分区与存储：选择目标硬盘，存储配置选择 "自动" (推荐采用默认 openings LVM + XFS 分区布局)。
+5. 网络配置：点击 "网络和主机名"，开启网卡开关，并配置主机名以确保网络畅通。
+6. 账户设置：设置 Root 管理员密码并创建一个普通管理员账号。
+7. 执行写入：确认所有警告消除后，点击 "开始安装" (Begin Installation)，安装完成后重启并拔出 U 盘。
+
+二、极简服务器安装 (CLI Minimal)
+1. 前期引导与语言配置同上，选择 "简体中文" 语言。
+2. 软件选择：
+   - 点击 "软件选择"，在大类中选择 "最小安装" (Minimal Install)，不带任何图形界面。
+   - Oracle Linux 在最小安装下也可以在右侧勾选 "Oracle Base System" 等包，以便在命令行环境下运行 Oracle 数据库。
+3. 分区与网络：选择目标硬盘为 "自动" 分区方案。在 "网络和主机名" 中开启网卡。
+4. 账户配置：设置 Root 超级密码与管理员普通账号。
+5. 开始安装：点击 "开始安装" 并等待系统写入重启。开机后，可以使用系统默认的高性能内核进行开发和生产环境部署。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('linux-15')">一键复制</button>
             </div>
         </div>
 
