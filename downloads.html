@@ -837,122 +837,256 @@
             // 3. Office 办公软件全系列下载舱
             // ==========================================
             const OFFICE_DB = {
-                "Office LTSC 2024": {
-                    "desc": "微软最新的长期服务版办公套件，专为不需要频繁云端连接的专业用户设计。包含 Word、Excel、PowerPoint、Outlook 等常用组件。采用即点即用（C2R）部署技术。",
-                    "type": "零售版 / 长期服务版 (IMG 离线镜像)",
+                "Microsoft 365": {
+                    "desc": "微软主推的订阅制办公套件，支持云端协作与持续功能更新。包含 Word、Excel、PowerPoint、Outlook、Access 等全套组件。本站提供原厂 CDN 高速直链离线镜像，请使用您的 Microsoft 账号登录激活使用。",
+                    "type": "订阅版 / 零售版 (原厂 CDN 直链 .img 离线镜像)",
                     "files": [
                         {
-                            "name": "Office Professional Plus 2024 Retail (专业增强版)",
+                            "name": "Microsoft 365 Apps for enterprise Retail (企业增强订阅版)",
                             "size": "4.8 GB",
-                            "sha1": "微软 CDN 官方直链",
+                            "sha1": "微软 CDN 原厂直链",
                             "links": [
-                                { "name": "微软 CDN 官方高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProPlus2024Retail.img", "type": "url" }
+                                { "name": "原厂 CDN 高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/O365ProPlusRetail.img", "type": "url" }
+                            ]
+                        },
+                        {
+                            "name": "Microsoft 365 Family/Personal Retail (家庭和个人订阅版)",
+                            "size": "4.8 GB",
+                            "sha1": "微软 CDN 原厂直链",
+                            "links": [
+                                { "name": "原厂 CDN 高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/O365HomePremRetail.img", "type": "url" }
+                            ]
+                        },
+                        {
+                            "name": "Microsoft 365 Business Retail (商业订阅版)",
+                            "size": "4.8 GB",
+                            "sha1": "微软 CDN 原厂直链",
+                            "links": [
+                                { "name": "原厂 CDN 高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/O365BusinessRetail.img", "type": "url" }
                             ]
                         }
                     ]
                 },
-                "Office LTSC 2021": {
-                    "desc": "微软经典的企业级长期服务版本，稳定可靠，不支持云端同步功能，是 Win 10 和 Win 11 的高性价比办公选择。采用即点即用（C2R）技术。",
-                    "type": "零售版 / 长期服务版 (IMG 离线镜像)",
+                "Office 2024": {
+                    "desc": "微软长期服务零售版本办公套件。提供原厂高速 CDN 零售版离线镜像下载，包含专业增强版、专业版、家庭和学生版等，无云端网络依赖，一次性购买激活。",
+                    "type": "零售版 (原厂 CDN 直链 .img 离线镜像)",
                     "files": [
                         {
-                            "name": "Office Professional Plus 2021 Retail (专业增强版)",
+                            "name": "Office Professional Plus 2024 Retail (专业增强零售版)",
+                            "size": "4.8 GB",
+                            "sha1": "微软 CDN 原厂直链",
+                            "links": [
+                                { "name": "原厂 CDN 高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProPlus2024Retail.img", "type": "url" }
+                            ]
+                        },
+                        {
+                            "name": "Office Professional 2024 Retail (专业零售版)",
+                            "size": "4.8 GB",
+                            "sha1": "微软 CDN 原厂直链",
+                            "links": [
+                                { "name": "原厂 CDN 高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/Professional2024Retail.img", "type": "url" }
+                            ]
+                        },
+                        {
+                            "name": "Office Home & Student 2024 Retail (家庭和学生零售版)",
+                            "size": "4.8 GB",
+                            "sha1": "微软 CDN 原厂直链",
+                            "links": [
+                                { "name": "原厂 CDN 高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/HomeStudent2024Retail.img", "type": "url" }
+                            ]
+                        },
+                        {
+                            "name": "Office Home & Business 2024 Retail (家庭和商业零售版)",
+                            "size": "4.8 GB",
+                            "sha1": "微软 CDN 原厂直链",
+                            "links": [
+                                { "name": "原厂 CDN 高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/HomeBusiness2024Retail.img", "type": "url" }
+                            ]
+                        }
+                    ]
+                },
+                "Office 2021": {
+                    "desc": "微软 2021 长期服务零售版本办公套件，高稳定性。提供原版原厂 CDN 高速直链离线镜像下载。",
+                    "type": "零售版 (原厂 CDN 直链 .img 离线镜像)",
+                    "files": [
+                        {
+                            "name": "Office Professional Plus 2021 Retail (专业增强零售版)",
                             "size": "4.4 GB",
-                            "sha1": "C40B8F5D88EE2EA7BF98888D7CFB269C89F3A660",
+                            "sha1": "微软 CDN 原厂直链",
                             "links": [
-                                { "name": "微软 CDN 官方高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProPlus2021Retail.img", "type": "url" }
+                                { "name": "原厂 CDN 高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProPlus2021Retail.img", "type": "url" }
+                            ]
+                        },
+                        {
+                            "name": "Office Professional 2021 Retail (专业零售版)",
+                            "size": "4.4 GB",
+                            "sha1": "微软 CDN 原厂直链",
+                            "links": [
+                                { "name": "原厂 CDN 高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/Professional2021Retail.img", "type": "url" }
+                            ]
+                        },
+                        {
+                            "name": "Office Home & Student 2021 Retail (家庭和学生零售版)",
+                            "size": "4.4 GB",
+                            "sha1": "微软 CDN 原厂直链",
+                            "links": [
+                                { "name": "原厂 CDN 高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/HomeStudent2021Retail.img", "type": "url" }
+                            ]
+                        },
+                        {
+                            "name": "Office Home & Business 2021 Retail (家庭和商业零售版)",
+                            "size": "4.4 GB",
+                            "sha1": "微软 CDN 原厂直链",
+                            "links": [
+                                { "name": "原厂 CDN 高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/HomeBusiness2021Retail.img", "type": "url" }
                             ]
                         }
                     ]
                 },
-                "Office LTSC 2019": {
-                    "desc": "微软 2019 企业级长期服务版本，支持 Windows 10/11，在经典功能上进行多项革新。采用即点即用（C2R）技术。",
-                    "type": "零售版 / 长期服务版 (IMG 离线镜像)",
+                "Office 2019": {
+                    "desc": "微软 2019 经典版办公套件，支持 Windows 10/11。提供原厂高速直链下载。",
+                    "type": "零售版 (原厂 CDN 直链 .img 离线镜像)",
                     "files": [
                         {
-                            "name": "Office Professional Plus 2019 Retail (专业增强版)",
+                            "name": "Office Professional Plus 2019 Retail (专业增强零售版)",
                             "size": "3.5 GB",
-                            "sha1": "微软 CDN 官方直链",
+                            "sha1": "微软 CDN 原厂直链",
                             "links": [
-                                { "name": "微软 CDN 官方高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProPlus2019Retail.img", "type": "url" }
+                                { "name": "原厂 CDN 高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProPlus2019Retail.img", "type": "url" }
+                            ]
+                        },
+                        {
+                            "name": "Office Professional 2019 Retail (专业零售版)",
+                            "size": "3.5 GB",
+                            "sha1": "微软 CDN 原厂直链",
+                            "links": [
+                                { "name": "原厂 CDN 高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/Professional2019Retail.img", "type": "url" }
+                            ]
+                        },
+                        {
+                            "name": "Office Home & Student 2019 Retail (家庭和学生零售版)",
+                            "size": "3.5 GB",
+                            "sha1": "微软 CDN 原厂直链",
+                            "links": [
+                                { "name": "原厂 CDN 高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/HomeStudent2019Retail.img", "type": "url" }
+                            ]
+                        },
+                        {
+                            "name": "Office Home & Business 2019 Retail (家庭和商业零售版)",
+                            "size": "3.5 GB",
+                            "sha1": "微软 CDN 原厂直链",
+                            "links": [
+                                { "name": "原厂 CDN 高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/HomeBusiness2019Retail.img", "type": "url" }
                             ]
                         }
                     ]
                 },
                 "Office 2016": {
-                    "desc": "非常经典且成熟的 Office 版本，适合 Windows 7 及以上系统。本站提供原厂原版镜像，支持传统的 ISO/MSI 安装模式。",
-                    "type": "专业增强版 (原厂原版 ISO 镜像)",
+                    "desc": "极高兼容性的经典版本。不仅提供微软官方原厂 C2R 直链离线镜像，同时提供批量授权的 MSI 经典原装 ISO 电驴磁力链接。",
+                    "type": "零售版直链 / 批量版 ISO (电驴 ed2k)",
                     "files": [
                         {
-                            "name": "Office Professional Plus 2016 (x86 & x64) - 简体中文",
+                            "name": "Office Professional Plus 2016 Retail (专业增强零售版 - 微软直链)",
+                            "size": "4.1 GB",
+                            "sha1": "微软 CDN 原厂直链",
+                            "links": [
+                                { "name": "原厂 CDN 高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProPlusRetail.img", "type": "url" }
+                            ]
+                        },
+                        {
+                            "name": "Office Professional 2016 Retail (专业零售版 - 微软直链)",
+                            "size": "4.1 GB",
+                            "sha1": "微软 CDN 原厂直链",
+                            "links": [
+                                { "name": "原厂 CDN 高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProfessionalRetail.img", "type": "url" }
+                            ]
+                        },
+                        {
+                            "name": "Office Home & Student 2016 Retail (家庭和学生零售版 - 微软直链)",
+                            "size": "4.1 GB",
+                            "sha1": "微软 CDN 原厂直链",
+                            "links": [
+                                { "name": "原厂 CDN 高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/HomeStudentRetail.img", "type": "url" }
+                            ]
+                        },
+                        {
+                            "name": "Office Home & Business 2016 Retail (家庭和商业零售版 - 微软直链)",
+                            "size": "4.1 GB",
+                            "sha1": "微软 CDN 原厂直链",
+                            "links": [
+                                { "name": "原厂 CDN 高速直链下载", "url": "http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/HomeBusinessRetail.img", "type": "url" }
+                            ]
+                        },
+                        {
+                            "name": "Office Professional Plus 2016 (x86 & x64) - 批量原版中文 ISO (电驴)",
                             "size": "2.41 GB",
                             "sha1": "277926A41B472EE38CA0B36ED8F2696356DCC98F",
                             "links": [
-                                { "name": "原版电驴高速直链 (ED2K) 复制", "url": "ed2k://|file|cn_office_professional_plus_2016_x86_x64_dvd_6969182.iso|2588266496|27EEA4FE4BB13CD0ECCDFC24167F9E01|/", "type": "copy" }
+                                { "name": "原装电驴磁力链接复制", "url": "ed2k://|file|cn_office_professional_plus_2016_x86_x64_dvd_6969182.iso|2588266496|27EEA4FE4BB13CD0ECCDFC24167F9E01|/", "type": "copy" }
                             ]
                         }
                     ]
                 },
                 "Office 2013": {
-                    "desc": "微软第一代扁平化界面办公套件，极佳的系统资源占用表现，对老款电脑、低配置设备友好。此版本集成 SP1 补丁包。",
-                    "type": "专业增强版 (集成 SP1 补丁版)",
+                    "desc": "扁平化开山之作，高兼容性。提供原版 MSDN 简体中文 ISO，集成 SP1 补丁，采用传统 MSI 安装模式。",
+                    "type": "专业增强版 (电驴 ed2k 镜像)",
                     "files": [
                         {
-                            "name": "Office Professional Plus 2013 with SP1 (x64) - 简体中文",
+                            "name": "Office Professional Plus 2013 with SP1 (x64) - 简体中文 ISO",
                             "size": "934.85 MB",
                             "sha1": "5BC5AE6B03876E634FA6396749C59164C7767F9F",
                             "links": [
-                                { "name": "原版电驴高速直链 (ED2K) 复制", "url": "ed2k://|file|cn_office_professional_plus_2013_with_sp1_x64_dvd_3921920.iso|980258816|E18C9CF896D65B2778AA1A44C922C377|/", "type": "copy" }
+                                { "name": "原装电驴磁力链接复制", "url": "ed2k://|file|cn_office_professional_plus_2013_with_sp1_x64_dvd_3921920.iso|980258816|E18C9CF896D65B2778AA1A44C922C377|/", "type": "copy" }
                             ]
                         },
                         {
-                            "name": "Office Professional Plus 2013 with SP1 (x86) - 简体中文",
+                            "name": "Office Professional Plus 2013 with SP1 (x86) - 简体中文 ISO",
                             "size": "743.70 MB",
                             "sha1": "D4D2BE56525EA4C374D8D56A41434938",
                             "links": [
-                                { "name": "原版电驴高速直链 (ED2K) 复制", "url": "ed2k://|file|cn_office_professional_plus_2013_with_sp1_x86_dvd_3920269.iso|779831296|D4D2BE56525EA4C374D8D56A41434938|/", "type": "copy" }
+                                { "name": "原装电驴磁力链接复制", "url": "ed2k://|file|cn_office_professional_plus_2013_with_sp1_x86_dvd_3920269.iso|779831296|D4D2BE56525EA4C374D8D56A41434938|/", "type": "copy" }
                             ]
                         }
                     ]
                 },
                 "Office 2010": {
-                    "desc": "拟物化风格办公软件，运行速度极快，高兼容性，推荐给老电脑、低配置工作站系统装机首选。",
-                    "type": "专业增强版 (批量授权 SP1 版)",
+                    "desc": "拟物经典版本，占用极低，老旧配置电脑装机首选。提供原版 MSDN 简体中文 ISO，集成 SP1 补丁。",
+                    "type": "专业增强版 (电驴 ed2k 镜像)",
                     "files": [
                         {
-                            "name": "Office Professional Plus 2010 with SP1 (x64) - 简体中文",
+                            "name": "Office Professional Plus 2010 with SP1 (x64) - 简体中文 ISO",
                             "size": "1.50 GB",
                             "sha1": "9D97B220739161CFF3147E169B702A056A6C7F51",
                             "links": [
-                                { "name": "原版电驴高速直链 (ED2K) 复制", "url": "ed2k://|file|SW_DVD5_Office_Professional_Plus_2010w_SP1_64Bit_ChnSimp_CORE_MLF_X17-76742.iso|1612515328|032320121E0EE36D8F0C32EC89CA0AB9|/", "type": "copy" }
+                                { "name": "原装电驴磁力链接复制", "url": "ed2k://|file|SW_DVD5_Office_Professional_Plus_2010w_SP1_64Bit_ChnSimp_CORE_MLF_X17-76742.iso|1612515328|032320121E0EE36D8F0C32EC89CA0AB9|/", "type": "copy" }
                             ]
                         },
                         {
-                            "name": "Office Professional Plus 2010 with SP1 (x86) - 简体中文",
+                            "name": "Office Professional Plus 2010 with SP1 (x86) - 简体中文 ISO",
                             "size": "1.31 GB",
                             "sha1": "581ED02AC171DB18E80B277214AB6B952038F599",
                             "links": [
-                                { "name": "原版电驴高速直链 (ED2K) 复制", "url": "ed2k://|file|SW_DVD5_Office_Professional_Plus_2010w_SP1_W32_ChnSimp_CORE_MLF_X17-76734.iso|1412091904|79B75EE3F629A1BD925E6C0AEFDECA10|/", "type": "copy" }
+                                { "name": "原装电驴磁力链接复制", "url": "ed2k://|file|SW_DVD5_Office_Professional_Plus_2010w_SP1_W32_ChnSimp_CORE_MLF_X17-76734.iso|1412091904|79B75EE3F629A1BD925E6C0AEFDECA10|/", "type": "copy" }
                             ]
                         }
                     ]
                 },
                 "Office 部署工具 (ODT)": {
-                    "desc": "包含微软部署工具 (ODT)，以及开源辅助工具 Office Tool Plus，可在线配置、下载、安装、卸载任何版本的 Office，并支持精细配置需要安装的独立组件（如仅安装 Word/Excel/PPT，剔除其他）。",
+                    "desc": "包含微软官方的部署工具 (ODT)，以及优秀的第三方开源辅助部署管理工具 Office Tool Plus。",
                     "type": "部署与维护辅助工具",
                     "files": [
                         {
-                            "name": "Office Deployment Tool (ODT) - 部署工具",
+                            "name": "Office Deployment Tool (ODT) - 微软官方部署工具",
                             "size": "3.5 MB",
-                            "sha1": "命令行配置工具",
+                            "sha1": "微软官方命令行工具",
                             "links": [
-                                { "name": "进入下载页面", "url": "https://www.microsoft.com/en-us/download/details.aspx?id=49117", "type": "url" }
+                                { "name": "微软官网直连下载", "url": "https://www.microsoft.com/en-us/download/details.aspx?id=49117", "type": "url" }
                             ]
                         },
                         {
-                            "name": "Office Tool Plus (推荐) - 开源 Office 部署利器",
+                            "name": "Office Tool Plus (OTP) - 开源 Office 辅助部署利器",
                             "size": "12 MB (免安装版)",
-                            "sha1": "安全、无广告的一键安装管理工具",
+                            "sha1": "第三方安全无广告的维护工具",
                             "links": [
                                 { "name": "进入官网下载页", "url": "https://otp.landian.vip/", "type": "url" }
                             ]
@@ -961,7 +1095,7 @@
                 }
             };
 
-            let currentOffice = "Office LTSC 2024";
+            let currentOffice = "Microsoft 365";
 
             const officeTabsContainer = document.getElementById('office-tabs-container');
             const officeContentContainer = document.getElementById('office-content-container');
