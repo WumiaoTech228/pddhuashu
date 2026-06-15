@@ -224,6 +224,7 @@
             <!-- 发行版快速跳转标签栏 -->
             <div class="distro-nav-bar" id="distro-nav-bar">
                 <span class="distro-nav-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="13" y2="15"/></svg> 快速跳转发行版安装教程：</span>
+                <button class="distro-tab-btn" onclick="jumpToDistro('distro-trouble')" style="border-color: #eab308; color: #eab308;">通用故障排除</button>
                 <button class="distro-tab-btn" onclick="jumpToDistro('distro-ubuntu')">Ubuntu</button>
                 <button class="distro-tab-btn" onclick="jumpToDistro('distro-debian')">Debian</button>
                 <button class="distro-tab-btn" onclick="jumpToDistro('distro-mint')">Linux Mint</button>
@@ -271,6 +272,118 @@
                 <button class="copy-btn" onclick="copyText('linux-4')">一键复制</button>
             </div>
 
+            <div class="script-row distro-row" id="distro-trouble">
+                <div class="script-info">
+                    <span class="script-desc">【通用】安装前准备与全系统故障排除手册（适用于所有Linux发行版）</span>
+                    <div class="script-content" id="linux-trouble">【通用故障排除手册】
+以下内容适用于所有 Linux 发行版的安装与维护，请在安装前阅读。每个发行版的专属命令和特殊处理请见各发行版教程中的<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg> 安装后配置段落。
+
+一、U 盘无法引导启动的排查方法
+1. 检查 BIOS 设置：重启电脑，开机时连续按 F2 / Del / F10（具体键位见 boot-keys.html 参考表）进入 BIOS 设置界面。
+2. 关闭 Secure Boot（安全启动）：在 BIOS 的「Security」或「Boot」选项卡中找到「Secure Boot」，设为「Disabled」。大部分非 Windows 系统的引导问题都源于 Secure Boot 拦截。
+3. 确认引导模式：BIOS →「Boot」→ 找到「Boot Mode」或「UEFI/ Legacy Boot」→ 优先设「UEFI Only」(推荐)；老电脑选「Legacy Only」或「Both (UEFI First)」。注意：UEFI 和 Legacy 模式只能选其一安装，装好后不可切换，否则无法启动。
+4. 调整启动顺序：BIOS →「Boot Priority」→ 把 USB 设备（UEFI: USB Hard Drive 或 Ventoy 或你的 U 盘品牌名）拖到第一位 → F10 保存退出。
+5. 换 USB 接口：优先使用主板背面的 USB 2.0 黑色接口（非蓝色 3.0），部分老主板对 USB 3.0 引导支持不好。
+6. 重做启动盘：如果以上步骤无效，换用 Rufus (Windows) 的 DD 模式重写 ISO；或改用 Ventoy（推荐，一个 U 盘可放多个 ISO）。确认下载的 ISO 文件 SHA256 校验值与官网一致。
+
+二、安装前的磁盘准备（防止数据丢失）
+1. 备份数据：全盘安装会永久抹除磁盘所有数据，操作前务必将重要文件复制到外部硬盘或云盘。建议用 CloneZilla 或 dd 做整盘镜像备份。
+2. SATA 模式检查：进 BIOS →「SATA Configuration」或「Storage」→ 确认 SATA Mode 设为「AHCI」。如果当前是「RAID」或「RST with Optane」模式，切换为 AHCI 后 Windows 可能无法启动，需先在 Windows 中进安全模式一次再切换。具体步骤：Win+R → msconfig → 引导 → 勾选「安全引导」→ 重启进 BIOS 改 AHCI → 进 Windows 安全模式 → 取消安全引导 → 正常重启。
+3. BitLocker 暂停：Windows 双系统用户，如果 C 盘有锁图标（BitLocker 加密），务必先暂停保护：Win 搜索「管理 BitLocker」→「暂停保护」→ 重启确认挂锁图标消失。否则安装器可能无法读取分区表。
+4. Windows 快速启动关闭：Win 搜索「电源选项」→「选择电源按钮的功能」→「更改当前不可用的设置」→ 取消勾选「启用快速启动(推荐)」→ 保存。快速启动会使 Windows 分区处于休眠状态，Linux 无法安全挂载，导致双系统关机异常或数据损坏。
+5. 压缩 Windows 分区：Win + X → 磁盘管理 → 右键 C 盘 →「压缩卷」→ 输入要压缩的空间量（≥50GB 即 51200MB）。不要在 Linux 安装器里调整 Windows 分区大小，可能损坏 NTFS 文件系统。
+
+三、双系统常见问题与修复
+1. 安装后 GRUB 不显示 Windows 启动项：
+   - 原因：安装时未检测到 Windows（快速启动开启 or BitLocker 开启）。
+   - 修复：先进入 Linux，打开终端运行以下命令来自动检测 Windows 并更新 GRUB 菜单：
+     · Debian/Ubuntu/Mint/deepin/UOS/Kylin 系列：sudo update-grub
+     · Fedora/RHEL/CentOS/Rocky/Alma/openEuler 系列：sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+     · openSUSE：sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+     · Arch：sudo grub-mkconfig -o /boot/grub/grub.cfg
+   - 如果 update-grub 后仍不显示 Windows，检查是否安装了 os-prober 工具：sudo apt install os-prober 或 sudo pacman -S os-prober。编辑 /etc/default/grub，确保有 GRUB_DISABLE_OS_PROBER=false 这一行，然后再执行 update-grub。
+2. 双系统时间相差 8 小时：
+   - 原因：Windows 默认用本地时间，Linux 默认用 UTC 时间。
+   - 修复（二选一）：
+     · 让 Linux 使用本地时间：sudo timedatectl set-local-rtc 1 --adjust-system-clock
+     · 让 Windows 使用 UTC 时间：Win+R → regedit → 定位 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation → 新建 DWORD(32位)值 RealTimeIsUniversal → 设为 1 → 重启。
+3. 安装后直接进 Windows，不显示 GRUB：
+   - 进 BIOS → 把「ubuntu」或「Linux Boot Manager」设为第一启动项，排在「Windows Boot Manager」前面。
+   - 如果 BIOS 里看不到 Linux 启动项，说明 GRUB 未正确安装到 EFI 分区。用 Live U 盘启动 → chroot 修复（见下方第五条）。
+
+四、包管理器常见报错与解决
+无论 apt (Debian系)、dnf (RHEL系)、pacman (Arch系)、zypper (openSUSE)，都会遇到以下共性问题：
+1. 锁文件冲突（无法获得锁 / Unable to acquire the lock）：
+   - 原因：上次安装/更新进程异常中断，锁文件残留。
+   - apt 系：sudo rm /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock /var/cache/apt/archives/lock
+   - dnf 系：sudo rm /var/run/dnf.pid（或等待自动超时，dnf 有锁超时机制）
+   - pacman：sudo rm /var/lib/pacman/db.lck
+   - zypper：sudo rm /var/run/zypp.pid
+2. 依赖损坏（Unmet dependencies / broken packages）：
+   - apt 系：sudo apt --fix-broken install
+   - dnf 系：sudo dnf distro-sync（同步仓库版本）或 sudo dnf remove --duplicates
+   - pacman：sudo pacman -Syu（必须完整升级，不允许部分升级）
+   - zypper：sudo zypper verify（验证依赖完整性）
+3. GPG 密钥/签名验证失败：
+   - apt 系：sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 缺失的KEYID
+   - dnf 系：sudo rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-*
+   - pacman：sudo pacman -Sy archlinux-keyring（先更新密钥环再更新系统）
+   - zypper：sudo zypper refresh --gpg-auto-import-keys
+4. 软件源连接超时或 404：
+   - 优先换用国内镜像站：清华源 mirrors.tuna.tsinghua.edu.cn / 阿里源 mirrors.aliyun.com / 中科大源 mirrors.ustc.edu.cn
+   - 换源后务必执行：apt 系 sudo apt update；dnf 系 sudo dnf makecache；pacman 系 sudo pacman -Syy
+   - 如果所有镜像都不可用，检查网络是否连通：ping -c 3 8.8.8.8；如果 ping 不通，先解决网络问题。
+
+五、系统无法启动时的救援方法（chroot 修复）
+适用场景：安装显卡驱动后黑屏、误删内核、fstab 写错、GRUB 损坏等导致系统无法正常启动。
+修复步骤（通用）：
+1. 用安装 U 盘启动，选择「Live」或「Try」进入 Live 桌面环境（不要选 Install）。
+2. 打开终端，查看磁盘分区：sudo fdisk -l 或 lsblk -f。找到你的根分区（通常最大，文件系统 ext4/xfs/btrfs）和 EFI 分区（fat32，约 500MB）。
+3. 挂载根分区和必要的虚拟文件系统（假设根分区是 /dev/sda3，EFI 分区是 /dev/sda1）：
+   sudo mount /dev/sda3 /mnt
+   sudo mount /dev/sda1 /mnt/boot/efi    （UEFI 引导；如果是 Legacy 引导则 sudo mount /dev/sda1 /mnt/boot）
+   sudo mount --bind /dev /mnt/dev
+   sudo mount --bind /proc /mnt/proc
+   sudo mount --bind /sys /mnt/sys
+   （如果是 LVM 分区如 /dev/mapper/xxx-root，需先 sudo vgchange -ay 激活卷组再挂载）
+4. 切换根目录进入你安装的系统：sudo chroot /mnt
+5. 现在你就在原系统的终端环境中，可以像正常登录一样执行修复命令：
+   - 重装内核：apt install --reinstall linux-image-generic 或 dnf reinstall kernel
+   - 重建 GRUB：grub-install /dev/sda && update-grub
+   - 重装显卡驱动：apt purge *nvidia* && apt install nvidia-driver-xxx
+   - 修复 fstab：nano /etc/fstab
+6. 修复完成后：exit（退出 chroot）→ sudo umount -R /mnt → sudo reboot（重启并拔 U 盘）。
+
+六、网络故障排查
+1. 有线网络不通：
+   - 查看网卡是否被系统识别：ip link show 或 nmcli d。如果只看到 lo 回环接口，说明网卡驱动未加载。
+   - 手动启动网卡：sudo ip link set ens192 up（设备名用 ip link 看到的实际名称）。
+   - DHCP 获取 IP：sudo dhclient ens192。若超时失败，改为手动设置静态 IP：
+     sudo ip addr add 192.168.1.100/24 dev ens192
+     sudo ip route add default via 192.168.1.1
+     echo 'nameserver 223.5.5.5' | sudo tee /etc/resolv.conf
+2. Wi-Fi 不可用（常见于新装系统）：
+   - 先确认硬件信息：lspci | grep -i network（内置网卡）或 lsusb | grep -i wireless（USB 网卡）。
+   - Intel 网卡：sudo apt install firmware-iwlwifi（Debian系）/ sudo dnf install iwlwifi-firmware（RHEL系）/ sudo pacman -S linux-firmware（Arch）。
+   - 博通(Broadcom)网卡：最麻烦，先插网线联网，然后 sudo apt install broadcom-sta-dkms（Debian系）/ 从 RPM Fusion 安装 broadcom-wl（Fedora）/ sudo pacman -S broadcom-wl-dkms（Arch）。
+   - Realtek 网卡：通常内核自带，个别新型号需从 GitHub 编译驱动（如 rtl8852be, rtl8821ce）。
+3. DNS 解析失败（能 ping IP 但 ping 不通域名）：
+   - 临时方案：echo 'nameserver 223.5.5.5' | sudo tee /etc/resolv.conf（阿里 DNS）。
+   - 永久方案：编辑 /etc/systemd/resolved.conf，取消注释 DNS= 行，设为 DNS=223.5.5.5 223.6.6.6，然后 sudo systemctl restart systemd-resolved。
+   - 如果 /etc/resolv.conf 是软链接到 /run/systemd/resolve/stub-resolv.conf，需先 sudo rm /etc/resolv.conf && echo 'nameserver 223.5.5.5' | sudo tee /etc/resolv.conf 临时绕过 systemd-resolved。
+
+七、桌面环境选择指南
+安装时选择的桌面环境(DE)直接决定系统流畅度和操作习惯：
+- GNOME：Fedora/Ubuntu/RHEL 默认，界面现代简洁，触控板手势优化最好，内存占用 1~1.5GB。适合新款笔记本。
+- KDE Plasma：openSUSE 默认，高度可定制，Windows 风格任务栏，内存 800MB~1.2GB。适合习惯 Windows 操作的用户。
+- XFCE：极致轻量，内存仅 400~600MB，适合 10 年以上老电脑或虚拟机低配环境。功能简单够用。
+- Cinnamon：Linux Mint 默认，类 Windows 经典布局，内存 800MB~1GB，推荐从 Windows 迁移的新手首选。
+- DDE (Deepin Desktop)：deepin/UOS/openEuler 可选，国产自研桌面，颜值高但对显卡要求较高(≥2GB 显存推荐)。
+- UKUI：银河麒麟默认桌面，类 Windows 风格，针对国产办公场景优化。</div>
+                </div>
+                <button class="copy-btn" onclick="copyText('linux-trouble')">一键复制</button>
+            </div>
+
             <div class="script-row distro-row" id="distro-ubuntu">
                     <div class="script-content" id="linux-5">【Ubuntu 安装指南】
 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="13" y2="15"/></svg> 系统要求：CPU 双核 2GHz+，内存 ≥4GB (桌面)/≥512MB (服务器)，磁盘 ≥25GB，支持 UEFI/Legacy BIOS 引导。
@@ -295,7 +408,7 @@
 - 更新系统：终端运行 sudo apt update && sudo apt upgrade -y。
 - 安装输入法：sudo apt install fcitx5 fcitx5-chinese-addons -y，重启后在「设置→区域与语言」添加「中文(智能拼音)」。
 - 安装显卡驱动：打开「软件和更新」→「附加驱动」→ 选择 NVIDIA 专有驱动（推荐）→ 应用更改。
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：若安装后无法进入 Windows，开机按 F12 选择 Windows Boot Manager；若 GRUB 不显示，进 BIOS 把 Ubuntu 设为第一启动项。
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：若安装后无法进入 Windows，开机按 F12 选择 Windows Boot Manager；若 GRUB 不显示，进 BIOS 把 Ubuntu 设为第一启动项。如果系统黑屏无法启动：用安装U盘进入Live环境→终端执行 sudo fdisk -l 找到根分区(ext4)和EFI分区(fat32)→sudo mount /dev/sda3 /mnt && sudo mount /dev/sda1 /mnt/boot/efi && for d in dev proc sys; do sudo mount --bind /$d /mnt/$d; done && sudo chroot /mnt→apt install --reinstall linux-image-generic grub-efi-amd64 && update-grub && grub-install /dev/sda→exit→sudo reboot。详见上方「通用故障排除手册」第五条。</div>
 
 二、Ubuntu Server (命令行服务器版)
 1. 引导启动：U 盘选择 Ubuntu Server 镜像，按 Enter 加载内核。
@@ -349,7 +462,7 @@
 - 更新系统：sudo apt update && sudo apt upgrade -y。
 - 安装中文输入法：sudo apt install fcitx5 fcitx5-chinese-addons -y。
 - 安装常用软件：sudo apt install firefox-esr vim git curl build-essential -y。
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：Debian 默认不包含非自由固件，若 Wi-Fi 无法使用，需下载包含 non-free firmware 的 ISO 版本；NVIDIA 显卡需手动启用 non-free 源后安装 nvidia-detect。
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：Debian 默认不包含非自由固件，若 Wi-Fi 无法使用，需下载包含 non-free firmware 的 ISO 版本；NVIDIA 显卡需手动启用 non-free 源后安装 nvidia-detect。 系统黑屏救援：Live U盘启动→sudo mount /dev/sda3 /mnt && sudo mount /dev/sda1 /mnt/boot/efi && for d in dev proc sys; do sudo mount --bind /$d /mnt/$d; done && sudo chroot /mnt→apt install --reinstall linux-image-amd64 grub-efi-amd64 && update-grub && grub-install /dev/sda→exit→sudo reboot。
 
 二、Debian Netinst (命令行服务器/网络精简安装)
 1. 引导启动：U 盘选择 "Graphical install"（图形化向导）或 "Install"（纯文本），推荐 Graphical install。
@@ -377,7 +490,7 @@
 - 换国内源：同上，编辑 /etc/apt/sources.list。
 - 安装基础工具：sudo apt install sudo vim curl wget net-tools htop -y。
 - 配置防火墙：sudo apt install ufw && sudo ufw enable && sudo ufw allow OpenSSH。
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：Debian 默认 sudo 需要手动安装（若 root 留空会自动配置）；国内镜像连接失败可稍等重试或换用 mirrors.ustc.edu.cn。</div>
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：Debian 默认 sudo 需要手动安装（若 root 留空会自动配置）；国内镜像连接失败可稍等重试或换用 mirrors.ustc.edu.cn。 系统黑屏救援：同上chroot流程→apt install --reinstall linux-image-amd64 grub-efi-amd64 && update-grub && grub-install。</div>
                 </div>
                 <button class="copy-btn" onclick="copyText('linux-6')">一键复制</button>
             </div>
@@ -410,7 +523,7 @@
 - 换国内源：更新管理器 → 编辑 → 软件源 → 镜像 → 选择 mirrors.tuna.tsinghua.edu.cn 或 mirrors.aliyun.com。
 - 安装输入法：系统自带 Fcitx5，在「输入法」设置中添加「中文拼音」。
 - 安装常用软件：终端运行 sudo apt install git curl vim build-essential gimp -y。
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：Mint 基于 Ubuntu，软件源与 Ubuntu 通用；若 Wi-Fi 不可用，先插网线进系统运行驱动管理器安装博通驱动。</div>
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：Mint 基于 Ubuntu，软件源与 Ubuntu 通用；若 Wi-Fi 不可用，先插网线进系统运行驱动管理器安装博通驱动。 系统黑屏救援：Live U盘启动→sudo mount /dev/sda3 /mnt && sudo mount /dev/sda1 /mnt/boot/efi && for d in dev proc sys; do sudo mount --bind /$d /mnt/$d; done && sudo chroot /mnt→apt install --reinstall linux-image-generic grub-efi-amd64-signed && update-grub && grub-install /dev/sda→exit→sudo reboot。也可用Timeshift从Live环境还原快照。</div>
                 </div>
                 <button class="copy-btn" onclick="copyText('linux-7')">一键复制</button>
             </div>
@@ -441,7 +554,7 @@
 - 换国内源：sudo sed -e 's|^mirrorlist=|#mirrorlist=|g' -e 's|^#baseurl=http://dl.rockylinux.org|baseurl=https://mirrors.tuna.tsinghua.edu.cn/rocky|g' /etc/yum.repos.d/rocky*.repo (Rocky)；AlmaLinux 同理替换域名。
 - 安装 EPEL：sudo dnf install epel-release -y。
 - 安装开发工具：sudo dnf groupinstall "Development Tools" -y。
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：RHEL 系默认防火墙开启，需放行服务端口：sudo firewall-cmd --permanent --add-service=ssh && sudo firewall-cmd --reload。
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：RHEL 系默认防火墙开启，需放行服务端口：sudo firewall-cmd --permanent --add-service=ssh && sudo firewall-cmd --reload。 系统黑屏救援：Live ISO启动→sudo mount /dev/mapper/rl-root /mnt && sudo mount /dev/sda1 /mnt/boot && for d in dev proc sys; do sudo mount --bind /$d /mnt/$d; done && sudo chroot /mnt→dnf reinstall kernel-core grub2-efi-x64 && grub2-mkconfig -o /boot/grub2/grub.cfg && grub2-install /dev/sda→exit→sudo reboot。
 
 二、极简服务器安装 (Server Minimal CLI)
 1. 引导与语言：同上，选「简体中文」。
@@ -454,7 +567,7 @@
 - 换国内源：同上编辑 .repo 文件。
 - 安装基础包：sudo dnf install vim curl wget net-tools htop -y。
 - 启动 Cockpit Web 管理：sudo dnf install cockpit && sudo systemctl enable --now cockpit.socket（访问 https://服务器IP:9090）。
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：最小安装不含 man 手册和常用工具，需手动安装；SELinux 默认 enforcing，遇到权限问题可临时 setenforce 0 排查。</div>
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：最小安装不含 man 手册和常用工具，需手动安装；SELinux 默认 enforcing，遇到权限问题可临时 setenforce 0 排查。 系统黑屏救援：Live ISO启动→同上chroot→dnf reinstall kernel-core && grub2-mkconfig -o /boot/grub2/grub.cfg && grub2-install /dev/sda。SELinux异常加 touch /.autorelabel 后重启。</div>
                 </div>
                 <button class="copy-btn" onclick="copyText('linux-8')">一键复制</button>
             </div>
@@ -482,7 +595,7 @@
 - 安装 NVIDIA 驱动：sudo dnf install akmod-nvidia -y（RPM Fusion 源提供）。
 - 安装中文输入法：sudo dnf install fcitx5 fcitx5-chinese-addons -y。
 - 安装常用软件：sudo dnf install vim git curl htop neofetch -y。
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：Fedora 默认 Wayland + GNOME；若 NVIDIA 驱动异常，可在 GDM 登录界面齿轮图标切换 "GNOME on Xorg"。
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：Fedora 默认 Wayland + GNOME；若 NVIDIA 驱动异常，可在 GDM 登录界面齿轮图标切换 "GNOME on Xorg"。 系统黑屏救援：Live ISO启动→sudo mount /dev/sda3 /mnt && sudo mount /dev/sda1 /mnt/boot/efi && for d in dev proc sys; do sudo mount --bind /$d /mnt/$d; done && sudo chroot /mnt→dnf reinstall kernel-core grub2-efi-x64 && grub2-mkconfig -o /boot/grub2/grub.cfg && grub2-install /dev/sda→exit→sudo reboot。Btrfs快照回滚：sudo snapper rollback。
 
 二、Fedora Server (命令行服务器版)
 1. 引导启动：U 盘选 "Install Fedora Server"。
@@ -495,7 +608,7 @@
 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg> 安装后配置：
 - 换源同上。安装 Cockpit Web 管理：sudo dnf install cockpit -y && sudo systemctl enable --now cockpit.socket。
 - 基础包：sudo dnf install vim curl wget net-tools -y。
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：Fedora Server 默认使用 systemd-resolved 管理 DNS，修改 DNS 编辑 /etc/systemd/resolved.conf。</div>
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：Fedora Server 默认使用 systemd-resolved 管理 DNS，修改 DNS 编辑 /etc/systemd/resolved.conf。 系统黑屏救援：同上chroot→dnf reinstall kernel-core && grub2-mkconfig -o /boot/grub2/grub.cfg && grub2-install。</div>
                 </div>
                 <button class="copy-btn" onclick="copyText('linux-9')">一键复制</button>
             </div>
@@ -521,7 +634,7 @@
 - 安装输入法：sudo zypper install fcitx5 fcitx5-chinese-addons。
 - 安装 NVIDIA 驱动：sudo zypper addrepo https://download.nvidia.com/opensuse/leap/\$releasever nvidia && sudo zypper install nvidia-driver。
 - 安装多媒体解码器：sudo zypper install opi && opi codecs（opi 是一键安装社区包工具）。
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：Snapper 快照会占用较多磁盘空间，可在 YaST 中调整快照保留策略；Btrfs 的 /@/.snapshots 子卷存有快照，不要手动删除。
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：Snapper 快照会占用较多磁盘空间，可在 YaST 中调整快照保留策略；Btrfs 的 /@/.snapshots 子卷存有快照，不要手动删除。 系统黑屏救援：Live ISO→sudo mount /dev/sda3 /mnt && sudo mount /dev/sda1 /mnt/boot/efi && for d in dev proc sys; do sudo mount --bind /$d /mnt/$d; done && sudo chroot /mnt→zypper install -f kernel-default grub2-x86_64-efi && grub2-mkconfig -o /boot/grub2/grub.cfg && grub2-install /dev/sda→exit→sudo reboot。Snapper快照回滚：sudo snapper rollback。
 
 二、YaST 文本模式服务器安装 (CLI/Text)
 1. 引导启动同上，进入安装程序。
@@ -530,7 +643,7 @@
 4. 账户：创建普通用户 + 设置 root 密码。
 5. 完成安装：确认概要 →「Install」→ 重启。开机后输入 yast 唤起文本菜单式系统管理工具。
 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg> 安装后配置：同桌面版换源步骤；安装 Cockpit：sudo zypper install cockpit && sudo systemctl enable --now cockpit.socket。
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：事务性服务器版根文件系统默认只读，需用 transactional-update 命令安装/更新软件包。</div>
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：事务性服务器版根文件系统默认只读，需用 transactional-update 命令安装/更新软件包。 系统黑屏救援：同上chroot→zypper install -f kernel-default && grub2-mkconfig -o /boot/grub2/grub.cfg && grub2-install。</div>
                 </div>
                 <button class="copy-btn" onclick="copyText('linux-10')">一键复制</button>
             </div>
@@ -566,7 +679,7 @@
 - 换国内源：sudo sed -i '1i Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/\$repo/os/\$arch' /etc/pacman.d/mirrorlist。
 - 安装 AUR 助手：sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay-bin.git && cd yay-bin && makepkg -si。
 - 安装输入法：sudo pacman -S fcitx5 fcitx5-chinese-addons fcitx5-gtk fcitx5-qt。
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：安装时若下载失败，先更新密钥环 pacman -Sy archlinux-keyring；archinstall 失败可重试，注意选择正确的磁盘别误删数据。
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：安装时若下载失败，先更新密钥环 pacman -Sy archlinux-keyring；archinstall 失败可重试，注意选择正确的磁盘别误删数据。 系统黑屏救援：Arch ISO启动→mount /dev/sda3 /mnt && mount /dev/sda1 /mnt/boot && arch-chroot /mnt→pacman -Syu linux grub && grub-mkconfig -o /boot/grub/grub.cfg && grub-install /dev/sda→exit→reboot。
 
 二、传统命令行手动安装 (纯命令模式)
 1. 联网：同上用 iwctl 或插网线。更新系统时钟：timedatectl set-ntp true。
@@ -614,7 +727,7 @@
 - 更新系统：sudo dnf update -y。
 - 安装开发工具：sudo dnf groupinstall "Development Tools" -y。
 - 安装 EPOL(额外包)：sudo dnf install epol-release -y。
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：openEuler 默认使用 iSulad 轻量容器引擎，如需 Docker 需从 EPOL 源安装；Root 密码复杂度是强制要求，临时绕过可先设后再改。
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：openEuler 默认使用 iSulad 轻量容器引擎，如需 Docker 需从 EPOL 源安装；Root 密码复杂度是强制要求，临时绕过可先设后再改。 系统黑屏救援：Live ISO→sudo mount /dev/sda3 /mnt && sudo mount /dev/sda1 /mnt/boot/efi && for d in dev proc sys; do sudo mount --bind /$d /mnt/$d; done && sudo chroot /mnt→dnf reinstall kernel && grub2-mkconfig -o /boot/grub2/grub.cfg && grub2-install /dev/sda→exit→sudo reboot。
 
 二、命令行服务器安装 (CLI Minimal)
 1. 语言配置：同上，选「简体中文」或 English。
@@ -628,7 +741,7 @@
 - 换源 + 安装基础包同上。
 - 安装 SSH 服务（默认已安装）：sudo systemctl enable --now sshd。
 - 安装 Cockpit：sudo dnf install cockpit -y && sudo systemctl enable --now cockpit.socket。
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：openEuler 使用 shim 安全启动签名，在部分机器上需要先关闭 Secure Boot 才能引导。</div>
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：openEuler 使用 shim 安全启动签名，在部分机器上需要先关闭 Secure Boot 才能引导。 系统黑屏救援：同上chroot→dnf reinstall kernel && grub2-mkconfig -o /boot/grub2/grub.cfg && grub2-install。</div>
                 </div>
                 <button class="copy-btn" onclick="copyText('linux-12')">一键复制</button>
             </div>
@@ -659,7 +772,7 @@
 - 更新系统：sudo apt update && sudo apt upgrade -y。
 - 安装开发工具：sudo apt install build-essential git curl vim -y。
 - 开启开发者模式：设置 → 通用 → 开发者模式（获取 root 访问权限和 sideload 能力）。
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：deepin 25 使用玲珑(Linglong)容器化包格式作为主要应用分发方式，传统 deb 包仍兼容；与 Windows 双系统时，建议先装 Windows 再装 deepin，GRUB 会自动检测 Windows 启动项。</div>
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：deepin 25 使用玲珑(Linglong)容器化包格式作为主要应用分发方式，传统 deb 包仍兼容；与 Windows 双系统时，建议先装 Windows 再装 deepin，GRUB 会自动检测 Windows 启动项。 系统黑屏救援：Live U盘→sudo mount /dev/sda3 /mnt && sudo mount /dev/sda1 /mnt/boot/efi && for d in dev proc sys; do sudo mount --bind /$d /mnt/$d; done && sudo chroot /mnt→apt install --reinstall linux-image-deepin-amd64 grub-efi-amd64 && update-grub && grub-install /dev/sda→exit→sudo reboot。也可用/recovery分区一键还原。</div>
                 </div>
                 <button class="copy-btn" onclick="copyText('linux-13')">一键复制</button>
             </div>
@@ -690,7 +803,7 @@
 - 安装 EPEL：sudo dnf install epel-release -y。
 - 安装开发工具：sudo dnf groupinstall "Development Tools" -y。
 - RHEL 用户注意：免费开发者订阅每年需 renew。
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：CentOS 7 已于 2024 年 6 月 EOL，强烈建议迁移至 CentOS Stream 9/10 或 Rocky/AlmaLinux；RHEL 免费订阅仅限开发/测试用途，不可用于生产环境。
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：CentOS 7 已于 2024 年 6 月 EOL，强烈建议迁移至 CentOS Stream 9/10 或 Rocky/AlmaLinux；RHEL 免费订阅仅限开发/测试用途，不可用于生产环境。 系统黑屏救援：Live ISO→sudo mount /dev/mapper/rhel-root /mnt && sudo mount /dev/sda1 /mnt/boot && for d in dev proc sys; do sudo mount --bind /$d /mnt/$d; done && sudo chroot /mnt→dnf reinstall kernel-core grub2-efi-x64 && grub2-mkconfig -o /boot/grub2/grub.cfg && grub2-install /dev/sda→exit→sudo reboot。SELinux异常：touch /.autorelabel 后重启。
 
 二、极简服务器安装 (CLI Minimal)
 1. 语言选择：同上，「简体中文」或 English。
@@ -703,7 +816,7 @@
 - 换源同上。
 - 安装基础包：sudo dnf install vim curl wget net-tools htop -y。
 - 安装 Cockpit：sudo dnf install cockpit -y && sudo systemctl enable --now cockpit.socket。
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：最小安装不含 man、tar 等基本工具，需手动补充；SELinux 默认 enforcing，如遇权限异常可用 ausearch -m avc 排查。</div>
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：最小安装不含 man、tar 等基本工具，需手动补充；SELinux 默认 enforcing，如遇权限异常可用 ausearch -m avc 排查。 系统黑屏救援：同上chroot→dnf reinstall kernel-core && grub2-mkconfig -o /boot/grub2/grub.cfg && grub2-install。</div>
                 </div>
                 <button class="copy-btn" onclick="copyText('linux-14')">一键复制</button>
             </div>
@@ -731,7 +844,7 @@
 - Anolis OS 换国内源：sudo sed -e 's|openanolis.cn|mirrors.tuna.tsinghua.edu.cn/anolis|g' /etc/yum.repos.d/AnolisOS*.repo。
 - 安装 EPEL：sudo dnf install epel-release -y。
 - Oracle Linux 可选切换 UEK 内核（Unbreakable Enterprise Kernel，默认已启用，高性能数据库推荐）。
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：Oracle Linux 免费使用但商业支持需付费；Anolis OS 通过龙蜥社区提供免费社区支持。
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：Oracle Linux 免费使用但商业支持需付费；Anolis OS 通过龙蜥社区提供免费社区支持。 系统黑屏救援(Ubuntu系/deb系同样适用)：Live ISO→sudo mount /dev/mapper/ol-root /mnt && sudo mount /dev/sda1 /mnt/boot && for d in dev proc sys; do sudo mount --bind /$d /mnt/$d; done && sudo chroot /mnt→dnf reinstall kernel-core grub2-efi-x64 && grub2-mkconfig -o /boot/grub2/grub.cfg && grub2-install /dev/sda→exit→sudo reboot。UEK内核问题：grubby --set-default=/boot/vmlinuz-*RHCK* 切回兼容内核。
 
 二、极简服务器安装 (CLI Minimal)
 1. 语言同上，选「简体中文」。
@@ -740,7 +853,7 @@
 4. 账户：设 Root 强密码 + 创建管理员用户。
 5. 开始安装：点「开始安装」→ 重启拔 U 盘。
 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg> 安装后配置：同桌面版的换源操作 + 安装常用开发包 sudo dnf groupinstall "Development Tools" -y。
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：Anolis OS 的默认内核经过阿里针对国产生态（龙芯、飞腾、鲲鹏等）和海量并发场景的深度调优，兼容性极佳。</div>
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：Anolis OS 的默认内核经过阿里针对国产生态（龙芯、飞腾、鲲鹏等）和海量并发场景的深度调优，兼容性极佳。 系统黑屏救援：同上chroot→dnf reinstall kernel-core && grub2-mkconfig -o /boot/grub2/grub.cfg && grub2-install。Anolis OS：dnf install epol-release -y 启用扩展源。</div>
                 </div>
                 <button class="copy-btn" onclick="copyText('linux-15')">一键复制</button>
             </div>
@@ -772,7 +885,7 @@
 - 安装输入法：系统内置搜狗输入法，可在「设置→输入法」中启用。
 - 安装常用软件：麒麟应用商店可一键安装 WPS、微信、QQ、浏览器等国产应用。
 - 安装开发工具：sudo apt install build-essential git curl vim -y。
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：商业版银河麒麟默认开启安全审计和三权分立机制，普通用户部分操作受限；ARM 架构设备需确认 BIOS 中关闭 Secure Boot。
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：商业版银河麒麟默认开启安全审计和三权分立机制，普通用户部分操作受限；ARM 架构设备需确认 BIOS 中关闭 Secure Boot。 系统黑屏救援：Live U盘→sudo mount /dev/sda3 /mnt && sudo mount /dev/sda1 /mnt/boot/efi && for d in dev proc sys; do sudo mount --bind /$d /mnt/$d; done && sudo chroot /mnt→apt install --reinstall linux-image-generic grub-efi-amd64 && update-grub && grub-install /dev/sda→exit→sudo reboot。商业版三权分立锁定可进单用户模式恢复。
 
 二、银河麒麟服务器操作系统 V10 命令行安装 (CLI)
 1. 获取镜像：从 kylinos.cn 申请服务器版 ISO，或使用 openKylin 社区构建版本。
@@ -786,7 +899,7 @@
 7. Root 密码与用户：设 Root 强密码 + 创建管理员用户(sudo 权限)。
 8. 执行安装：「Begin Installation」→ 重启拔 U 盘 → 纯命令行终端。
 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg> 安装后配置：同桌面版换源 + 安装常用包 + 配置 SSH sudo systemctl enable --now sshd。
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：服务器版默认不开启任何多余服务，安全审计日志默认开启，日志路径 /var/log/audit/。
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：服务器版默认不开启任何多余服务，安全审计日志默认开启，日志路径 /var/log/audit/。 系统黑屏救援：同上chroot→apt install --reinstall linux-image-generic && update-grub && grub-install。审计日志占满磁盘：echo '' > /var/log/audit/audit.log。
 
 三、openKylin (开放麒麟) 社区版说明
 openKylin 是开放原子开源基金会孵化的社区版本，完全免费：
@@ -828,7 +941,7 @@ openKylin 是开放原子开源基金会孵化的社区版本，完全免费：
 - 开发者模式：设置 → 通用 → 开发者模式（获取 root 权限）。
 - 换国内源：编辑 /etc/apt/sources.list（基于 Debian 体系）使用清华源或官方源。
 - 更新系统：sudo apt update && sudo apt upgrade -y。
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：UOS 桌面专业版需要商业授权激活，未激活可体验 90 天全功能；社区版 deepin 25 永久免费无限制。
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：UOS 桌面专业版需要商业授权激活，未激活可体验 90 天全功能；社区版 deepin 25 永久免费无限制。 系统黑屏救援：Live U盘→sudo mount /dev/sda3 /mnt && sudo mount /dev/sda1 /mnt/boot/efi && for d in dev proc sys; do sudo mount --bind /$d /mnt/$d; done && sudo chroot /mnt→apt install --reinstall linux-image-deepin-amd64 grub-efi-amd64 && update-grub && grub-install /dev/sda→exit→sudo reboot。/recovery分区可一键还原至出厂状态。
 
 二、统信UOS 服务器版 命令行安装 (CLI)
 1. 获取镜像：从 uniontech.com 企业渠道申请下载服务器版 ISO。
@@ -847,7 +960,7 @@ openKylin 是开放原子开源基金会孵化的社区版本，完全免费：
 - 常用命令：apt update && apt upgrade(更新)、systemctl(服务管理)、ufw(防火墙)。
 - 容器化：支持 Docker/K8s 等容器部署，适用于高可用集群、中间件、数据库等政企核心场景。
 - Cockpit：sudo apt install cockpit -y && sudo systemctl enable --now cockpit（Web 管理面板）。
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：UOS 服务器版默认开启安全加固策略，部分端口需手动开放；与 RHEL/CentOS 生态的 RPM 包不兼容，需使用 DEB 包或 Snap/Flatpak。
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 常见问题：UOS 服务器版默认开启安全加固策略，部分端口需手动开放；与 RHEL/CentOS 生态的 RPM 包不兼容，需使用 DEB 包或 Snap/Flatpak。 系统黑屏救援：同上chroot→apt install --reinstall linux-image-amd64 && update-grub && grub-install。安全加固端口限制用 ufw allow 或 iptables -I INPUT 放行。
 
 三、UOS 社区版（即 deepin 深度操作系统）
 统信UOS 桌面社区版即 deepin 25（深度操作系统），完全免费：
