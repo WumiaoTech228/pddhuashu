@@ -130,6 +130,27 @@
         .kefu-section {
             scroll-margin-top: 7.5rem;
         }
+        /* 选项卡按钮 */
+        .os-tab-btn {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            border-radius: 4px;
+        }
+        .os-tab-btn:hover {
+            color: #ffffff;
+            border-color: var(--border-hover);
+        }
+        .os-tab-btn.active {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
 </style>
 </head>
 <body class="kefu-page">
@@ -171,138 +192,24 @@
             </div>
         </div>
 
-        <!-- 12. 我的世界 Minecraft Java 部署 -->
+        <!-- 12. 我的世界 Minecraft Java 部署及 Java 常见报错疑难解答 -->
         <div class="kefu-section" id="section-minecraft">
-            <div class="kefu-section-title">12. 我的世界 Minecraft Java 部署</div>
+            <div class="kefu-section-title">12. 我的世界 Minecraft Java 部署及 Java 常见报错疑难解答</div>
             
-            <div class="script-row">
-                <div class="script-info">
-                    <span class="script-desc">确认安装环境与正版/离线登录</span>
-                    <div class="script-content" id="mc-1">请问您要安装的是《我的世界》Java版还是基岩版？平时习惯使用哪款启动器，如 HMCL（哈皮启动器）还是 PCL2（皮卡鲁启动器）？
-如果您有微软正版账号，请准备好账号密码；如需使用离线模式，可以提供您想要的英文游戏 ID 角色名称，我们将为您配置。</div>
-                </div>
-                <button class="copy-btn" onclick="copyText('mc-1')">一键复制</button>
+            <!-- 分类选项卡 -->
+            <div class="os-tab-container" id="mc-tabs" style="margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                <!-- JS 动态生成 -->
             </div>
 
-            <div class="script-row">
-                <div class="script-info">
-                    <span class="script-desc">微软与原厂 Java 版本对照及多版本共存规则</span>
-                    <div class="script-content" id="mc-2">由于不同版本的《我的世界》需要配合不同的 Java 运行环境，Java 版本对照如下：
-1. 1.7.10 至 1.12.2 版本：推荐使用 Java 8 (x64)；
-2. 1.16.5 至 1.17 版本：推荐使用 Java 16 (x64)；
-3. 1.18 至 1.20.4 版本：推荐使用 Java 17 (x64)；
-4. 1.20.5 及以上版本：推荐使用 Java 21 (x64)。
-我们将为您安装多版本 Java 环境共存，并在启动器里手动指定对应的 Java 路径，以防游戏因 Java 版本不匹配而报错打不开。</div>
-                </div>
-                <button class="copy-btn" onclick="copyText('mc-2')">一键复制</button>
+            <!-- 实时搜索输入框 -->
+            <div style="margin-bottom: 1.5rem;">
+                <input type="text" id="mc-search" placeholder="输入关键字搜索 Minecraft 问题与话术... (如: 闪退、联机、OpenGL、JVM)" 
+                       style="width: 100%; padding: 0.75rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color); color: #ffffff; font-size: 0.9rem; outline: none; transition: var(--transition-fast);" />
             </div>
 
-            <div class="script-row">
-                <div class="script-info">
-                    <span class="script-desc">Forge/Fabric 模组加载器远程一键部署</span>
-                    <div class="script-content" id="mc-3">如果您想使用 Mod 模组，游戏必须首先安装对应的 Mod 加载器框架：
-1. Forge：传统的模组加载器，历史模组极其丰富，但启动较慢，内存占用相对较高。
-2. Fabric：新一代轻量级加载器，启动飞快，兼容性好，是目前高版本优化的首选。
-我们将为您一键下载并远程部署所需的 Forge 或 Fabric 框架，并同步配置好对应的游戏前置 API 运行库（如 Fabric API 等）。</div>
-                </div>
-                <button class="copy-btn" onclick="copyText('mc-3')">一键复制</button>
-            </div>
-
-            <div class="script-row">
-                <div class="script-info">
-                    <span class="script-desc">游戏优化与帧率提升部署</span>
-                    <div class="script-content" id="mc-4">为解决游戏卡顿、掉帧以及画面撕裂问题，我们建议为您的游戏部署专用的优化方案：
-1. 针对 Fabric 环境：为您安装 Sodium（钠）、Lithium（锂）、Phosphor（磷）或 Indium（铟）等一系列原版优化模组，大幅提升游戏帧率；
-2. 针对 Forge 环境：为您安装 OptiFine 或 Rubidium 优化模组。
-同时，我们会在启动器中为您分配合理的最大内存（推荐 4G-8G），并调整适宜的视距（8-12区块）和关闭不必要的特效，保证流畅运行。</div>
-                </div>
-                <button class="copy-btn" onclick="copyText('mc-4')">一键复制</button>
-            </div>
-
-            <div class="script-row">
-                <div class="script-info">
-                    <span class="script-desc">疑难排查 - Exit Code 1 / -1 游戏崩溃闪退</span>
-                    <div class="script-content" id="mc-5">如果游戏启动时报错 Exit Code 1 或 Exit Code -1 闪退：
-1. 模组冲突：我们将为您进入游戏目录下的 .minecraft/crash-reports 文件夹，查看最新生成的崩溃报告，定位具体的冲突模组（Mod）并予以清理或更新；
-2. Java 路径不一致：如果在导入整合包时误选了默认的旧版 Java，会导致启动闪退。我们将重新为您指定正确的 Java 版本路径。</div>
-                </div>
-                <button class="copy-btn" onclick="copyText('mc-5')">一键复制</button>
-            </div>
-
-            <div class="script-row">
-                <div class="script-info">
-                    <span class="script-desc">疑难排查 - GLFW Error 65542 / OpenGL 不支持报错</span>
-                    <div class="script-content" id="mc-6">启动游戏报错“GLFW error 65542: WGL: The driver does not appear to support OpenGL”或“Pixel format not accelerated”：
-这是由于您当前的显卡驱动未安装或版本过旧，不支持游戏所需的 OpenGL 渲染。
-解决方法：我们将为您重装官网最新的显卡驱动（NVIDIA/AMD/Intel）；对于某些老旧核心显卡，如果官网驱动不再更新，我们将手动为您在 Java 的 bin 目录下放置专用的 opengl32.dll 补丁文件绕过限制。</div>
-                </div>
-                <button class="copy-btn" onclick="copyText('mc-6')">一键复制</button>
-            </div>
-
-            <div class="script-row">
-                <div class="script-info">
-                    <span class="script-desc">疑难排查 - Class file version 61.0 / Java 路径报错</span>
-                    <div class="script-content" id="mc-7">游戏闪退且日志提示“has been compiled by a more recent version of the Java Runtime (class file version 61.0)”：
-这代表您的游戏或某些模组需要更高版本的 Java 运行环境（例如 61.0 对应的是 Java 17），但启动器目前正误用较低的版本（如 Java 8）来启动它。
-解决方法：我们将在您的电脑上配置并安装最新的 JDK，随后在启动器的版本设置中，手动将“Java 路径”指向新安装的 javaw.exe。</div>
-                </div>
-                <button class="copy-btn" onclick="copyText('mc-7')">一键复制</button>
-            </div>
-
-            <div class="script-row">
-                <div class="script-info">
-                    <span class="script-desc">疑难排查 - 内存分配失败</span>
-                    <div class="script-content" id="mc-8">游戏报错“Could not create the Java Virtual Machine”或“Error: Could not reserve enough space for object heap”：
-这是由于游戏分配的运行内存不足，或您的电脑运行内存已被占满，导致 Java 虚拟机无法成功申请内存空间。
-解决方法：
-1. 确认您的系统和 Java 是否均为 64 位。如果是 32 位 Java，最多只能分配 1G 内存，我们将为您升级为 64 位 Java 运行环境；
-2. 检查启动器设置，将最大分配内存适当调小（如从 8G 调小至 4G），或开启系统的虚拟内存。</div>
-                </div>
-                <button class="copy-btn" onclick="copyText('mc-8')">一键复制</button>
-            </div>
-
-            <div class="script-row">
-                <div class="script-info">
-                    <span class="script-desc">局域网内网穿透联机部署</span>
-                    <div class="script-content" id="mc-9">如果您需要和朋友跨网络联机，且不打算购买云服务器，我们可以配置免费的 Sakura Frp 进行局域网穿透联机：
-1. 工程师将协助您下载客户端，并在其管理后台创建一条 TCP 隧道，将本地端口设为 25565（或您游戏内开放局域网时随机生成的 5 位端口）；
-2. 开启隧道映射后，系统会生成一个“节点IP:端口”外网链接；
-3. 您只需将此链接发送给好友，对方在多人游戏“直接连接”中粘贴此地址，即可异地联机加入您的世界。</div>
-                </div>
-                <button class="copy-btn" onclick="copyText('mc-9')">一键复制</button>
-            </div>
-
-            <div class="script-row">
-                <div class="script-info">
-                    <span class="script-desc">ZeroTier/蒲公英虚拟局域网联机部署</span>
-                    <div class="script-content" id="mc-10">如果您的游戏装有大量模组（Mod）且数据传输频繁，使用虚拟局域网（VLAN）工具联机比端口映射更加稳定：
-1. 工程师会为您和您的好友安装并配置 ZeroTier 客户端；
-2. 协助您创建一个虚拟私有网络，并引导好友加入，通过后台授权建立虚拟局域网通道；
-3. 联机时，好友只需在多人游戏中输入您在 ZeroTier 专网中获得的虚拟 IP 和游戏内开放局域网时生成的端口即可进入。在此过程中，我们会确保为您关闭 Windows 防火墙拦截以防连接超时。</div>
-                </div>
-                <button class="copy-btn" onclick="copyText('mc-10')">一键复制</button>
-            </div>
-
-            <div class="script-row">
-                <div class="script-info">
-                    <span class="script-desc">联机进不去 - 登入失败/无效会话/连接超时错误</span>
-                    <div class="script-content" id="mc-11">当好友联机时提示“登入失败：无效的会话”或“连接超时/Connection Refused”：
-1. 无效的会话：这是由于您本地开启的游戏开启了正版验证，而联机玩家使用的是离线客户端。我们将为您更改配置或使用离线启动模式解决；
-2. 连接超时/拒绝连接：这是由于房主电脑上的 Windows Defender 防火墙拦截了 Java 的网络访问，或者本地联机端口输入错误。我们将为您彻底配置防火墙的入站与出站规则，允许 Java (TM) Platform SE binary 通信。</div>
-                </div>
-                <button class="copy-btn" onclick="copyText('mc-11')">一键复制</button>
-            </div>
-
-            <div class="script-row">
-                <div class="script-info">
-                    <span class="script-desc">独立云服务器 (Server) 纯净/模组开服部署</span>
-                    <div class="script-content" id="mc-12">如果您需要一个可以 24 小时在线、好友能随时进出的服务器，我们建议在您租用的云服务器上部署独立服务端：
-1. 工程师会协助您安装 Windows Server 或 Linux 系统，配置 Java 环境；
-2. 根据您的偏好，部署纯净高轻量版服务端（如 Paper/Purpur）或模组服务端（如 CatServer/Arclight/Forge）；
-3. 编写 start.bat (或 start.sh) 自动运行脚本并配置最大内存分配；
-4. 修改 server.properties 配置文件，将 online-mode 设为 false 以允许离线客户端进入，开放云服务器的 TCP 25565 端口防火墙，完美开服。</div>
-                </div>
-                <button class="copy-btn" onclick="copyText('mc-12')">一键复制</button>
+            <!-- 话术折叠列表容器 -->
+            <div id="mc-qa-list" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <!-- JS 动态渲染 -->
             </div>
         </div>
 
@@ -319,6 +226,169 @@
         </div>
     </footer>
 
+    <script src="mc-data.js"></script>
     <script src="script.js"></script>
+    <script>
+    (function() {
+        const categories = {
+            'all': '全部问题',
+            'install': '安装与环境',
+            'performance': '性能与调优',
+            'mods': '模组与冲突',
+            'multiplayer': '联机与穿透',
+            'server': '开服与配置'
+        };
+
+        let activeCategory = 'all';
+        let searchQuery = '';
+
+        const tabsContainer = document.getElementById('mc-tabs');
+        const searchInput = document.getElementById('mc-search');
+        const qaListContainer = document.getElementById('mc-qa-list');
+
+        function initTabs() {
+            tabsContainer.innerHTML = '';
+            Object.keys(categories).forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = `os-tab-btn ${cat === activeCategory ? 'active' : ''}`;
+                btn.textContent = categories[cat];
+                btn.addEventListener('click', () => {
+                    activeCategory = cat;
+                    document.querySelectorAll('#mc-tabs .os-tab-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderQA();
+                });
+                tabsContainer.appendChild(btn);
+            });
+        }
+
+        function renderQA() {
+            qaListContainer.innerHTML = '';
+            
+            const filtered = MC_QA_DB.filter(item => {
+                const matchCategory = activeCategory === 'all' || item.category === activeCategory;
+                const matchSearch = !searchQuery || 
+                    item.title.toLowerCase().includes(searchQuery) || 
+                    item.content.toLowerCase().includes(searchQuery);
+                return matchCategory && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                qaListContainer.innerHTML = '<div style="color: var(--text-muted); font-size: 0.9rem; text-align: center; padding: 2rem; border: 1px dashed var(--border-color);">没有找到匹配的我的世界话术问题</div>';
+                return;
+            }
+
+            filtered.forEach(item => {
+                const row = document.createElement('div');
+                row.className = 'script-row';
+                row.style.flexDirection = 'column';
+                row.style.alignItems = 'stretch';
+                row.style.padding = '0';
+                row.style.border = '1px solid var(--border-color)';
+                row.style.marginBottom = '0.75rem';
+
+                // Header
+                const header = document.createElement('div');
+                header.style.display = 'flex';
+                header.style.alignItems = 'center';
+                header.style.justifyContent = 'space-between';
+                header.style.padding = '1rem 1.25rem';
+                header.style.cursor = 'pointer';
+                header.style.userSelect = 'none';
+
+                const left = document.createElement('div');
+                left.style.display = 'flex';
+                left.style.alignItems = 'center';
+                left.style.gap = '0.75rem';
+                left.style.flex = '1';
+
+                const arrow = document.createElement('span');
+                arrow.style.display = 'inline-flex';
+                arrow.style.alignItems = 'center';
+                arrow.style.transition = 'transform 0.2s ease';
+                arrow.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-secondary);"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
+
+                const title = document.createElement('span');
+                title.style.fontSize = '0.9rem';
+                title.style.fontWeight = '600';
+                title.style.color = '#ffffff';
+                title.textContent = item.title;
+
+                left.appendChild(arrow);
+                left.appendChild(title);
+
+                const badge = document.createElement('span');
+                badge.style.fontSize = '0.7rem';
+                badge.style.color = 'var(--text-muted)';
+                badge.style.background = 'rgba(255, 255, 255, 0.03)';
+                badge.style.padding = '0.2rem 0.5rem';
+                badge.style.borderRadius = '2px';
+                badge.textContent = categories[item.category];
+
+                header.appendChild(left);
+                header.appendChild(badge);
+
+                // Body
+                const body = document.createElement('div');
+                body.style.display = 'none';
+                body.style.borderTop = '1px solid var(--border-color)';
+                body.style.padding = '1.25rem';
+                body.style.background = 'rgba(0, 0, 0, 0.15)';
+
+                const desc = document.createElement('span');
+                desc.className = 'script-desc';
+                desc.style.display = 'block';
+                desc.style.marginBottom = '0.5rem';
+                desc.textContent = categories[item.category] + ' / ' + item.id;
+
+                const content = document.createElement('div');
+                content.className = 'script-content';
+                content.id = item.id;
+                content.textContent = item.content;
+
+                const btnContainer = document.createElement('div');
+                btnContainer.style.display = 'flex';
+                btnContainer.style.justifyContent = 'flex-end';
+                btnContainer.style.marginTop = '1rem';
+
+                const copyBtn = document.createElement('button');
+                copyBtn.className = 'copy-btn';
+                copyBtn.textContent = '一键复制';
+                copyBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    copyText(item.id);
+                });
+
+                btnContainer.appendChild(copyBtn);
+                body.appendChild(desc);
+                body.appendChild(content);
+                body.appendChild(btnContainer);
+
+                header.addEventListener('click', () => {
+                    const isOpen = body.style.display === 'block';
+                    if (isOpen) {
+                        body.style.display = 'none';
+                        arrow.style.transform = 'rotate(0deg)';
+                    } else {
+                        body.style.display = 'block';
+                        arrow.style.transform = 'rotate(90deg)';
+                    }
+                });
+
+                row.appendChild(header);
+                row.appendChild(body);
+                qaListContainer.appendChild(row);
+            });
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value.toLowerCase().trim();
+            renderQA();
+        });
+
+        initTabs();
+        renderQA();
+    })();
+    </script>
 </body>
 </html>
